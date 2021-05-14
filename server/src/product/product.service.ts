@@ -40,7 +40,6 @@ export class ProductService {
       .where('area', area)
       .where('baths', baths)
       .where('beds', beds)
-    console.log(body, condidate)
     return condidate
   }
 }
