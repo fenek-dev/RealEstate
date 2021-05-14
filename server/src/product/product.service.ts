@@ -1,13 +1,29 @@
-import { Body, Delete, Get, Injectable, Param, Post } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model, ObjectId } from 'mongoose'
 import { CreateProductDto } from './dto/create-product.dto'
+import { Product, ProductDocument } from './schema/product.schema'
 
 @Injectable()
 export class ProductService {
-  async getAll() {}
+  constructor(
+    @InjectModel(Product.name) private productModel: Model<ProductDocument>,
+  ) {}
 
-  async getOne(id: string) {}
+  async getAll(): Promise<Product[]> {
+    return await this.productModel.find().exec()
+  }
 
-  async create(dto: CreateProductDto) {}
+  async getOne(id: ObjectId): Promise<Product> {
+    return await this.productModel.findById(id).exec()
+  }
 
-  async remove(id: string) {}
+  async create(dto: CreateProductDto): Promise<Product> {
+    return await (await this.productModel.create({ ...dto })).save()
+  }
+
+  async remove(id: ObjectId): Promise<ObjectId> {
+    const product = await this.productModel.findByIdAndDelete(id)
+    return product._id
+  }
 }
