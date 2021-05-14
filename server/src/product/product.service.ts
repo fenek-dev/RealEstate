@@ -24,7 +24,7 @@ export class ProductService {
   }
 
   async remove(id: ObjectId): Promise<ObjectId> {
-    const product = await this.productModel.findByIdAndDelete(id)
+    const product = await this.productModel.findByIdAndDelete(id).exec()
     return product._id
   }
 
@@ -40,6 +40,7 @@ export class ProductService {
       .where('area', area)
       .where('baths', baths)
       .where('beds', beds)
+      .exec()
     return condidate
   }
 }
