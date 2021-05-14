@@ -9,6 +9,9 @@ export class Product {
   readonly name: string
 
   @Prop()
+  readonly type: string
+
+  @Prop()
   readonly price: number
 
   @Prop()
