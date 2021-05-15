@@ -1,10 +1,10 @@
-import { Body, Controller, Get, Post, UseGuards, Request } from '@nestjs/common'
-import { AuthService } from './auth.service'
-import { CreateUserDto } from './dto/create-user.dto'
-import { JwtAuthGuard } from './jwt/jwt-auth.guard'
-import { IEmailAndPassword } from './types'
+import {Body, Controller, Get, Post, UseGuards, Request} from '@nestjs/common'
+import {AuthService} from './auth.service'
+import {CreateUserDto} from './dto/create-user.dto'
+import {JwtAuthGuard} from './jwt/jwt-auth.guard'
+import {IEmailAndPassword} from './types'
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
@@ -13,7 +13,7 @@ export class AuthController {
    */
   @Post('login')
   login(@Body() body: IEmailAndPassword) {
-    const { email, password } = body
+    const {email, password} = body
     return this.authService.login(email, password)
   }
 

@@ -1,11 +1,11 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { JwtService } from '@nestjs/jwt'
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common'
+import {JwtService} from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
-import { User, UserDocument } from './schema/user.schema'
-import { IEmailAndPassword } from './types'
-import { InjectModel } from '@nestjs/mongoose'
-import { Model } from 'mongoose'
-import { CreateUserDto } from './dto/create-user.dto'
+import {User, UserDocument} from './schema/user.schema'
+import {IEmailAndPassword} from './types'
+import {InjectModel} from '@nestjs/mongoose'
+import {Model} from 'mongoose'
+import {CreateUserDto} from './dto/create-user.dto'
 
 @Injectable()
 export class AuthService {
@@ -34,7 +34,7 @@ export class AuthService {
    */
   async login(email: string, password: string) {
     const user = await this.validateUser(email, password)
-    const payload: IEmailAndPassword = { email, password }
+    const payload: IEmailAndPassword = {email, password}
     return {
       token: this.jwtService.sign(payload),
       _id: user._id,
@@ -49,14 +49,14 @@ export class AuthService {
    * Find a user by email
    */
   async findOne(email: string) {
-    return await this.userModel.findOne({ email }).exec()
+    return await this.userModel.findOne({email}).exec()
   }
 
   /**
    * Creating user
    */
   async create(dto: CreateUserDto) {
-    const { email, password, type, name } = dto
+    const {email, password, type, name} = dto
     const candidate = await this.findOne(email)
     if (candidate) {
       throw new HttpException('User already exists', HttpStatus.CONFLICT)
@@ -74,8 +74,8 @@ export class AuthService {
 
     await user.save()
 
-    const token = await this.jwtService.sign({ email, password })
+    const token = await this.jwtService.sign({email, password})
 
-    return { _id: user._id, email, name, type, products: [], token }
+    return {_id: user._id, email, name, type, products: [], token}
   }
 }

@@ -1,10 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { InjectModel } from '@nestjs/mongoose'
-import { Model, ObjectId } from 'mongoose'
-import { CreateProductDto } from './dto/create-product.dto'
-import { EditProductDto } from './dto/edit-product.dto'
-import { Product, ProductDocument } from './schema/product.schema'
-import { ISearchBody } from './types'
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common'
+import {InjectModel} from '@nestjs/mongoose'
+import {Model, ObjectId} from 'mongoose'
+import {CreateProductDto} from './dto/create-product.dto'
+import {EditProductDto} from './dto/edit-product.dto'
+import {Product, ProductDocument} from './schema/product.schema'
+import {ISearchBody} from './types'
 
 @Injectable()
 export class ProductService {
@@ -21,7 +21,7 @@ export class ProductService {
   }
 
   async create(dto: CreateProductDto): Promise<Product> {
-    return await (await this.productModel.create({ ...dto })).save()
+    return await (await this.productModel.create({...dto})).save()
   }
 
   async remove(id: ObjectId): Promise<ObjectId> {
@@ -31,7 +31,7 @@ export class ProductService {
 
   async search(body: ISearchBody): Promise<Product[]> {
     // Get all setting parametrs from given body object
-    const { baths, beds, max, min, area, location, type } = body
+    const {baths, beds, max, min, area, location, type} = body
     // Create regular expresstion by given location name
     const reg = new RegExp(location, 'i')
     // Search for suitable products
@@ -52,12 +52,12 @@ export class ProductService {
    * Updating product fields
    */
   async editProduct(dto: EditProductDto) {
-    const { _id, ...props } = dto
+    const {_id, ...props} = dto
     const product = await this.productModel.findById(_id)
     if (!product) {
       throw new HttpException('Product not found', HttpStatus.NOT_FOUND)
     }
-    await product.updateOne({ $set: { ...props } }).exec()
+    await product.updateOne({$set: {...props}}).exec()
     return dto
   }
 }

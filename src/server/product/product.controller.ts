@@ -1,12 +1,12 @@
-import { Body, Delete, Get, Param, Post } from '@nestjs/common'
-import { Controller } from '@nestjs/common'
-import { ObjectId } from 'mongoose'
-import { CreateProductDto } from './dto/create-product.dto'
-import { EditProductDto } from './dto/edit-product.dto'
-import { ProductService } from './product.service'
-import { ISearchBody } from './types'
+import {Body, Delete, Get, Param, Post} from '@nestjs/common'
+import {Controller} from '@nestjs/common'
+import {ObjectId} from 'mongoose'
+import {CreateProductDto} from './dto/create-product.dto'
+import {EditProductDto} from './dto/edit-product.dto'
+import {ProductService} from './product.service'
+import {ISearchBody} from './types'
 
-@Controller('product')
+@Controller('api/product')
 export class ProductController {
   constructor(private productServise: ProductService) {}
 
