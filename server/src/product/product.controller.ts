@@ -2,6 +2,7 @@ import { Body, Delete, Get, Param, Post } from '@nestjs/common'
 import { Controller } from '@nestjs/common'
 import { ObjectId } from 'mongoose'
 import { CreateProductDto } from './dto/create-product.dto'
+import { EditProductDto } from './dto/edit-product.dto'
 import { ProductService } from './product.service'
 import { ISearchBody } from './types'
 
@@ -47,5 +48,13 @@ export class ProductController {
   @Post('/search')
   search(@Body() body: ISearchBody) {
     return this.productServise.search(body)
+  }
+
+  /**
+   * Edit product by given settings
+   */
+  @Post('/edit')
+  edit(@Body() body: EditProductDto) {
+    return this.productServise.editProduct(body)
   }
 }

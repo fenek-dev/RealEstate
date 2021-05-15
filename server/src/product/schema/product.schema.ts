@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document } from 'mongoose'
+import * as mongoose from 'mongoose'
+import { User } from 'src/auth/schema/user.schema'
 
 export type ProductDocument = Product & Document
 
@@ -14,7 +16,7 @@ export class Product {
   @Prop()
   readonly price: number
 
-  @Prop()
+  @Prop({ required: false })
   readonly description?: string
 
   @Prop()
@@ -32,8 +34,11 @@ export class Product {
   @Prop()
   readonly baths: number
 
-  @Prop()
+  @Prop({ required: false })
   readonly floor?: number
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  readonly author: User
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product)

@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model, ObjectId } from 'mongoose'
 import { CreateProductDto } from './dto/create-product.dto'
+import { EditProductDto } from './dto/edit-product.dto'
 import { Product, ProductDocument } from './schema/product.schema'
 import { ISearchBody } from './types'
 
@@ -45,5 +46,18 @@ export class ProductService {
       .where('beds', beds)
       .exec()
     return condidate
+  }
+
+  /**
+   * Updating product fields
+   */
+  async editProduct(dto: EditProductDto) {
+    const { _id, ...props } = dto
+    const product = await this.productModel.findById(_id)
+    if (!product) {
+      throw new HttpException('Product not found', HttpStatus.NOT_FOUND)
+    }
+    await product.updateOne({ $set: { ...props } }).exec()
+    return dto
   }
 }
