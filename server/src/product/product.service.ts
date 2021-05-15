@@ -29,8 +29,11 @@ export class ProductService {
   }
 
   async search(body: ISearchBody): Promise<Product[]> {
+    // Get all setting parametrs from given body object
     const { baths, beds, max, min, area, location, type } = body
+    // Create regular expresstion by given location name
     const reg = new RegExp(location, 'i')
+    // Search for suitable products
     const condidate = await this.productModel
       .where('type', type)
       .where('location', reg)

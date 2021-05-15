@@ -8,12 +8,18 @@ import { IEmailAndPassword } from './types'
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  /**
+   * Login by email and password without token
+   */
   @Post('login')
   login(@Body() body: IEmailAndPassword) {
     const { email, password } = body
     return this.authService.login(email, password)
   }
 
+  /**
+   * Login by token
+   */
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
@@ -21,6 +27,9 @@ export class AuthController {
     return this.authService.findOne(user.email)
   }
 
+  /**
+   * Registrate user
+   */
   @Post('register')
   create(@Body() body: CreateUserDto) {
     return this.authService.create(body)

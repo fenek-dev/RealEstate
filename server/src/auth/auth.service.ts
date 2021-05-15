@@ -14,6 +14,9 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  /**
+   * Util function for checking user existing
+   */
   async validateUser(email: string, password: string) {
     const user = await this.findOne(email)
     if (!user) {
@@ -26,6 +29,9 @@ export class AuthService {
     throw new HttpException('Incorrect email/password', HttpStatus.CONFLICT)
   }
 
+  /**
+   * Returning user credantials and token
+   */
   async login(email: string, password: string) {
     const user = await this.validateUser(email, password)
     const payload: IEmailAndPassword = { email, password }
@@ -39,10 +45,16 @@ export class AuthService {
     }
   }
 
+  /**
+   * Find a user by email
+   */
   async findOne(email: string) {
     return await this.userModel.findOne({ email }).exec()
   }
 
+  /**
+   * Creating user
+   */
   async create(dto: CreateUserDto) {
     const { email, password, type, name } = dto
     const candidate = await this.findOne(email)
