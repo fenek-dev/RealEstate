@@ -22,7 +22,6 @@ export class LivingController {
   /**
    * Get one living by id
    */
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
   getOne(@Param('id') id: ObjectId) {
     return this.livingServise.getOne(id)
@@ -31,6 +30,7 @@ export class LivingController {
   /**
    * Create new living by given dto
    */
+  @UseGuards(JwtAuthGuard)
   @Post('/create')
   create(@Body() dto: CreateLivingDto) {
     return this.livingServise.create(dto)
@@ -39,6 +39,7 @@ export class LivingController {
   /**
    * Delete a living by id
    */
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: ObjectId) {
     return this.livingServise.remove(id)
@@ -55,6 +56,7 @@ export class LivingController {
   /**
    * Edit living by given settings
    */
+  @UseGuards(JwtAuthGuard)
   @Patch('/edit')
   edit(@Body() body: EditLivingDto) {
     return this.livingServise.editLiving(body)
