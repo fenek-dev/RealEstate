@@ -1,5 +1,5 @@
 import {Module} from '@nestjs/common'
-import {ProductModule} from './product/product.module'
+import {LivingModule} from './living/living.module'
 import {MongooseModule} from '@nestjs/mongoose'
 import {ConfigModule} from '@nestjs/config'
 import {AuthModule} from './auth/auth.module'
@@ -12,7 +12,7 @@ import {RegionModule} from './region/region.module'
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_URI),
-    ProductModule,
+    LivingModule,
     AuthModule,
     ViewModule,
     CommercialModule,

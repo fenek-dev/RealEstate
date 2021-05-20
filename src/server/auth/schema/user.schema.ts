@@ -1,7 +1,7 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose'
 import {Document} from 'mongoose'
 import * as mongoose from 'mongoose'
-import {Product} from 'src/server/product/schema/product.schema'
+import {Living} from 'src/server/living/schema/living.schema'
 
 export type UserDocument = User & Document
 
@@ -20,9 +20,9 @@ export class User {
   readonly type: string
 
   @Prop({
-    type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product', default: []}],
+    type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Living', default: []}],
   })
-  products: Product[]
+  products: Living[]
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
