@@ -4,5 +4,11 @@
     "files": [
       "static/chunks/node_modules_next_dist_client_dev_noop_js.js"
     ]
+  },
+  "..\\redux\\store.ts -> redux-devtools-extension": {
+    "id": "../../node_modules/redux-devtools-extension/index.js",
+    "files": [
+      "static/chunks/node_modules_redux-devtools-extension_index_js.js"
+    ]
   }
 }

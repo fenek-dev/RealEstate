@@ -1,3 +1,5 @@
+import {END} from 'redux-saga'
+import {wrapper} from '../redux/store'
 import Head from 'next/head'
 
 export default function Home() {
@@ -11,3 +13,7 @@ export default function Home() {
     </>
   )
 }
+
+export const getStaticProps = wrapper.getStaticProps(({store}) => {
+  store.dispatch(END)
+})

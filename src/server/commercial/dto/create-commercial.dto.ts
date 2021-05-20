@@ -1,7 +1,7 @@
 import {User} from 'src/server/auth/schema/user.schema'
-import {Category} from 'src/server/category/schema/category.schema'
-import {Layout} from 'src/server/layout/schema/layout.schema'
-import {Region} from 'src/server/region/schema/region.schema'
+import {Category} from '../../category/schema/category.schema'
+import {Layout} from '../../layout/schema/layout.schema'
+import {Region} from '../../region/schema/region.schema'
 
 export class CreateCommercialDto {
   readonly city: string
