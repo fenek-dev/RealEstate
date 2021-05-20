@@ -14,10 +14,10 @@ import {RegionModule} from './region/region.module'
     MongooseModule.forRoot(process.env.MONGO_URI),
     CommercialModule,
     CategoryModule,
+    LayoutModule,
     LivingModule,
     AuthModule,
     ViewModule,
-    LayoutModule,
     RegionModule,
   ],
 })

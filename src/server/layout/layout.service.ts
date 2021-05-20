@@ -1,26 +1,36 @@
-import { Injectable } from '@nestjs/common';
-import { CreateLayoutDto } from './dto/create-layout.dto';
-import { UpdateLayoutDto } from './dto/update-layout.dto';
+import {Injectable} from '@nestjs/common'
+import {InjectModel} from '@nestjs/mongoose'
+import {Model} from 'mongoose'
+import {CreateLayoutDto} from './dto/create-layout.dto'
+import {UpdateLayoutDto} from './dto/update-layout.dto'
+import {Layout, LayoutDocument} from './schema/layout.schema'
 
 @Injectable()
 export class LayoutService {
-  create(createLayoutDto: CreateLayoutDto) {
-    return 'This action adds a new layout';
+  constructor(
+    @InjectModel(Layout.name)
+    private layoutModel: Model<LayoutDocument>,
+  ) {}
+
+  async create(createLayoutDto: CreateLayoutDto) {
+    const layout = await this.layoutModel.create(createLayoutDto)
+    await layout.save()
+    return layout
   }
 
-  findAll() {
-    return `This action returns all layout`;
+  async findAll() {
+    return await this.layoutModel.find().exec()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} layout`;
+  async findOne(id: string) {
+    return await this.layoutModel.findById(id).exec()
   }
 
-  update(id: number, updateLayoutDto: UpdateLayoutDto) {
-    return `This action updates a #${id} layout`;
+  async update(id: string, updateLayoutDto: UpdateLayoutDto) {
+    return await this.layoutModel.findByIdAndUpdate(id, updateLayoutDto)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} layout`;
+  async remove(id: string) {
+    return await this.layoutModel.findByIdAndRemove(id)
   }
 }
