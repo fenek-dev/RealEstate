@@ -12,11 +12,11 @@ import {RegionModule} from './region/region.module'
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_URI),
+    CommercialModule,
+    CategoryModule,
     LivingModule,
     AuthModule,
     ViewModule,
-    CommercialModule,
-    CategoryModule,
     LayoutModule,
     RegionModule,
   ],

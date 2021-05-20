@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
-import { CreateCommercialDto } from './dto/create-commercial.dto';
-import { UpdateCommercialDto } from './dto/update-commercial.dto';
+import {Injectable} from '@nestjs/common'
+import {InjectModel} from '@nestjs/mongoose'
+import {Model} from 'mongoose'
+import {CreateCommercialDto} from './dto/create-commercial.dto'
+import {UpdateCommercialDto} from './dto/update-commercial.dto'
+import {Commercial, CommercialDocument} from './schema/commercial.schema'
 
 @Injectable()
 export class CommercialService {
-  create(createCommercialDto: CreateCommercialDto) {
-    return 'This action adds a new commercial';
+  constructor(
+    @InjectModel(Commercial.name)
+    private commercialModel: Model<CommercialDocument>,
+  ) {}
+
+  async create(createCommercialDto: CreateCommercialDto) {
+    const commercial = await this.commercialModel.create(createCommercialDto)
+    await commercial.save()
+    return commercial
   }
 
-  findAll() {
-    return `This action returns all commercial`;
+  async getAll() {
+    return await this.commercialModel.find().exec()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} commercial`;
+  async findOne(id: string) {
+    return await this.commercialModel.findById(id).exec()
   }
 
-  update(id: number, updateCommercialDto: UpdateCommercialDto) {
-    return `This action updates a #${id} commercial`;
+  async update(id: string, updateCommercialDto: UpdateCommercialDto) {
+    return await this.commercialModel
+      .findByIdAndUpdate(id, updateCommercialDto)
+      .exec()
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} commercial`;
+  async remove(id: string) {
+    return await this.commercialModel.findByIdAndDelete(id).exec()
   }
 }

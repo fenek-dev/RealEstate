@@ -1,34 +1,52 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { CommercialService } from './commercial.service';
-import { CreateCommercialDto } from './dto/create-commercial.dto';
-import { UpdateCommercialDto } from './dto/update-commercial.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common'
+import {JwtAuthGuard} from '../auth/jwt/jwt-auth.guard'
+import {CommercialService} from './commercial.service'
+import {CreateCommercialDto} from './dto/create-commercial.dto'
+import {UpdateCommercialDto} from './dto/update-commercial.dto'
 
-@Controller('commercial')
+@Controller('api/commercial')
 export class CommercialController {
-  constructor(private readonly commercialService: CommercialService) {}
+  constructor(private commercialService: CommercialService) {}
 
-  @Post()
-  create(@Body() createCommercialDto: CreateCommercialDto) {
-    return this.commercialService.create(createCommercialDto);
-  }
-
+  @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.commercialService.findAll();
+  getAll() {
+    return this.commercialService.getAll()
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Post('create')
+  create(@Body() createCommercialDto: CreateCommercialDto) {
+    return this.commercialService.create(createCommercialDto)
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.commercialService.findOne(+id);
+    return this.commercialService.findOne(id)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCommercialDto: UpdateCommercialDto) {
-    return this.commercialService.update(+id, updateCommercialDto);
+  @UseGuards(JwtAuthGuard)
+  @Patch('update/:id')
+  update(
+    @Param('id') id: string,
+    @Body() updateCommercialDto: UpdateCommercialDto,
+  ) {
+    return this.commercialService.update(id, updateCommercialDto)
   }
 
-  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @Delete('delete/:id')
   remove(@Param('id') id: string) {
-    return this.commercialService.remove(+id);
+    return this.commercialService.remove(id)
   }
 }
