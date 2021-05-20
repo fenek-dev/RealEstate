@@ -1,6 +1,10 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose'
 import {Document} from 'mongoose'
 import * as mongoose from 'mongoose'
+import {Region} from 'src/server/region/schema/region.schema'
+import {User} from 'src/server/auth/schema/user.schema'
+import {Layout} from 'src/server/layout/schema/layout.schema'
+import {Category} from 'src/server/category/schema/category.schema'
 
 export type CommercialDocument = Commercial & Document
 
@@ -37,20 +41,20 @@ export class Commercial {
   readonly property?: string
 
   @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Region', required: true})
-  readonly region: mongoose.Schema.Types.ObjectId
+  readonly region: Region
 
   @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true})
-  readonly author: mongoose.Schema.Types.ObjectId
+  readonly author: User
 
   @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Layout', required: false})
-  readonly layout?: mongoose.Schema.Types.ObjectId
+  readonly layout?: Layout
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
     required: false,
   })
-  readonly category?: mongoose.Schema.Types.ObjectId
+  readonly category?: Category
 }
 
 export const CommercialSchema = SchemaFactory.createForClass(Commercial)

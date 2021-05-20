@@ -11,7 +11,7 @@ import {RegionModule} from './region/region.module'
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(process.env.MONGO_URI),
+    MongooseModule.forRoot(process.env.MONGO_URI, {useFindAndModify: false}),
     CommercialModule,
     CategoryModule,
     LayoutModule,

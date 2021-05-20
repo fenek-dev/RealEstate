@@ -3,7 +3,7 @@ import {Controller} from '@nestjs/common'
 import {ObjectId} from 'mongoose'
 import {JwtAuthGuard} from '../auth/jwt/jwt-auth.guard'
 import {CreateLivingDto} from './dto/create-living.dto'
-import {EditLivingDto} from './dto/edit-living.dto'
+import {UpdateLivingDto} from './dto/update-living.dto'
 import {LivingService} from './living.service'
 import {ISearchBody} from './types'
 
@@ -40,7 +40,7 @@ export class LivingController {
    * Delete a living by id
    */
   @UseGuards(JwtAuthGuard)
-  @Delete(':id')
+  @Delete('delete/:id')
   remove(@Param('id') id: ObjectId) {
     return this.livingServise.remove(id)
   }
@@ -57,8 +57,8 @@ export class LivingController {
    * Edit living by given settings
    */
   @UseGuards(JwtAuthGuard)
-  @Patch('/edit')
-  edit(@Body() body: EditLivingDto) {
-    return this.livingServise.editLiving(body)
+  @Patch('/update/:id')
+  edit(@Body() body: UpdateLivingDto, @Param() id: string) {
+    return this.livingServise.editLiving(id, body)
   }
 }

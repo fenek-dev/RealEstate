@@ -2,7 +2,7 @@ import {HttpException, HttpStatus, Injectable} from '@nestjs/common'
 import {InjectModel} from '@nestjs/mongoose'
 import {Model, ObjectId} from 'mongoose'
 import {CreateLivingDto} from './dto/create-living.dto'
-import {EditLivingDto} from './dto/edit-living.dto'
+import {UpdateLivingDto} from './dto/update-living.dto'
 import {Living, LivingDocument} from './schema/living.schema'
 import {ISearchBody} from './types'
 
@@ -50,13 +50,12 @@ export class LivingService {
   /**
    * Updating Living fields
    */
-  async editLiving(dto: EditLivingDto) {
-    const {_id, ...props} = dto
-    const Living = await this.LivingModel.findById(_id)
+  async editLiving(id: string, dto: UpdateLivingDto) {
+    const Living = await this.LivingModel.findById(id)
     if (!Living) {
       throw new HttpException('Living not found', HttpStatus.NOT_FOUND)
     }
-    await Living.updateOne({$set: {...props}}).exec()
+    await Living.updateOne(dto).exec()
     return dto
   }
 }

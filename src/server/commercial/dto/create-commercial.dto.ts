@@ -1,4 +1,7 @@
-import {ObjectId} from 'mongoose'
+import {User} from 'src/server/auth/schema/user.schema'
+import {Category} from 'src/server/category/schema/category.schema'
+import {Layout} from 'src/server/layout/schema/layout.schema'
+import {Region} from 'src/server/region/schema/region.schema'
 
 export class CreateCommercialDto {
   readonly city: string
@@ -11,8 +14,8 @@ export class CreateCommercialDto {
   readonly price: number
   readonly date: number
   readonly property?: string
-  readonly region: ObjectId
-  readonly author: ObjectId
-  readonly layout?: ObjectId
-  readonly category?: ObjectId
+  readonly region: Region
+  readonly author: User
+  readonly layout?: Layout
+  readonly category?: Category
 }
