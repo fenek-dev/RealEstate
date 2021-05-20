@@ -16,9 +16,9 @@ import {RegionModule} from './region/region.module'
     CategoryModule,
     LayoutModule,
     LivingModule,
+    RegionModule,
     AuthModule,
     ViewModule,
-    RegionModule,
   ],
 })
 export class AppModule {}

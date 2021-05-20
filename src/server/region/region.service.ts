@@ -1,26 +1,36 @@
 import {Injectable} from '@nestjs/common'
+import {InjectModel} from '@nestjs/mongoose'
+import {Model} from 'mongoose'
 import {CreateRegionDto} from './dto/create-region.dto'
 import {UpdateRegionDto} from './dto/update-region.dto'
+import {Region, RegionDocument} from './schema/region.schema'
 
 @Injectable()
 export class RegionService {
-  create(createRegionDto: CreateRegionDto) {
-    return 'This action adds a new region'
+  constructor(
+    @InjectModel(Region.name)
+    private regionModel: Model<RegionDocument>,
+  ) {}
+
+  async create(createRegionDto: CreateRegionDto) {
+    const region = await this.regionModel.create(createRegionDto)
+    await region.save()
+    return region
   }
 
-  findAll() {
-    return `This action returns all region`
+  async findAll() {
+    return await this.regionModel.find().exec()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} region`
+  async findOne(id: string) {
+    return await this.regionModel.findById(id).exec()
   }
 
-  update(id: number, updateRegionDto: UpdateRegionDto) {
-    return `This action updates a #${id} region`
+  async update(id: string, updateRegionDto: UpdateRegionDto) {
+    return await this.regionModel.findByIdAndUpdate(id, updateRegionDto)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} region`
+  async remove(id: string) {
+    return await this.regionModel.findByIdAndRemove(id)
   }
 }
