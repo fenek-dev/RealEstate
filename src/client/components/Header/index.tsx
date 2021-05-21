@@ -5,9 +5,7 @@ import styles from './header.module.scss'
 import {memo} from 'react'
 const {Link} = Typography
 
-interface IHeader {}
-
-const Header: React.FC<IHeader> = () => {
+const Header: React.FC = () => {
   return (
     <header className={styles.header}>
       <Image src="/logo.svg" width={128} height={22} alt="DigitalEstate" />
