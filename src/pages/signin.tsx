@@ -46,9 +46,9 @@ const Signin: React.FC = () => {
             </Button>
           </Form.Item>
         </Form>
-        <Text>Already have an account?</Text>
+        <Text>Doesn't have an account?</Text>
         <Button className={styles.createBtn}>
-          <Link href="/signin">Create an account</Link>
+          <Link href="/signup">Create an account</Link>
         </Button>
       </section>
     </MainLayout>
