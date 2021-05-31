@@ -1,10 +1,10 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose'
 import {Document} from 'mongoose'
 import * as mongoose from 'mongoose'
-import {User} from 'src/server/auth/schema/user.schema'
-import {Region} from 'src/server/region/schema/region.schema'
-import {Layout} from 'src/server/layout/schema/layout.schema'
-import {Category} from 'src/server/category/schema/category.schema'
+import {User} from '../../auth/schema/user.schema'
+import {Region} from '../../region/schema/region.schema'
+import {Layout} from '../../layout/schema/layout.schema'
+import {Category} from '../../category/schema/category.schema'
 
 export type LivingDocument = Living & Document
 

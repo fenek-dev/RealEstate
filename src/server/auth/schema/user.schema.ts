@@ -1,7 +1,7 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose'
 import {Document} from 'mongoose'
 import * as mongoose from 'mongoose'
-import {Living} from 'src/server/living/schema/living.schema'
+import {Living} from '../../living/schema/living.schema'
 
 export type UserDocument = User & Document
 

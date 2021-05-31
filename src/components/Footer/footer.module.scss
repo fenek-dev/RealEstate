@@ -1,0 +1,23 @@
+.footer {
+
+    &Main {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &Description {
+        display: flex;
+        flex-direction: column;
+        max-width: 267px;
+
+        &__text {
+            padding: 10px 0;
+        }
+    }
+
+    &Icons {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+}

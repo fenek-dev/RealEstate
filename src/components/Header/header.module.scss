@@ -1,0 +1,25 @@
+.header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &List {
+        min-width: 210px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+        font-size: 18px;
+        margin-bottom: 0;
+        margin-right: 76px;
+    }
+
+}
