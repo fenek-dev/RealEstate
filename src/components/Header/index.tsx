@@ -8,7 +8,9 @@ const {Link} = Typography
 const Header: React.FC = () => {
   return (
     <header className={styles.header}>
-      <Image src="/logo.svg" width={128} height={22} alt="DigitalEstate" />
+      <Link href="/">
+        <Image src="/logo.svg" width={128} height={22} alt="DigitalEstate" />
+      </Link>
       <nav className={styles.nav}>
         <ul className={styles.navList}>
           <li>
@@ -21,7 +23,9 @@ const Header: React.FC = () => {
             <Link>Sell</Link>
           </li>
         </ul>
-        <Button shape="round">Sign up</Button>
+        <Button>
+          <Link href="/signin">Sign In</Link>
+        </Button>
       </nav>
     </header>
   )

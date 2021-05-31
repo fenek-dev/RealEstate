@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <MainLayout>
       <Head>
-        <title>Digital Estate</title>
+        <title>DigitalEstate</title>
         <meta
           name="description"
           content="Real Estate website to search your dream property"
