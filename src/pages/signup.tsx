@@ -1,6 +1,5 @@
 import MainLayout from '../layouts/Main'
 import Head from 'next/head'
-import React from 'react'
 import {Button, Checkbox, Form, Input, Radio, Typography} from 'antd'
 import styles from '../styles/signin.module.scss'
 const {Title, Text, Link} = Typography
