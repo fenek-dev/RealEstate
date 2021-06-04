@@ -1,6 +1,6 @@
 import {takeEvery} from 'redux-saga/effects'
 
-export default function* watchAddAction() {
+export function* watchAddAction() {
   yield takeEvery('ADD', workerAddAction)
 }
 
