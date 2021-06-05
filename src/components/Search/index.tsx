@@ -6,9 +6,24 @@ import styles from './search.module.scss'
 interface ISearch {
   className?: string
   onFinish?: () => void
+  defaultValues?: {
+    readonly city?: string
+    readonly property?: string
+    readonly type?: string
+    readonly beds?: string
+    readonly baths?: string
+    readonly min?: string
+    readonly max?: string
+  }
+  type: 'welcome' | 'main'
 }
 
-const Search: React.FC<ISearch> = ({className, onFinish}) => {
+const Search: React.FC<ISearch> = ({
+  className,
+  onFinish,
+  defaultValues,
+  type,
+}) => {
   const [form] = Form.useForm()
 
   return (
@@ -20,16 +35,25 @@ const Search: React.FC<ISearch> = ({className, onFinish}) => {
       onFinish={onFinish}>
       <Form.Item
         name="city"
+        required
         rules={[
           {
             required: true,
             message: 'Please input city name',
           },
         ]}>
-        <Input prefix={<SearchOutlined />} placeholder="City" />
+        <Input
+          style={{width: 150}}
+          defaultValue={defaultValues && defaultValues.city}
+          prefix={<SearchOutlined />}
+          placeholder="City"
+        />
       </Form.Item>
-      <Form.Item name="Property">
-        <Select style={{width: 150}} placeholder="Property type">
+      <Form.Item name="property">
+        <Select
+          defaultValue={defaultValues && defaultValues.property}
+          style={{width: 150}}
+          placeholder="Property type">
           <Select.OptGroup label="Living">
             <Select.Option value="house">House</Select.Option>
             <Select.Option value="apartment">Apartment</Select.Option>
@@ -42,20 +66,50 @@ const Search: React.FC<ISearch> = ({className, onFinish}) => {
         </Select>
       </Form.Item>
       <Form.Item name="type">
-        <Select style={{width: 100}} placeholder="Rent/Buy">
-          <Select.Option value="Rent">Rent</Select.Option>
-          <Select.Option value="Buy">Buy</Select.Option>
+        <Select
+          defaultValue={defaultValues && defaultValues.type}
+          style={{width: 100}}
+          placeholder="Rent/Buy">
+          <Select.Option value="rent">Rent</Select.Option>
+          <Select.Option value="buy">Buy</Select.Option>
         </Select>
       </Form.Item>
+      {type === 'main' && (
+        <>
+          <Form.Item name="beds">
+            <Input
+              style={{width: 70}}
+              defaultValue={defaultValues && defaultValues.beds}
+              placeholder="Beds"
+            />
+          </Form.Item>
+          <Form.Item name="baths">
+            <Input
+              style={{width: 70}}
+              defaultValue={defaultValues && defaultValues.baths}
+              placeholder="Baths"
+            />
+          </Form.Item>
+          <Form.Item name="min">
+            <Input
+              style={{width: 100}}
+              defaultValue={defaultValues && defaultValues.min}
+              placeholder="Min price"
+            />
+          </Form.Item>
+          <Form.Item name="max">
+            <Input
+              style={{width: 100}}
+              defaultValue={defaultValues && defaultValues.max}
+              placeholder="Max price"
+            />
+          </Form.Item>
+        </>
+      )}
+
       <Form.Item shouldUpdate>
         {() => (
-          <Button
-            type="primary"
-            htmlType="submit"
-            disabled={
-              !form.isFieldsTouched(true) ||
-              !!form.getFieldsError().filter(({errors}) => errors.length).length
-            }>
+          <Button type="primary" htmlType="submit">
             Start Search
           </Button>
         )}
