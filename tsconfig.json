@@ -27,7 +27,7 @@
     "isolatedModules": true
   },
   "include": [
-    "src/server/**/*.ts",
+    "server/**/*.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"

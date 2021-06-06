@@ -8,7 +8,8 @@ import MainLayout from '../../layouts/Main'
 import Head from 'next/head'
 import styles from './product.module.scss'
 import {IProduct} from '../../types'
-
+import {GetStaticPaths} from 'next'
+import {useRouter} from 'next/router'
 const {Title, Paragraph, Text} = Typography
 
 const Product: React.FC<IProduct> = ({
@@ -29,6 +30,10 @@ const Product: React.FC<IProduct> = ({
   description,
   date,
 }) => {
+  const router = useRouter()
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
   return (
     <MainLayout>
       <Head>
@@ -203,7 +208,7 @@ const Product: React.FC<IProduct> = ({
 
 export default Product
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   return {paths: [{params: {id: '123'}}], fallback: true}
 }
 
