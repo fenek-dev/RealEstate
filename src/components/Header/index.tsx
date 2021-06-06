@@ -18,13 +18,19 @@ const Header: React.FC = () => {
       <nav className={styles.nav}>
         <ul className={styles.navList}>
           <li>
-            <Link>Buy</Link>
+            <Link strong href="/search?type=buy">
+              Buy
+            </Link>
           </li>
           <li>
-            <Link>Rent</Link>
+            <Link strong href="/search?type=rent">
+              Rent
+            </Link>
           </li>
           <li>
-            <Link>Sell</Link>
+            <Link strong href="/search">
+              Sell
+            </Link>
           </li>
         </ul>
         {user.email ? (

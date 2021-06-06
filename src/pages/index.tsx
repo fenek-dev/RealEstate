@@ -6,7 +6,7 @@ import {Typography} from 'antd'
 import Image from 'next/image'
 import styles from '../styles/index.module.scss'
 import Search from '../components/Search'
-const {Title, Text} = Typography
+const {Title, Text, Paragraph} = Typography
 export default function Home() {
   return (
     <MainLayout>
@@ -30,16 +30,16 @@ export default function Home() {
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta property="og:url" content="http://localhost:3000/" />
-        <link rel="canonical" href="http://localhost:3000/" />
+        <meta property="og:url" content="http://localhost:3000" />
+        <link rel="canonical" href="http://localhost:3000" />
       </Head>
       <section className={styles.welcome}>
         <div className={styles.welcomeTitle}>
           <Text>Digital Estate is</Text>
           <Title level={1}>The real estate marketplace</Title>
-          <Title level={4}>
+          <Paragraph strong style={{fontSize: 16}}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit
-          </Title>
+          </Paragraph>
         </div>
         <div style={{width: '100%'}}>
           <Image

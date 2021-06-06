@@ -29,8 +29,8 @@ const About = () => {
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta property="og:url" content="http://localhost:3000/" />
-        <link rel="canonical" href="http://localhost:3000/" />
+        <meta property="og:url" content="http://localhost:3000/about" />
+        <link rel="canonical" href="http://localhost:3000/about" />
       </Head>
       <Title level={1}>About us and our technologies</Title>
       <section>
