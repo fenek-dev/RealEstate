@@ -73,11 +73,11 @@ export interface IUser {
 }
 
 export interface IQuery {
-  readonly city: string
-  readonly property: string
-  readonly type: ProductType
-  readonly beds: string
-  readonly baths: string
-  readonly min: string
-  readonly max: string
+  readonly city?: string
+  readonly property?: string
+  readonly type?: ProductType
+  readonly beds?: string
+  readonly baths?: string
+  readonly min?: string
+  readonly max?: string
 }

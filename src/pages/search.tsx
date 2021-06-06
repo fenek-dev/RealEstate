@@ -5,29 +5,28 @@ import {Typography} from 'antd'
 import styles from '../styles/search.module.scss'
 import Head from 'next/head'
 import SearchCard from '../components/SearchCard'
-import {useEffect, useState} from 'react'
 import {wrapper} from '../redux/store'
 import {END} from 'redux-saga'
 import {addSearchAction} from '../redux/search/searchAction'
-import {useSelector} from 'react-redux'
-import {IRootReducer} from '../redux/rootReducer'
-import {ISearchState} from '../types'
+import {IQuery, ISearchState} from '../types'
 
 const {Title} = Typography
 
-const SearchPage: React.FC<ISearchState> = ({products}) => {
-  const router = useRouter()
-  const [query, setQuery] = useState(router.query)
+interface ISearchPage extends ISearchState {
+  query: IQuery
+}
 
-  useEffect(() => {
-    setQuery(router.query)
-  }, [router.query])
+const SearchPage: React.FC<ISearchPage> = ({products, query}) => {
+  const router = useRouter()
 
   const {city, type, property} = router.query
   return (
     <MainLayout>
       <Head>
-        <title>DigitalEstate | {city}</title>
+        <title>
+          DigitalEstate | {city ? city : ''} {property ? property : ''}s{' '}
+          {type ? `for ${type}` : ''}
+        </title>
       </Head>
       <Search className={styles.search} type="main" defaultValues={query} />
       <Title level={2}>
@@ -55,13 +54,17 @@ const SearchPage: React.FC<ISearchState> = ({products}) => {
 
 export default SearchPage
 
-export const getStaticProps = wrapper.getServerSideProps(({store}) => {
-  store.dispatch(addSearchAction())
-  store.dispatch(END)
-  const state = store.getState().search
-  return {
-    props: {
-      products: state.products || [],
-    },
-  }
-})
+export const getServerSideProps = wrapper.getServerSideProps(
+  async ({store, query}) => {
+    store.dispatch(addSearchAction())
+    store.dispatch(END)
+    const state = store.getState().search
+
+    return {
+      props: {
+        products: state.products || [],
+        query,
+      },
+    }
+  },
+)

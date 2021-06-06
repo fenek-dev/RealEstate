@@ -2,19 +2,12 @@ import React, {memo} from 'react'
 import {Form, Input, Button, Select} from 'antd'
 import {SearchOutlined} from '@ant-design/icons'
 import styles from './search.module.scss'
+import {IQuery} from '../../types'
 
 interface ISearch {
   className?: string
   onFinish?: () => void
-  defaultValues?: {
-    readonly city?: string
-    readonly property?: string
-    readonly type?: string
-    readonly beds?: string
-    readonly baths?: string
-    readonly min?: string
-    readonly max?: string
-  }
+  defaultValues?: IQuery
   type: 'welcome' | 'main'
 }
 
