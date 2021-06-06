@@ -1,43 +1,34 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {Carousel, Typography, Card, Image, Divider, Button} from 'antd'
 import {HomeOutlined, ExpandOutlined} from '@ant-design/icons'
 import {wrapper} from '../../redux/store'
-import {useDispatch, useSelector} from 'react-redux'
-import {IRootReducer} from '../../redux/rootReducer'
 import {END} from 'redux-saga'
 import {addProductAction} from '../../redux/product/productAction'
 import MainLayout from '../../layouts/Main'
 import Head from 'next/head'
 import styles from './product.module.scss'
+import {IProduct} from '../../types'
 
 const {Title, Paragraph, Text} = Typography
 
-const Product: React.FC = () => {
-  const store = useSelector((store: IRootReducer) => store.product)
-  const {
-    address,
-    area,
-    author,
-    layout,
-    photos,
-    property,
-    tax,
-    type,
-    city,
-    category,
-    beds,
-    baths,
-    region,
-    price,
-    description,
-    date,
-  } = store
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(addProductAction())
-  }, [])
+const Product: React.FC<IProduct> = ({
+  address,
+  area,
+  author,
+  layout,
+  photos,
+  property,
+  tax,
+  type,
+  city,
+  category,
+  beds,
+  baths,
+  region,
+  price,
+  description,
+  date,
+}) => {
   return (
     <MainLayout>
       <Head>
@@ -209,4 +200,8 @@ export async function getStaticPaths() {
 export const getStaticProps = wrapper.getStaticProps(({store}) => {
   store.dispatch(addProductAction())
   store.dispatch(END)
+
+  return {
+    props: store.getState().product,
+  }
 })
