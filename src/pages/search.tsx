@@ -24,7 +24,7 @@ const SearchPage: React.FC<ISearchPage> = ({products, query}) => {
     <MainLayout>
       <Head>
         <title>
-          DigitalEstate | {city ? city : ''} {property ? property : ''}s{' '}
+          DigitalEstate | {city ? city : ''} {property ? property + 's' : ''}{' '}
           {type ? `for ${type}` : ''}
         </title>
       </Head>

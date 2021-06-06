@@ -24,6 +24,7 @@ const Search: React.FC<ISearch> = ({
       className={className}
       form={form}
       name="search"
+      initialValues={defaultValues}
       layout="inline"
       onFinish={onFinish}>
       <Form.Item
@@ -36,15 +37,16 @@ const Search: React.FC<ISearch> = ({
           },
         ]}>
         <Input
+          aria-label="city"
           style={{width: 150}}
-          defaultValue={defaultValues && defaultValues.city}
           prefix={<SearchOutlined />}
           placeholder="City"
         />
       </Form.Item>
       <Form.Item name="property">
         <Select
-          defaultValue={defaultValues && defaultValues.property}
+          aria-label="property"
+          aria-selected="true"
           style={{width: 150}}
           placeholder="Property type">
           <Select.OptGroup label="Living">
@@ -60,7 +62,8 @@ const Search: React.FC<ISearch> = ({
       </Form.Item>
       <Form.Item name="type">
         <Select
-          defaultValue={defaultValues && defaultValues.type}
+          aria-label="type"
+          aria-selected="true"
           style={{width: 100}}
           placeholder="Rent/Buy">
           <Select.Option value="rent">Rent</Select.Option>
@@ -70,30 +73,22 @@ const Search: React.FC<ISearch> = ({
       {type === 'main' && (
         <>
           <Form.Item name="beds">
-            <Input
-              style={{width: 70}}
-              defaultValue={defaultValues && defaultValues.beds}
-              placeholder="Beds"
-            />
+            <Input aria-label="beds" style={{width: 70}} placeholder="Beds" />
           </Form.Item>
           <Form.Item name="baths">
-            <Input
-              style={{width: 70}}
-              defaultValue={defaultValues && defaultValues.baths}
-              placeholder="Baths"
-            />
+            <Input aria-label="baths" style={{width: 70}} placeholder="Baths" />
           </Form.Item>
           <Form.Item name="min">
             <Input
+              aria-label="min price"
               style={{width: 100}}
-              defaultValue={defaultValues && defaultValues.min}
               placeholder="Min price"
             />
           </Form.Item>
           <Form.Item name="max">
             <Input
+              aria-label="max price"
               style={{width: 100}}
-              defaultValue={defaultValues && defaultValues.max}
               placeholder="Max price"
             />
           </Form.Item>
