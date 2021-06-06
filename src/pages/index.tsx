@@ -17,6 +17,21 @@ export default function Home() {
           content="Real Estate website to search your dream property"
         />
         <link rel="icon" href="/favicon.ico" />
+        <meta property="og:title" content="Digital Estate" />
+        <meta
+          property="og:description"
+          content="Real Estate website to search your dream property"
+        />
+        {/* <meta property="og:image" content={} />
+        <meta
+          property="og:image:alt"
+          content={city + ' ' + address + ' for ' + type}
+        /> */}
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="og:url" content="http://localhost:3000/" />
+        <link rel="canonical" href="http://localhost:3000/" />
       </Head>
       <section className={styles.welcome}>
         <div className={styles.welcomeTitle}>

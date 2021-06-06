@@ -34,6 +34,18 @@ const Product: React.FC<IProduct> = ({
       <Head>
         <title>DigitalEstate | {address}</title>
         <meta name="description" content={description} />
+        <meta property="og:title" content={address} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={photos[0]} />
+        <meta
+          property="og:image:alt"
+          content={city + ' ' + address + ' for ' + type}
+        />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="og:url" content={`http://localhost:3000/product/123`} />
+        <link rel="canonical" href={`http://localhost:3000/product/123`} />
       </Head>
       <Carousel autoplay className={styles.carousel} centerMode>
         {photos.map((src, index) => (
