@@ -30,7 +30,7 @@ const SearchPage: React.FC<ISearchPage> = ({products, query}) => {
       </Head>
       <Search className={styles.search} type="main" defaultValues={query} />
       <Title level={2}>
-        {city ? city : ''} {property ? property : ''}s{' '}
+        {city ? city : 'World'} {property ? property + 's' : ''}{' '}
         {type ? `for ${type}` : ''}
       </Title>
       <section className={styles.result}>

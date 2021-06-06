@@ -1,9 +1,11 @@
 import {HYDRATE} from 'next-redux-wrapper'
 export interface UserInitialStateInterface {
   email: string
+  name: string
 }
 const initialState: UserInitialStateInterface = {
   email: '',
+  name: '',
 }
 
 function reducer(state = initialState, action): UserInitialStateInterface {

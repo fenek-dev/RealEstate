@@ -29,7 +29,6 @@ const Search: React.FC<ISearch> = ({
       onFinish={onFinish}>
       <Form.Item
         name="city"
-        required
         rules={[
           {
             required: true,

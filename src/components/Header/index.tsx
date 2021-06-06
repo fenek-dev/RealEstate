@@ -1,11 +1,15 @@
 import Image from 'next/image'
-import {Button} from 'antd'
-import {Typography} from 'antd'
+import {Button, Typography, Avatar, Menu, Dropdown, Space} from 'antd'
 import styles from './header.module.scss'
 import {memo} from 'react'
+import {useSelector} from 'react-redux'
+import {IRootReducer} from '../../redux/rootReducer'
+import {UserOutlined} from '@ant-design/icons'
+
 const {Link} = Typography
 
 const Header: React.FC = () => {
+  const user = useSelector((store: IRootReducer) => store.user)
   return (
     <header className={styles.header}>
       <Link href="/">
@@ -23,9 +27,31 @@ const Header: React.FC = () => {
             <Link>Sell</Link>
           </li>
         </ul>
-        <Button>
-          <Link href="/signin">Sign In</Link>
-        </Button>
+        {user.email ? (
+          <Space>
+            <Avatar icon={<UserOutlined />} />
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item>
+                    <Link href="/">My profile</Link>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <Link href="/">Products</Link>
+                  </Menu.Item>
+                  <Menu.Item danger>
+                    <Link href="/">Logout</Link>
+                  </Menu.Item>
+                </Menu>
+              }>
+              <Link onClick={e => e.preventDefault()}>{user.name}</Link>
+            </Dropdown>
+          </Space>
+        ) : (
+          <Button>
+            <Link href="/signin">Sign In</Link>
+          </Button>
+        )}
       </nav>
     </header>
   )
