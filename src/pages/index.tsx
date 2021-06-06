@@ -37,7 +37,7 @@ export default function Home() {
           />
         </div>
 
-        <Search className={styles.search} />
+        <Search className={styles.search} type="welcome" />
       </section>
     </MainLayout>
   )

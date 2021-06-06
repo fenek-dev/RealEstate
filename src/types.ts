@@ -1,8 +1,30 @@
+export type ProductType = 'sell' | 'rent' | ''
+
+export type ErrorType = {
+  statusCode: number
+  message: string
+}
+
+export type ISearchProduct = Omit<
+  IProduct,
+  | 'region'
+  | 'layout'
+  | 'tax'
+  | 'description'
+  | 'category'
+  | 'author'
+  | 'property'
+>
+
+export interface ISearchState {
+  products: ISearchProduct[]
+  error?: ErrorType
+}
 export interface IProduct {
   readonly city: string
   readonly address: string
   readonly photos?: string[]
-  readonly type?: string
+  readonly type?: ProductType
   readonly area: number
   readonly beds?: number
   readonly baths?: number
@@ -12,7 +34,7 @@ export interface IProduct {
   readonly date: number
   readonly property?: string
   readonly region: IRegion
-  readonly author: IUser
+  readonly author?: IUser
   readonly layout?: ILayout
   readonly category?: ICategory
 }
@@ -48,4 +70,14 @@ export interface IUser {
   readonly name: string
   readonly email: string
   readonly type: string
+}
+
+export interface IQuery {
+  readonly city: string
+  readonly property: string
+  readonly type: ProductType
+  readonly beds: string
+  readonly baths: string
+  readonly min: string
+  readonly max: string
 }
