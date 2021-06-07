@@ -35,7 +35,10 @@ const Footer: React.FC = () => {
               <Link href="/about">About</Link>
             </li>
             <li>
-              <Link href="/about">Contact us</Link>
+              <Link href="/agree">Privacy policy</Link>
+            </li>
+            <li>
+              <Link href="/contact">Contact us</Link>
             </li>
           </ul>
         </div>
@@ -43,16 +46,21 @@ const Footer: React.FC = () => {
           <Title level={3}>Buy</Title>
           <ul>
             <li>
-              <Link href="/about">Apartaments</Link>
+              <Link href="/search?property=house&type=buy">Houses</Link>
             </li>
             <li>
-              <Link href="/about">Houses</Link>
+              <Link href="/search?property=apartment&type=buy">
+                Apartaments
+              </Link>
             </li>
             <li>
-              <Link href="/about">Offices</Link>
+              <Link href="/search?property=condo&type=buy">Condo</Link>
             </li>
             <li>
-              <Link href="/about">Land</Link>
+              <Link href="/search?property=office&type=buy">Office</Link>
+            </li>
+            <li>
+              <Link href="/search?property=shop&type=buy">Shop</Link>
             </li>
           </ul>
         </div>
@@ -60,16 +68,21 @@ const Footer: React.FC = () => {
           <Title level={3}>Rent</Title>
           <ul>
             <li>
-              <Link href="/about">Apartaments</Link>
+              <Link href="/search?property=house&type=rent">Houses</Link>
             </li>
             <li>
-              <Link href="/about">Houses</Link>
+              <Link href="/search?property=apartment&type=rent">
+                Apartaments
+              </Link>
             </li>
             <li>
-              <Link href="/about">Offices</Link>
+              <Link href="/search?property=condo&type=rent">Condo</Link>
             </li>
             <li>
-              <Link href="/about">Land</Link>
+              <Link href="/search?property=office&type=rent">Office</Link>
+            </li>
+            <li>
+              <Link href="/search?property=shop&type=rent">Shop</Link>
             </li>
           </ul>
         </div>

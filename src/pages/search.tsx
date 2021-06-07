@@ -24,8 +24,8 @@ const SearchPage: React.FC<ISearchPage> = ({products, query}) => {
     <MainLayout>
       <Head>
         <title>
-          DigitalEstate | {city ? city : ''} {property ? property + 's' : ''}{' '}
-          {type ? `for ${type}` : ''}
+          DigitalEstate | {city ? city : 'World'}{' '}
+          {property ? property + 's' : ''} {type ? `for ${type}` : ''}
         </title>
       </Head>
       <Search className={styles.search} type="main" defaultValues={query} />
