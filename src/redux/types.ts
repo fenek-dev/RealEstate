@@ -1,6 +1,6 @@
 export type IAction<T = any> = (payload?: T) => {type: string; payload?: T}
 
-export interface ICreateUserResponse {
+export interface IUserResponse {
   _id: string
   email: string
   name: string
