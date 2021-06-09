@@ -1,6 +1,6 @@
 import {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
-import {addUserAction, createUserAction} from 'src/redux/user/userAction'
+import {addUserAction} from 'src/redux/user/userAction'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
 import styles from './main.module.scss'

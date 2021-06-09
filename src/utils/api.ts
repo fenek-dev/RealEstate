@@ -6,7 +6,7 @@ export const Api = async (
 ) => {
   const token = getCookie('token')
   const res = await fetch(url, {
-    body: options.body || undefined,
+    body: JSON.stringify(options.body) || undefined,
     method: options.method || 'GET',
     credentials: 'same-origin',
     headers: {

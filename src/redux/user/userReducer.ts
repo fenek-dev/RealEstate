@@ -1,5 +1,5 @@
 import {HYDRATE} from 'next-redux-wrapper'
-import {SET_USER} from '../Constants'
+import {SET_USER} from '../constants'
 export interface UserInitialStateInterface {
   _id: string
   email: string

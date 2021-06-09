@@ -39,13 +39,13 @@ const Header: React.FC = () => {
             <Dropdown
               overlay={
                 <Menu>
-                  <Menu.Item>
+                  <Menu.Item key="1">
                     <Link href="/">My profile</Link>
                   </Menu.Item>
-                  <Menu.Item>
+                  <Menu.Item key="2">
                     <Link href="/">Products</Link>
                   </Menu.Item>
-                  <Menu.Item danger>
+                  <Menu.Item danger key="3">
                     <Link href="/">Logout</Link>
                   </Menu.Item>
                 </Menu>
