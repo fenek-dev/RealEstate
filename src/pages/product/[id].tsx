@@ -50,7 +50,12 @@ const Product: React.FC<IProduct> = ({
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Carousel autoplay className={styles.carousel} centerMode>
+      <Carousel
+        autoplay
+        className={styles.carousel}
+        infinite={false}
+        autoplaySpeed={5000}
+        dotPosition="top">
         {photos.map((src, index) => (
           <Image
             src={src}
@@ -131,11 +136,17 @@ const Product: React.FC<IProduct> = ({
             </Paragraph>
           </Card>
           <Card title="Layout" className={styles.card}>
-            <Carousel autoplay>
+            <Carousel autoplay autoplaySpeed={5000}>
               {layout.photos.map((src, index) => (
-                <Image src={src} key={index} alt={layout.name + 'plan'} />
+                <Image
+                  src={src}
+                  key={index}
+                  alt={layout.name + 'plan'}
+                  loading="lazy"
+                />
               ))}
             </Carousel>
+
             <Paragraph>
               <Text strong>Layout name: </Text>
               {layout.name}
@@ -212,7 +223,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return {paths: [{params: {id: '123'}}], fallback: true}
 }
 
-export const getStaticProps = wrapper.getStaticProps(({store}) => {
+export const getStaticProps = wrapper.getServerSideProps(({store}) => {
   store.dispatch(addProductAction())
   store.dispatch(END)
 
