@@ -5,6 +5,7 @@ import {createWrapper} from 'next-redux-wrapper'
 import rootReducer from './rootReducer'
 import {watchAddProductAction} from './product/productSaga'
 import {watchAddSearchAction} from './search/searchSaga'
+import {watchCreateUserAction} from './user/userSaga'
 
 const bindMiddleware = middleware => {
   if (process.env.NODE_ENV !== 'production') {
@@ -20,6 +21,7 @@ export const makeStore = context => {
   const store = createStore(rootReducer, bindMiddleware([sagaMiddleware]))
   sagaMiddleware.run(watchAddProductAction)
   sagaMiddleware.run(watchAddSearchAction)
+  sagaMiddleware.run(watchCreateUserAction)
   return store
 }
 

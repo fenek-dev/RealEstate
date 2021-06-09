@@ -9,6 +9,7 @@ import {wrapper} from '../redux/store'
 import {END} from 'redux-saga'
 import {addSearchAction} from '../redux/search/searchAction'
 import {IQuery, ISearchState} from '../types'
+import {useCallback} from 'react'
 
 const {Title} = Typography
 
@@ -21,9 +22,9 @@ const SearchPage: React.FC<ISearchPage> = ({products, query}) => {
 
   const {city, type, property} = router.query
 
-  const handleFinish = (values: IQuery) => {
+  const handleFinish = useCallback((values: IQuery) => {
     router.push({pathname: 'search', query: {...values}})
-  }
+  }, [])
 
   return (
     <MainLayout>

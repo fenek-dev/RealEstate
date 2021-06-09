@@ -8,12 +8,13 @@ import styles from '../styles/index.module.scss'
 import Search from '../components/Search'
 import {IQuery} from 'src/types'
 import {useRouter} from 'next/router'
+import {useCallback} from 'react'
 const {Title, Text, Paragraph} = Typography
 export default function Home() {
   const router = useRouter()
-  const handleFinish = (values: IQuery) => {
+  const handleFinish = useCallback((values: IQuery) => {
     router.push({pathname: 'search', query: {...values}})
-  }
+  }, [])
 
   return (
     <MainLayout>
