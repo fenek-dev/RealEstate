@@ -8,3 +8,8 @@ export interface IUserResponse {
   products: string[]
   token: string
 }
+
+export interface IError {
+  statusCode: number
+  message: string
+}

@@ -1,10 +1,13 @@
 import MainLayout from '../layouts/Main'
 import {Typography} from 'antd'
 import Head from 'next/head'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {Tabs} from 'antd'
 import Profile from '../components/Profile'
 import Properties from '../components/Properties'
+import {useSelector} from 'react-redux'
+import {IRootReducer} from 'src/redux/rootReducer'
+import {useRouter} from 'next/router'
 
 const {TabPane} = Tabs
 const {Title} = Typography
@@ -16,8 +19,17 @@ function getBase64(img, callback) {
 }
 
 const ProfilePage = () => {
+  const store = useSelector((state: IRootReducer) => state)
+
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState('')
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!store.user._id && store.user.loading) {
+      router.push('/signup')
+    }
+  }, [store.user._id, store.user.loading])
 
   const handleChange = info => {
     if (info.file.status === 'uploading') {

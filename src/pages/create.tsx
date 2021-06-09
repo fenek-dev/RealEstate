@@ -12,7 +12,10 @@ import {
   Radio,
 } from 'antd'
 import {PlusOutlined} from '@ant-design/icons'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
+import {useRouter} from 'next/router'
+import {useSelector} from 'react-redux'
+import {IRootReducer} from 'src/redux/rootReducer'
 
 const {Title} = Typography
 
@@ -26,9 +29,18 @@ function getBase64(file) {
 }
 
 const Create: React.FC = () => {
+  const store = useSelector((state: IRootReducer) => state)
+
   const [previewVisible, setPreviewVisible] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
   const [fileList, setFileList] = useState([])
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!store.user._id && store.user.loading) {
+      router.push('/signup')
+    }
+  }, [store.user._id, store.user.loading])
 
   const handleCancel = () => setPreviewVisible(false)
 

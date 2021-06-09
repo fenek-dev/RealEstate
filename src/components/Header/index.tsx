@@ -40,7 +40,7 @@ const Header: React.FC = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="1">
-                    <Link href="/">My profile</Link>
+                    <Link href="/profile">My profile</Link>
                   </Menu.Item>
                   <Menu.Item key="2">
                     <Link href="/">Products</Link>
