@@ -10,6 +10,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "incremental": true,
     "jsx": "preserve",
     "lib": [
       "dom",
@@ -27,10 +28,7 @@
     "isolatedModules": true
   },
   "include": [
-    "server/**/*.ts",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
+    "src/server/**/*.ts"
   ],
   "exclude": [
     "node_modules"
