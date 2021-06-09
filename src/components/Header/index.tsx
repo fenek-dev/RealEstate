@@ -28,7 +28,7 @@ const Header: React.FC = () => {
             </Link>
           </li>
           <li>
-            <Link strong href="/search">
+            <Link strong href="/create">
               Sell
             </Link>
           </li>
