@@ -20,6 +20,11 @@ const SearchPage: React.FC<ISearchPage> = ({products, query}) => {
   const router = useRouter()
 
   const {city, type, property} = router.query
+
+  const handleFinish = (values: IQuery) => {
+    router.push({pathname: 'search', query: {...values}})
+  }
+
   return (
     <MainLayout>
       <Head>
@@ -28,7 +33,12 @@ const SearchPage: React.FC<ISearchPage> = ({products, query}) => {
           {property ? property + 's' : ''} {type ? `for ${type}` : ''}
         </title>
       </Head>
-      <Search className={styles.search} type="main" defaultValues={query} />
+      <Search
+        className={styles.search}
+        type="main"
+        defaultValues={query}
+        onFinish={handleFinish}
+      />
       <Title level={2}>
         {city ? city : 'World'} {property ? property + 's' : ''}{' '}
         {type ? `for ${type}` : ''}

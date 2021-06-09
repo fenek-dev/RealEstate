@@ -6,7 +6,7 @@ import {IQuery} from '../../types'
 
 interface ISearch {
   className?: string
-  onFinish?: () => void
+  onFinish?: (values: IQuery) => void
   defaultValues?: IQuery
   type: 'welcome' | 'main'
 }

@@ -6,8 +6,15 @@ import {Typography} from 'antd'
 import Image from 'next/image'
 import styles from '../styles/index.module.scss'
 import Search from '../components/Search'
+import {IQuery} from 'src/types'
+import {useRouter} from 'next/router'
 const {Title, Text, Paragraph} = Typography
 export default function Home() {
+  const router = useRouter()
+  const handleFinish = (values: IQuery) => {
+    router.push({pathname: 'search', query: {...values}})
+  }
+
   return (
     <MainLayout>
       <Head>
@@ -52,7 +59,11 @@ export default function Home() {
           />
         </div>
 
-        <Search className={styles.search} type="welcome" />
+        <Search
+          className={styles.search}
+          type="welcome"
+          onFinish={handleFinish}
+        />
       </section>
     </MainLayout>
   )
