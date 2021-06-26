@@ -1,12 +1,12 @@
 import {useRouter} from 'next/dist/client/router'
 import MainLayout from '../layouts/Main'
 import Search from '../components/Search'
-import {Typography} from 'antd'
+import {Empty, Typography} from 'antd'
 import styles from '../styles/search.module.scss'
 import Head from 'next/head'
 import SearchCard from '../components/SearchCard'
-import {IQuery} from '../types'
-import {useCallback, useEffect} from 'react'
+import {IQuery, ISearchProduct} from '../types'
+import {useCallback, useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {IRootReducer} from '../redux/rootReducer'
 import {addSearchAction} from '../redux/search/searchAction'
@@ -23,8 +23,8 @@ const SearchPage: React.FC<ISearchPage> = ({query}) => {
   const router = useRouter()
   const state = useSelector((store: IRootReducer) => store)
   const dispatch = useDispatch()
+  const [products, setProducts] = useState<ISearchProduct[]>([])
 
-  const products = state.search.products
   const {city, type, property} = query
 
   const handleFinish = useCallback((values: IQuery) => {
@@ -33,7 +33,11 @@ const SearchPage: React.FC<ISearchPage> = ({query}) => {
 
   useEffect(() => {
     dispatch(addSearchAction(router.query))
-  }, [])
+  }, [router.query])
+
+  useEffect(() => {
+    setProducts(state.search.products)
+  }, [state.search])
   return (
     <MainLayout>
       <Head>
@@ -53,20 +57,24 @@ const SearchPage: React.FC<ISearchPage> = ({query}) => {
         {type ? `for ${type}` : ''}
       </Title>
       <section className={styles.result}>
-        {products.map((item, index) => (
-          <SearchCard
-            key={item._id || index}
-            _id={item._id}
-            address={item.address}
-            photos={item.photos}
-            area={item.area}
-            baths={item.baths}
-            beds={item.beds}
-            city={item.city}
-            price={item.price}
-            date={item.date}
-          />
-        ))}
+        {products.length > 0 ? (
+          products.map((item, index) => (
+            <SearchCard
+              key={item._id || index}
+              _id={item._id}
+              address={item.address}
+              photos={item.photos}
+              area={item.area}
+              baths={item.baths}
+              beds={item.beds}
+              city={item.city}
+              price={item.price}
+              date={item.date}
+            />
+          ))
+        ) : (
+          <Empty />
+        )}
       </section>
     </MainLayout>
   )

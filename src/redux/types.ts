@@ -15,6 +15,7 @@ export enum ProductActions {
 export enum SearchActions {
   ADD_SEARCH = 'ADD_SEARCH',
   SET_SEARCH = 'SET_SEARCH',
+  CLEAN_SEARCH = 'CLEAN_SEARCH',
 }
 
 export type IAction<T = any> = (payload?: T) => {type: string; payload?: T}

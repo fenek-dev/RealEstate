@@ -9,7 +9,14 @@ function* workerAddSearchAction(action: ReturnType<IAddSearchAction>) {
     action?.payload.property === 'office' || action?.payload.property === 'shop'
       ? 'commercial'
       : 'living'
-  const result: ISearchProduct = yield call(Api, `api/${type}`)
+
+  yield put({type: SearchActions.CLEAN_SEARCH})
+
+  const result: ISearchProduct = yield call(Api, `api/${type}/search`, {
+    body: action.payload,
+    method: 'POST',
+  })
+
   yield put({
     type: SearchActions.SET_SEARCH,
     payload: result,

@@ -16,6 +16,10 @@ function reducer(state = initialState, action): ISearchState {
       return {...state, products: [...state.products, ...action.payload]}
     }
 
+    case SearchActions.CLEAN_SEARCH: {
+      return {...state, products: []}
+    }
+
     default:
       return state
   }

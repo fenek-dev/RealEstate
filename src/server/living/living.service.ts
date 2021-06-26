@@ -36,19 +36,22 @@ export class LivingService {
 
   async search(body: ISearchBody): Promise<Living[]> {
     // Get all setting parametrs from given body object
-    const {baths, beds, max, min, area, location, type} = body
-    // Create regular expresstion by given location name
-    const reg = new RegExp(location, 'i')
+    const {baths, beds, property, type, city} = body
     // Search for suitable Livings
+    const regCity = new RegExp(city, 'ig')
+    const max = +body.max || Number.MAX_VALUE
+    const min = +body.min || Number.MIN_VALUE
+
     const condidate = await this.LivingModel.where('type', type)
-      .where('location', reg)
+      .where('city', regCity)
       .where('price')
       .lte(max)
       .gte(min)
-      .where('area', area)
+      .where('property', property)
       .where('baths', baths)
       .where('beds', beds)
       .exec()
+
     return condidate
   }
 

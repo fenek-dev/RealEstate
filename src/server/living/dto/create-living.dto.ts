@@ -7,7 +7,7 @@ export class CreateLivingDto {
   readonly city: string
   readonly address: string
   readonly photos?: string[]
-  readonly type?: string
+  readonly type: string
   readonly area: number
   readonly beds?: number
   readonly baths?: number

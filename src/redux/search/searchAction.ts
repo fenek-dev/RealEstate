@@ -7,3 +7,7 @@ export const addSearchAction: IAddSearchAction = payload => ({
   type: SearchActions.ADD_SEARCH,
   payload,
 })
+
+export const clearSearchAction = () => ({
+  type: SearchActions.CLEAN_SEARCH,
+})

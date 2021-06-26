@@ -1,7 +1,7 @@
 export interface ISearchBody {
-  readonly location: string
+  readonly city: string
   readonly type: string
-  readonly area: number
+  readonly property: string
   readonly min: number
   readonly max: number
   readonly beds: number
