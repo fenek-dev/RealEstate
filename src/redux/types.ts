@@ -7,6 +7,7 @@ export enum UserActions {
   CREATE_USER = 'CREATE_USER',
   LOGOUT_USER = 'LOGOUT_USER',
   CLEAN_USER = 'CLEAN_USER',
+  EDIT_USER = 'EDIT_USER',
 }
 
 export enum ProductActions {

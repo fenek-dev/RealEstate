@@ -1,13 +1,14 @@
 import MainLayout from '../layouts/Main'
-import {Typography} from 'antd'
+import {Space, Typography} from 'antd'
 import Head from 'next/head'
-import {useEffect, useState} from 'react'
-import {Tabs} from 'antd'
+import {useCallback, useEffect, useState} from 'react'
+import {Tabs, Spin} from 'antd'
 import Profile from '../components/Profile'
 import Properties from '../components/Properties'
-import {useSelector} from 'react-redux'
-import {IRootReducer} from 'src/redux/rootReducer'
+import {useDispatch, useSelector} from 'react-redux'
 import {useRouter} from 'next/router'
+import {IRootReducer} from '../redux/rootReducer'
+import {editUserAction} from '../redux/user/userAction'
 
 const {TabPane} = Tabs
 const {Title} = Typography
@@ -19,17 +20,19 @@ function getBase64(img, callback) {
 }
 
 const ProfilePage = () => {
-  const store = useSelector((state: IRootReducer) => state)
+  const store = useSelector((state: IRootReducer) => state.user)
+  const dispatch = useDispatch()
 
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState('')
   const router = useRouter()
 
   useEffect(() => {
-    if (!store.user._id && store.user.loading) {
+    if (!store._id && store.loading) {
       router.push('/signup')
     }
-  }, [store.user._id, store.user.loading])
+  }, [store._id, store.loading])
+  console.log(store)
 
   const handleChange = info => {
     if (info.file.status === 'uploading') {
@@ -45,9 +48,12 @@ const ProfilePage = () => {
     }
   }
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values)
-  }
+  const onFinish = useCallback(
+    (values: any) => {
+      dispatch(editUserAction({...values, _id: store._id}))
+    },
+    [store],
+  )
   return (
     <MainLayout>
       <Head>
@@ -56,17 +62,25 @@ const ProfilePage = () => {
       <Title level={1}>My profile</Title>
       <Tabs defaultActiveKey="1">
         <TabPane tab="Profile" key="1">
-          <Profile
-            onFinish={onFinish}
-            handleChange={handleChange}
-            imageUrl={imageUrl}
-            loading={loading}
-          />
+          {store.loading ? (
+            <Profile
+              onFinish={onFinish}
+              handleChange={handleChange}
+              imageUrl={imageUrl}
+              loading={loading}
+              user={store}
+            />
+          ) : (
+            <Space align="center" size="large">
+              <Spin size="large" />
+            </Space>
+          )}
         </TabPane>
         <TabPane tab="My properties" key="2">
           <Properties
             products={[
               {
+                _id: 'skjdfl',
                 address: 'Moscow, Red Square',
                 area: 123,
                 photos: [
@@ -82,6 +96,7 @@ const ProfilePage = () => {
                 type: 'rent',
               },
               {
+                _id: 'sdlkfjkajsd',
                 address: 'Moscow, Red Square',
                 area: 123,
                 photos: [
@@ -97,6 +112,7 @@ const ProfilePage = () => {
                 type: 'rent',
               },
               {
+                _id: 'hlkjdsfl',
                 address: 'Moscow, Red Square',
                 area: 123,
                 photos: [

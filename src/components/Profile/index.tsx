@@ -4,6 +4,7 @@ import {UploadChangeParam} from 'antd/lib/upload'
 import {UploadFile} from 'antd/lib/upload/interface'
 import {useForm} from 'antd/lib/form/Form'
 import {memo} from 'react'
+import {UserInitialStateInterface} from '../../redux/user/userReducer'
 
 const {Title} = Typography
 
@@ -24,12 +25,14 @@ interface IProfile {
   imageUrl: string
   loading: boolean
   onFinish: (values: any) => void
+  user: UserInitialStateInterface
 }
 const Profile: React.FC<IProfile> = ({
   handleChange,
   imageUrl,
   loading,
   onFinish,
+  user,
 }) => {
   const [form] = useForm()
   return (
@@ -55,7 +58,11 @@ const Profile: React.FC<IProfile> = ({
       </Space>
       <Space direction="vertical">
         <Title level={2}>Profile details</Title>
-        <Form form={form} name="profile" onFinish={onFinish}>
+        <Form
+          form={form}
+          name="profile"
+          onFinish={onFinish}
+          initialValues={user}>
           <Form.Item
             name="name"
             label="Name"

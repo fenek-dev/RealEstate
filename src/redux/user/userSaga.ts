@@ -1,8 +1,9 @@
 import {call, put, takeEvery} from 'redux-saga/effects'
 import {CreateUserDto} from 'src/server/auth/dto/create-user.dto'
 import {IEmailAndPassword} from 'src/server/auth/types'
-import {Api} from 'src/utils/api'
+import {Api} from '../../utils/api'
 import {setCookie} from 'src/utils/cookie'
+import {UpdateUserDto} from '../../server/auth/dto/update-user.dto'
 import {IAction, IUserResponse, UserActions} from '../types'
 import {errorUserAction, loadingUserAction} from './userAction'
 
@@ -89,6 +90,14 @@ function* workerLogoutAction() {
   yield put({type: UserActions.CLEAN_USER})
 }
 
+function* workerEditUserAction(action: ReturnType<IAction<UpdateUserDto>>) {
+  const result = yield call(Api, 'api/auth/profile', {
+    body: action.payload,
+    method: 'PATCH',
+  })
+  yield put({type: UserActions.SET_USER, payload: result})
+}
+
 export function* watchCreateUserAction() {
   yield takeEvery(UserActions.CREATE_USER, workerCreateUserAction)
 }
@@ -99,4 +108,8 @@ export function* watchLoginUserAction() {
 
 export function* watchLogoutUserAction() {
   yield takeEvery(UserActions.LOGOUT_USER, workerLogoutAction)
+}
+
+export function* watchEditUserAction() {
+  yield takeEvery(UserActions.EDIT_USER, workerEditUserAction)
 }

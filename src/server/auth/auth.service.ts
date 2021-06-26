@@ -6,6 +6,7 @@ import {IEmailAndPassword} from './types'
 import {InjectModel} from '@nestjs/mongoose'
 import {Model} from 'mongoose'
 import {CreateUserDto} from './dto/create-user.dto'
+import {UpdateUserDto} from './dto/update-user.dto'
 
 @Injectable()
 export class AuthService {
@@ -77,5 +78,27 @@ export class AuthService {
     const token = await this.jwtService.sign({email, password})
 
     return {_id: user._id, email, name, type, products: [], token}
+  }
+
+  async update(dto: UpdateUserDto) {
+    console.log(dto);
+    
+    const user = await this.userModel.findById(dto._id)
+    if (user.email !== dto.email) {
+      const condidate = await this.userModel.find({email: user.email}).exec()
+      if (condidate) {
+        throw new HttpException('Email already exists', HttpStatus.CONFLICT)
+      }
+    }
+    await this.userModel
+      .findByIdAndUpdate(dto._id, {
+        email: dto.email,
+        name: dto.name,
+        phone: dto.name,
+      })
+      .select('-password')
+      .exec()
+
+    return dto
   }
 }

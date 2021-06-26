@@ -1,5 +1,6 @@
 import {CreateUserDto} from 'src/server/auth/dto/create-user.dto'
 import {IEmailAndPassword} from 'src/server/auth/types'
+import {UpdateUserDto} from '../../server/auth/dto/update-user.dto'
 import {UserActions, IAction, IError} from '../types'
 
 export const addUserAction: IAction = () => ({
@@ -28,4 +29,9 @@ export const errorUserAction: IAction<IError> = payload => ({
 
 export const logoutUserAction: IAction = () => ({
   type: UserActions.LOGOUT_USER,
+})
+
+export const editUserAction: IAction<UpdateUserDto> = payload => ({
+  type: UserActions.EDIT_USER,
+  payload,
 })

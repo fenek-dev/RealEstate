@@ -3,16 +3,15 @@ import {Button, Typography, Avatar, Menu, Dropdown, Space} from 'antd'
 import styles from './header.module.scss'
 import {memo} from 'react'
 import {UserOutlined} from '@ant-design/icons'
-import {UserInitialStateInterface} from '../../redux/user/userReducer'
 
 const {Link} = Typography
 
 interface IHeader {
-  user: UserInitialStateInterface
+  userName: string
   onLogout?: () => void
 }
 
-const Header: React.FC<IHeader> = ({user, onLogout}) => {
+const Header: React.FC<IHeader> = ({userName, onLogout}) => {
   return (
     <header className={styles.header}>
       <Link href="/">
@@ -36,7 +35,7 @@ const Header: React.FC<IHeader> = ({user, onLogout}) => {
             </Link>
           </li>
         </ul>
-        {user.email ? (
+        {userName ? (
           <Space>
             <Avatar icon={<UserOutlined />} />
             <Dropdown
@@ -55,7 +54,7 @@ const Header: React.FC<IHeader> = ({user, onLogout}) => {
                   </Menu.Item>
                 </Menu>
               }>
-              <Link onClick={e => e.preventDefault()}>{user.name}</Link>
+              <Link>{userName}</Link>
             </Dropdown>
           </Space>
         ) : (

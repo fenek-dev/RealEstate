@@ -20,7 +20,7 @@ const MainLayout: React.FC = ({children}) => {
   }, [])
   return (
     <div className={styles.container}>
-      <Header user={state.user} onLogout={onLogout} />
+      <Header userName={state.user.name} onLogout={onLogout} />
       {children}
       <Footer />
     </div>

@@ -1,6 +1,15 @@
-import {Body, Controller, Get, Post, UseGuards, Request} from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  Request,
+  Patch,
+} from '@nestjs/common'
 import {AuthService} from './auth.service'
 import {CreateUserDto} from './dto/create-user.dto'
+import {UpdateUserDto} from './dto/update-user.dto'
 import {JwtAuthGuard} from './jwt/jwt-auth.guard'
 import {IEmailAndPassword} from './types'
 
@@ -33,5 +42,11 @@ export class AuthController {
   @Post('register')
   create(@Body() body: CreateUserDto) {
     return this.authService.create(body)
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('profile')
+  updateProfile(@Body() body: UpdateUserDto) {
+    return this.authService.update(body)
   }
 }
