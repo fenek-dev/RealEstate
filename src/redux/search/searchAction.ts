@@ -1,5 +1,9 @@
-import {SearchActions} from '../types'
+import {IQuery} from '../../types'
+import {IAction, SearchActions} from '../types'
 
-export const addSearchAction = () => ({
+export type IAddSearchAction = IAction<IQuery>
+
+export const addSearchAction: IAddSearchAction = payload => ({
   type: SearchActions.ADD_SEARCH,
+  payload,
 })

@@ -1,27 +1,18 @@
-import {takeEvery, put} from 'redux-saga/effects'
+import {takeEvery, put, call} from 'redux-saga/effects'
+import {ISearchProduct} from '../../types'
+import {Api} from '../../utils/api'
 import {SearchActions} from '../types'
+import {IAddSearchAction} from './searchAction'
 
-function* workerAddSearchAction() {
+function* workerAddSearchAction(action: ReturnType<IAddSearchAction>) {
+  const type =
+    action?.payload.property === 'office' || action?.payload.property === 'shop'
+      ? 'commercial'
+      : 'living'
+  const result: ISearchProduct = yield call(Api, `api/${type}`)
   yield put({
     type: SearchActions.SET_SEARCH,
-    payload: {
-      address: 'Moscow, Red Square',
-      area: 123,
-      photos: [
-        'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-        'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-        'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-      ],
-      city: 'Moscow',
-      date: 23235,
-      description: 'A brilliant flat in Moscow',
-      price: 120,
-      baths: 2,
-      beds: 2,
-      tax: 0,
-      property: 'brick',
-      type: 'rent',
-    },
+    payload: result,
   })
 }
 

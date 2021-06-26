@@ -17,7 +17,6 @@ import {UpdateCommercialDto} from './dto/update-commercial.dto'
 export class CommercialController {
   constructor(private commercialService: CommercialService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   getAll() {
     return this.commercialService.getAll()
@@ -29,7 +28,6 @@ export class CommercialController {
     return this.commercialService.create(createCommercialDto)
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.commercialService.findOne(id)

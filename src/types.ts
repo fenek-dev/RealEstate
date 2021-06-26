@@ -21,6 +21,7 @@ export interface ISearchState {
   error?: ErrorType
 }
 export interface IProduct {
+  readonly _id: string
   readonly city: string
   readonly address: string
   readonly photos?: string[]

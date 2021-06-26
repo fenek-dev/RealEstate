@@ -13,7 +13,7 @@ function reducer(state = initialState, action): ISearchState {
     }
 
     case SearchActions.SET_SEARCH: {
-      return {...state, products: [...state.products, action.payload]}
+      return {...state, products: [...state.products, ...action.payload]}
     }
 
     default:

@@ -21,7 +21,7 @@ const SearchCard: React.FC<ISearchProduct> = ({
     <Card
       cover={
         <Carousel dotPosition="top" lazyLoad="progressive">
-          {photos.map((src, index) => (
+          {photos?.map((src, index) => (
             <Image
               loading="lazy"
               preview={false}

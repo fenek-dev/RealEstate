@@ -5,27 +5,29 @@ import {Typography} from 'antd'
 import styles from '../styles/search.module.scss'
 import Head from 'next/head'
 import SearchCard from '../components/SearchCard'
-import {wrapper} from '../redux/store'
-import {END} from 'redux-saga'
+import {IQuery} from '../types'
+import {useCallback, useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {IRootReducer} from '../redux/rootReducer'
 import {addSearchAction} from '../redux/search/searchAction'
-import {IQuery, ISearchState} from '../types'
-import {useCallback} from 'react'
 
 const {Title} = Typography
 
-interface ISearchPage extends ISearchState {
-  query: IQuery
-}
-
-const SearchPage: React.FC<ISearchPage> = ({products, query}) => {
+const SearchPage: React.FC = () => {
   const router = useRouter()
+  const state = useSelector((store: IRootReducer) => store)
+  const dispatch = useDispatch()
 
+  const products = state.search.products
   const {city, type, property} = router.query
 
   const handleFinish = useCallback((values: IQuery) => {
     router.push({pathname: 'search', query: {...values}})
   }, [])
 
+  useEffect(() => {
+    dispatch(addSearchAction(router.query))
+  }, [])
   return (
     <MainLayout>
       <Head>
@@ -37,7 +39,7 @@ const SearchPage: React.FC<ISearchPage> = ({products, query}) => {
       <Search
         className={styles.search}
         type="main"
-        defaultValues={query}
+        defaultValues={router.query}
         onFinish={handleFinish}
       />
       <Title level={2}>
@@ -45,9 +47,10 @@ const SearchPage: React.FC<ISearchPage> = ({products, query}) => {
         {type ? `for ${type}` : ''}
       </Title>
       <section className={styles.result}>
-        {products.map(item => (
+        {products.map((item, index) => (
           <SearchCard
-            key={item.date}
+            key={item._id || index}
+            _id={item._id}
             address={item.address}
             photos={item.photos}
             area={item.area}
@@ -64,18 +67,3 @@ const SearchPage: React.FC<ISearchPage> = ({products, query}) => {
 }
 
 export default SearchPage
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  async ({store, query}) => {
-    store.dispatch(addSearchAction())
-    store.dispatch(END)
-    const state = store.getState().search
-
-    return {
-      props: {
-        products: state.products || [],
-        query,
-      },
-    }
-  },
-)
