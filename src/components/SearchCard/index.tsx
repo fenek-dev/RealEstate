@@ -1,4 +1,4 @@
-import {Card, Carousel, Divider} from 'antd'
+import {Card, Carousel, Divider, Space} from 'antd'
 import {ISearchProduct} from '../../types'
 import {Typography, Image} from 'antd'
 import styles from './searchCard.module.scss'
@@ -41,10 +41,10 @@ const SearchCard: React.FC<ISearchProduct> = ({
         style={{position: 'relative'}}></Card.Meta>
 
       <Divider />
-      <Paragraph className={styles.options}>
-        <Text>{area}sq</Text>
-        <Text>{beds}bd</Text>
-        <Text>{baths}bt</Text>
+      <Space direction="horizontal" className={styles.options}>
+        {area && <Text>{area}sq</Text>}
+        {beds && <Text>{beds}bd</Text>}
+        {baths && <Text>{baths}bt</Text>}
         <Text>
           {new Date(date).toLocaleDateString('en-US', {
             day: 'numeric',
@@ -52,7 +52,7 @@ const SearchCard: React.FC<ISearchProduct> = ({
             year: 'numeric',
           })}
         </Text>
-      </Paragraph>
+      </Space>
     </Card>
   )
 }

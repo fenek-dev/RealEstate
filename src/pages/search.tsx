@@ -10,16 +10,22 @@ import {useCallback, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {IRootReducer} from '../redux/rootReducer'
 import {addSearchAction} from '../redux/search/searchAction'
+import {wrapper} from '../redux/store'
+import {END} from 'redux-saga'
 
 const {Title} = Typography
 
-const SearchPage: React.FC = () => {
+interface ISearchPage {
+  query: IQuery
+}
+
+const SearchPage: React.FC<ISearchPage> = ({query}) => {
   const router = useRouter()
   const state = useSelector((store: IRootReducer) => store)
   const dispatch = useDispatch()
 
   const products = state.search.products
-  const {city, type, property} = router.query
+  const {city, type, property} = query
 
   const handleFinish = useCallback((values: IQuery) => {
     router.push({pathname: 'search', query: {...values}})
@@ -39,7 +45,7 @@ const SearchPage: React.FC = () => {
       <Search
         className={styles.search}
         type="main"
-        defaultValues={router.query}
+        defaultValues={query}
         onFinish={handleFinish}
       />
       <Title level={2}>
@@ -67,3 +73,15 @@ const SearchPage: React.FC = () => {
 }
 
 export default SearchPage
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async ({store, query}) => {
+    store.dispatch(END)
+
+    return {
+      props: {
+        query,
+      },
+    }
+  },
+)

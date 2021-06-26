@@ -18,7 +18,6 @@ const Search: React.FC<ISearch> = ({
   type,
 }) => {
   const [form] = Form.useForm()
-
   return (
     <Form
       className={className}
