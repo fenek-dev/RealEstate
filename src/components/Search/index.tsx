@@ -33,6 +33,10 @@ const Search: React.FC<ISearch> = ({
             required: true,
             message: 'Please input city name',
           },
+          {
+            type: 'string',
+            message: 'It should be a string',
+          },
         ]}>
         <Input
           aria-label="city"
@@ -73,20 +77,28 @@ const Search: React.FC<ISearch> = ({
       </Form.Item>
       {type === 'main' && (
         <>
-          <Form.Item name="beds">
+          <Form.Item
+            name="beds"
+            rules={[{type: 'number', message: 'It should be a number'}]}>
             <Input aria-label="beds" style={{width: 70}} placeholder="Beds" />
           </Form.Item>
-          <Form.Item name="baths">
+          <Form.Item
+            name="baths"
+            rules={[{type: 'number', message: 'It should be a number'}]}>
             <Input aria-label="baths" style={{width: 70}} placeholder="Baths" />
           </Form.Item>
-          <Form.Item name="min">
+          <Form.Item
+            name="min"
+            rules={[{type: 'number', message: 'It should be a number'}]}>
             <Input
               aria-label="min price"
               style={{width: 100}}
               placeholder="Min price"
             />
           </Form.Item>
-          <Form.Item name="max">
+          <Form.Item
+            name="max"
+            rules={[{type: 'number', message: 'It should be a number'}]}>
             <Input
               aria-label="max price"
               style={{width: 100}}

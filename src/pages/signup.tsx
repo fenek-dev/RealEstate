@@ -20,8 +20,11 @@ const Signup: React.FC = () => {
           layout="vertical"
           onFinish={onFinish}
           className={styles.form}>
-          <Form.Item label="Type" name="type">
-            <Radio.Group defaultValue="buyer">
+          <Form.Item
+            label="Type"
+            name="type"
+            rules={[{required: true, message: 'Please choose type!'}]}>
+            <Radio.Group>
               <Radio.Button value="buyer">Buyer</Radio.Button>
               <Radio.Button value="seller">Seller</Radio.Button>
             </Radio.Group>
@@ -29,23 +32,41 @@ const Signup: React.FC = () => {
           <Form.Item
             label="Email"
             name="email"
-            rules={[{required: true, message: 'Please input your email!'}]}>
+            rules={[
+              {
+                required: true,
+                message: 'Please input your email!',
+              },
+              {
+                type: 'email',
+                message: 'Email incorrect!',
+              },
+            ]}>
             <Input />
           </Form.Item>
           <Form.Item
             label="Name"
             name="name"
-            rules={[{required: true, message: 'Please input your name!'}]}>
+            rules={[
+              {required: true, message: 'Please input your name!'},
+              {
+                type: 'string',
+                min: 3,
+                message: 'Required at least 3 characters',
+              },
+            ]}>
             <Input />
           </Form.Item>
           <Form.Item
             label="Password"
             name="password"
-            rules={[{required: true, message: 'Please input your password!'}]}>
+            rules={[
+              {required: true, message: 'Please input your password!'},
+              {min: 6, message: 'Required at least 6 characters!'},
+            ]}>
             <Input.Password />
           </Form.Item>
           <Form.Item
-            name="agreement"
             valuePropName="checked"
             rules={[
               {
