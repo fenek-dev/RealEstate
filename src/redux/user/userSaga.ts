@@ -22,6 +22,7 @@ function* workerAddAction() {
         products: user.products,
         _id: user._id,
         name: user.name,
+        phone: user.phone
       },
     })
   } catch (error) {

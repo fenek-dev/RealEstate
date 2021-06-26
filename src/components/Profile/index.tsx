@@ -93,15 +93,7 @@ const Profile: React.FC<IProfile> = ({
             ]}>
             <Input />
           </Form.Item>
-          <Form.Item
-            name="phone"
-            label="Phone"
-            rules={[
-              {
-                type: 'number',
-                message: 'The input is not valid tel!',
-              },
-            ]}>
+          <Form.Item name="phone" label="Phone">
             <Input />
           </Form.Item>
           <Form.Item>

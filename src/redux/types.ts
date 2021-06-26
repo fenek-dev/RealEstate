@@ -28,6 +28,7 @@ export interface IUserResponse {
   email: string
   name: string
   type: string
+  phone: string
   products: string[]
   token: string
 }

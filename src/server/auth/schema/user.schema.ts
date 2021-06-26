@@ -19,6 +19,9 @@ export class User {
   @Prop()
   readonly type: string
 
+  @Prop()
+  readonly phone: string
+
   @Prop({
     type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Living', default: []}],
   })

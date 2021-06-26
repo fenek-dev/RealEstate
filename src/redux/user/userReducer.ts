@@ -16,6 +16,7 @@ const initialState: UserInitialStateInterface = {
   name: '',
   products: [],
   loading: false,
+  phone: '',
   error: {
     statusCode: 0,
     message: '',
@@ -41,7 +42,7 @@ function reducer(state = initialState, action): UserInitialStateInterface {
     }
 
     case UserActions.CLEAN_USER: {
-      return {...state, _id: '', email: '', name: '', products: []}
+      return {...state, ...initialState}
     }
 
     default:

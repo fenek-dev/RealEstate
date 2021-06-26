@@ -43,6 +43,7 @@ export class AuthService {
       name: user.name,
       type: user.type,
       products: user.products,
+      phone: user.phone,
     }
   }
 
@@ -57,7 +58,7 @@ export class AuthService {
    * Creating user
    */
   async create(dto: CreateUserDto) {
-    const {email, password, type, name} = dto
+    const {email, password, type, name, phone} = dto
     const candidate = await this.findOne(email)
     if (candidate) {
       throw new HttpException('User already exists', HttpStatus.CONFLICT)
@@ -71,18 +72,17 @@ export class AuthService {
       name,
       type,
       products: [],
+      phone,
     })
 
     await user.save()
 
     const token = await this.jwtService.sign({email, password})
 
-    return {_id: user._id, email, name, type, products: [], token}
+    return {_id: user._id, email, name, type, products: [], token, phone}
   }
 
   async update(dto: UpdateUserDto) {
-    console.log(dto);
-    
     const user = await this.userModel.findById(dto._id)
     if (user.email !== dto.email) {
       const condidate = await this.userModel.find({email: user.email}).exec()
@@ -94,7 +94,7 @@ export class AuthService {
       .findByIdAndUpdate(dto._id, {
         email: dto.email,
         name: dto.name,
-        phone: dto.name,
+        phone: dto.phone,
       })
       .select('-password')
       .exec()
