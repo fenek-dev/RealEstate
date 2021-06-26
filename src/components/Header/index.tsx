@@ -42,10 +42,10 @@ const Header: React.FC<IHeader> = ({userName, onLogout}) => {
               overlay={
                 <Menu>
                   <Menu.Item key="1">
-                    <Link href="/profile">My profile</Link>
+                    <Link href="/profile?tab=1">My profile</Link>
                   </Menu.Item>
                   <Menu.Item key="2">
-                    <Link href="/">Products</Link>
+                    <Link href="/profile?tab=2">Products</Link>
                   </Menu.Item>
                   <Menu.Item danger key="3">
                     <Link href="/" onClick={onLogout}>

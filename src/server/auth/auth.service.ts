@@ -25,7 +25,7 @@ export class AuthService {
     }
     const isMatch = await bcrypt.compare(password, user.password)
     if (user && isMatch) {
-      return user
+      return user.populate('products')
     }
     throw new HttpException('Incorrect email/password', HttpStatus.CONFLICT)
   }
@@ -51,7 +51,7 @@ export class AuthService {
    * Find a user by email
    */
   async findOne(email: string) {
-    return await this.userModel.findOne({email}).exec()
+    return await this.userModel.findOne({email}).populate('products').exec()
   }
 
   /**

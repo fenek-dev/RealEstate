@@ -1,4 +1,5 @@
 import {HYDRATE} from 'next-redux-wrapper'
+import {ISearchProduct} from '../../types'
 import {IError, UserActions} from '../types'
 export interface UserInitialStateInterface {
   _id: string
@@ -6,7 +7,7 @@ export interface UserInitialStateInterface {
   name: string
   phone?: string
   photo?: string
-  products?: string[]
+  products?: ISearchProduct[]
   loading: boolean
   error: IError
 }

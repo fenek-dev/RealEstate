@@ -22,17 +22,15 @@ function getBase64(img, callback) {
 const ProfilePage = () => {
   const store = useSelector((state: IRootReducer) => state.user)
   const dispatch = useDispatch()
-
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState('')
   const router = useRouter()
-
   useEffect(() => {
     if (!store._id && store.loading) {
       router.push('/signup')
     }
   }, [store._id, store.loading])
-  console.log(store)
+  console.log(!Array.isArray(router.query.tab) ? router.query.tab : '1')
 
   const handleChange = info => {
     if (info.file.status === 'uploading') {
@@ -60,7 +58,9 @@ const ProfilePage = () => {
         <title>DigitalEstate | Profile</title>
       </Head>
       <Title level={1}>My profile</Title>
-      <Tabs defaultActiveKey="1">
+      <Tabs
+        defaultActiveKey="1"
+        activeKey={!Array.isArray(router.query.tab) ? router.query.tab : '1'}>
         <TabPane tab="Profile" key="1">
           {store.loading ? (
             <Profile
@@ -77,58 +77,13 @@ const ProfilePage = () => {
           )}
         </TabPane>
         <TabPane tab="My properties" key="2">
-          <Properties
-            products={[
-              {
-                _id: 'skjdfl',
-                address: 'Moscow, Red Square',
-                area: 123,
-                photos: [
-                  'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-                  'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-                  'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-                ],
-                city: 'Moscow',
-                date: 23235,
-                price: 120,
-                baths: 2,
-                beds: 2,
-                type: 'rent',
-              },
-              {
-                _id: 'sdlkfjkajsd',
-                address: 'Moscow, Red Square',
-                area: 123,
-                photos: [
-                  'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-                  'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-                  'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-                ],
-                city: 'Moscow',
-                date: 23235,
-                price: 120,
-                baths: 2,
-                beds: 2,
-                type: 'rent',
-              },
-              {
-                _id: 'hlkjdsfl',
-                address: 'Moscow, Red Square',
-                area: 123,
-                photos: [
-                  'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-                  'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-                  'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-                ],
-                city: 'Moscow',
-                date: 23235,
-                price: 120,
-                baths: 2,
-                beds: 2,
-                type: 'rent',
-              },
-            ]}
-          />
+          {store.loading ? (
+            <Properties products={store.products} />
+          ) : (
+            <Space align="center" size="large">
+              <Spin size="large" />
+            </Space>
+          )}
         </TabPane>
       </Tabs>
     </MainLayout>
