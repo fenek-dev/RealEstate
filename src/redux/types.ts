@@ -5,6 +5,8 @@ export enum UserActions {
   SET_USER_LOADING = 'SET_USER_LOADING',
   SET_USER_ERROR = 'SET_USER_ERROR',
   CREATE_USER = 'CREATE_USER',
+  LOGOUT_USER = 'LOGOUT_USER',
+  CLEAN_USER = 'CLEAN_USER',
 }
 
 export enum ProductActions {

@@ -2,12 +2,26 @@ import MainLayout from '../layouts/Main'
 import Head from 'next/head'
 import {Button, Checkbox, Form, Input, Radio, Typography} from 'antd'
 import styles from '../styles/signin.module.scss'
+import {useDispatch, useSelector} from 'react-redux'
+import {useCallback, useEffect} from 'react'
+import {createUserAction} from '../redux/user/userAction'
+import {useRouter} from 'next/router'
+import {IRootReducer} from '../redux/rootReducer'
 const {Title, Text, Link} = Typography
 
 const Signup: React.FC = () => {
-  const onFinish = (values: any) => {
-    console.log('Success:', values)
-  }
+  const state = useSelector((store: IRootReducer) => store.user)
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const onFinish = useCallback((values: any) => {
+    dispatch(createUserAction(values))
+  }, [])
+
+  useEffect(() => {
+    if (state._id) {
+      router.replace('profile')
+    }
+  }, [state])
   return (
     <MainLayout>
       <Head>

@@ -25,3 +25,7 @@ export const errorUserAction: IAction<IError> = payload => ({
   type: UserActions.SET_USER_ERROR,
   payload,
 })
+
+export const logoutUserAction: IAction = () => ({
+  type: UserActions.LOGOUT_USER,
+})

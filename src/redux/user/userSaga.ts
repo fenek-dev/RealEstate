@@ -34,7 +34,7 @@ function* workerCreateUserAction(action: ReturnType<IAction<CreateUserDto>>) {
   try {
     const {payload} = action
     const user: IUserResponse = yield call(Api, '/api/auth/register', {
-      body: JSON.stringify(payload),
+      body: payload,
       method: 'POST',
     })
     setCookie('token', user.token)
@@ -82,10 +82,21 @@ export function* workerLoginUserAction(
   }
 }
 
+function* workerLogoutAction() {
+  console.log('hello')
+
+  setCookie('token', 'hello')
+  yield put({type: UserActions.CLEAN_USER})
+}
+
 export function* watchCreateUserAction() {
   yield takeEvery(UserActions.CREATE_USER, workerCreateUserAction)
 }
 
 export function* watchLoginUserAction() {
   yield takeEvery(UserActions.LOGIN_USER, workerLoginUserAction)
+}
+
+export function* watchLogoutUserAction() {
+  yield takeEvery(UserActions.LOGOUT_USER, workerLogoutAction)
 }

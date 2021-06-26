@@ -2,14 +2,17 @@ import Image from 'next/image'
 import {Button, Typography, Avatar, Menu, Dropdown, Space} from 'antd'
 import styles from './header.module.scss'
 import {memo} from 'react'
-import {useSelector} from 'react-redux'
-import {IRootReducer} from '../../redux/rootReducer'
 import {UserOutlined} from '@ant-design/icons'
+import {UserInitialStateInterface} from '../../redux/user/userReducer'
 
 const {Link} = Typography
 
-const Header: React.FC = () => {
-  const user = useSelector((store: IRootReducer) => store.user)
+interface IHeader {
+  user: UserInitialStateInterface
+  onLogout?: () => void
+}
+
+const Header: React.FC<IHeader> = ({user, onLogout}) => {
   return (
     <header className={styles.header}>
       <Link href="/">
@@ -46,7 +49,9 @@ const Header: React.FC = () => {
                     <Link href="/">Products</Link>
                   </Menu.Item>
                   <Menu.Item danger key="3">
-                    <Link href="/">Logout</Link>
+                    <Link href="/" onClick={onLogout}>
+                      Logout
+                    </Link>
                   </Menu.Item>
                 </Menu>
               }>

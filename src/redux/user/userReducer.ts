@@ -40,6 +40,10 @@ function reducer(state = initialState, action): UserInitialStateInterface {
       return {...state, error: action.payload}
     }
 
+    case UserActions.CLEAN_USER: {
+      return {...state, _id: '', email: '', name: '', products: []}
+    }
+
     default:
       return state
   }

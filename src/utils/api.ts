@@ -8,7 +8,6 @@ export const Api = async (
   const res = await fetch(url, {
     body: JSON.stringify(options.body) || undefined,
     method: options.method || 'GET',
-    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
