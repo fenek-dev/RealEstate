@@ -23,7 +23,13 @@ export class CommercialService {
   }
 
   async findOne(id: string) {
-    return await this.commercialModel.findById(id).exec()
+    return await this.commercialModel
+      .findById(id)
+      .populate('region')
+      .populate('author')
+      .populate('layout')
+      .populate('category')
+      .exec()
   }
 
   async update(id: string, updateCommercialDto: UpdateCommercialDto) {

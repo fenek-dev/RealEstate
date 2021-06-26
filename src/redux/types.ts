@@ -1,3 +1,22 @@
+export enum UserActions {
+  ADD_USER = 'ADD_USER',
+  SET_USER = 'SET_USER',
+  LOGIN_USER = 'LOGIN_USER',
+  SET_USER_LOADING = 'SET_USER_LOADING',
+  SET_USER_ERROR = 'SET_USER_ERROR',
+  CREATE_USER = 'CREATE_USER',
+}
+
+export enum ProductActions {
+  ADD_PRODUCT = 'ADD_PRODUCT',
+  SET_PRODUCT = 'SET_PRODUCT',
+}
+
+export enum SearchActions {
+  ADD_SEARCH = 'ADD_SEARCH',
+  SET_SEARCH = 'SET_SEARCH',
+}
+
 export type IAction<T = any> = (payload?: T) => {type: string; payload?: T}
 
 export interface IUserResponse {

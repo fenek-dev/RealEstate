@@ -1,12 +1,9 @@
 import {takeEvery, put} from 'redux-saga/effects'
-
-export function* watchAddSearchAction() {
-  yield takeEvery('ADD_SEARCH', workerAddSearchAction)
-}
+import {SearchActions} from '../types'
 
 function* workerAddSearchAction() {
   yield put({
-    type: 'SET_SEARCH',
+    type: SearchActions.SET_SEARCH,
     payload: {
       address: 'Moscow, Red Square',
       area: 123,
@@ -26,4 +23,8 @@ function* workerAddSearchAction() {
       type: 'rent',
     },
   })
+}
+
+export function* watchAddSearchAction() {
+  yield takeEvery(SearchActions.ADD_SEARCH, workerAddSearchAction)
 }

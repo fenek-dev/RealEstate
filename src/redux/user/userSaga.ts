@@ -3,19 +3,18 @@ import {CreateUserDto} from 'src/server/auth/dto/create-user.dto'
 import {IEmailAndPassword} from 'src/server/auth/types'
 import {Api} from 'src/utils/api'
 import {setCookie} from 'src/utils/cookie'
-import {ADD_USER, CREATE_USER, LOGIN_USER, SET_USER} from '../constants'
-import {IAction, IUserResponse} from '../types'
+import {IAction, IUserResponse, UserActions} from '../types'
 import {errorUserAction, loadingUserAction} from './userAction'
 
 export function* watchAddAction() {
-  yield takeEvery(ADD_USER, workerAddAction)
+  yield takeEvery(UserActions.ADD_USER, workerAddAction)
 }
 
 function* workerAddAction() {
   try {
     const user: IUserResponse = yield call(Api, 'api/auth/profile')
     yield put({
-      type: SET_USER,
+      type: UserActions.SET_USER,
       payload: {
         email: user.email,
         type: user.type,
@@ -32,7 +31,7 @@ function* workerAddAction() {
 }
 
 export function* watchCreateUserAction() {
-  yield takeEvery(CREATE_USER, workerCreateUserAction)
+  yield takeEvery(UserActions.CREATE_USER, workerCreateUserAction)
 }
 
 function* workerCreateUserAction(action: ReturnType<IAction<CreateUserDto>>) {
@@ -44,7 +43,7 @@ function* workerCreateUserAction(action: ReturnType<IAction<CreateUserDto>>) {
     })
     setCookie('token', user.token)
     yield put({
-      type: SET_USER,
+      type: UserActions.SET_USER,
       payload: {
         email: user.email,
         type: user.type,
@@ -61,7 +60,7 @@ function* workerCreateUserAction(action: ReturnType<IAction<CreateUserDto>>) {
 }
 
 export function* watchLoginUserAction() {
-  yield takeEvery(LOGIN_USER, workerLoginUserAction)
+  yield takeEvery(UserActions.LOGIN_USER, workerLoginUserAction)
 }
 
 export function* workerLoginUserAction(
@@ -74,7 +73,7 @@ export function* workerLoginUserAction(
     })
     setCookie('token', user.token)
     yield put({
-      type: SET_USER,
+      type: UserActions.SET_USER,
       payload: {
         email: user.email,
         type: user.type,

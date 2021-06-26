@@ -1,8 +1,0 @@
-export const ADD_USER = 'ADD_USER'
-export const SET_USER = 'SET_USER'
-export const LOGIN_USER = 'LOGIN_USER'
-export const SET_USER_LOADING = 'SET_USER_LOADING'
-export const SET_USER_ERROR = 'SET_USER_ERROR'
-export const CREATE_USER = 'CREATE_USER'
-export const ADD_PRODUCT = 'ADD_PRODUCT'
-export const SET_PRODUCT = 'SET_PRODUCT'

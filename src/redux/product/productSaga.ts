@@ -1,13 +1,13 @@
 import {takeEvery, put} from 'redux-saga/effects'
-import {ActionTypes} from '../types'
+import {ProductActions} from '../types'
 
 export function* watchAddProductAction() {
-  yield takeEvery('ADD_PRODUCT', workerAddProductAction)
+  yield takeEvery(ProductActions.ADD_PRODUCT, workerAddProductAction)
 }
 
 function* workerAddProductAction() {
   yield put({
-    type: 'SET_PRODUCT',
+    type: ProductActions.SET_PRODUCT,
     payload: {
       address: 'Moscow, Red Square',
       area: 123,

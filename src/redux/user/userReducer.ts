@@ -1,6 +1,5 @@
 import {HYDRATE} from 'next-redux-wrapper'
-import {SET_USER, SET_USER_ERROR, SET_USER_LOADING} from '../constants'
-import {IError} from '../types'
+import {IError, UserActions} from '../types'
 export interface UserInitialStateInterface {
   _id: string
   email: string
@@ -29,15 +28,15 @@ function reducer(state = initialState, action): UserInitialStateInterface {
       return {...state, ...action.payload}
     }
 
-    case SET_USER: {
+    case UserActions.SET_USER: {
       return {...state, ...action.payload}
     }
 
-    case SET_USER_LOADING: {
+    case UserActions.SET_USER_LOADING: {
       return {...state, loading: action.payload}
     }
 
-    case SET_USER_ERROR: {
+    case UserActions.SET_USER_ERROR: {
       return {...state, error: action.payload}
     }
 

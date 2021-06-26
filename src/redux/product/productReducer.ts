@@ -1,6 +1,6 @@
 import {HYDRATE} from 'next-redux-wrapper'
 import {IProduct} from '../../types'
-import {ActionTypes} from '../types'
+import {ProductActions} from '../types'
 const initialState: IProduct = {
   address: '',
   area: 0,
@@ -51,7 +51,7 @@ function reducer(state = initialState, action): IProduct {
       return {...state, ...action.payload}
     }
 
-    case 'SET_PRODUCT': {
+    case ProductActions.SET_PRODUCT: {
       return {...state, ...action.payload}
     }
 

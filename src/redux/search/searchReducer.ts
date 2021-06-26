@@ -1,5 +1,6 @@
 import {HYDRATE} from 'next-redux-wrapper'
 import {ISearchState} from '../../types'
+import {SearchActions} from '../types'
 
 const initialState: ISearchState = {
   products: [],
@@ -11,7 +12,7 @@ function reducer(state = initialState, action): ISearchState {
       return {...state, ...action.payload}
     }
 
-    case 'SET_SEARCH': {
+    case SearchActions.SET_SEARCH: {
       return {...state, products: [...state.products, action.payload]}
     }
 

@@ -1,3 +1,5 @@
+import {SearchActions} from '../types'
+
 export const addSearchAction = () => ({
-  type: 'ADD_SEARCH',
+  type: SearchActions.ADD_SEARCH,
 })

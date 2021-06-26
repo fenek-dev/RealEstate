@@ -1,5 +1,5 @@
-import {ActionTypes, IAction} from '../types'
+import {IAction, ProductActions} from '../types'
 
-export const addProductAction = () => ({
-  type: 'ADD_PRODUCT',
+export const addProductAction: IAction = () => ({
+  type: ProductActions.ADD_PRODUCT,
 })
