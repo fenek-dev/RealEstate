@@ -20,14 +20,72 @@ const Header: React.FC<IHeader> = ({userName, onLogout}) => {
       <nav className={styles.nav}>
         <ul className={styles.navList}>
           <li>
-            <Link strong href="/search?type=buy">
-              Buy
-            </Link>
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.ItemGroup title="Living">
+                    <Menu.Item key="1">
+                      <Link href="/search?type=buy&property=house">House</Link>
+                    </Menu.Item>
+                    <Menu.Item key="2">
+                      <Link href="/search?type=buy&property=apartment">
+                        Apartment
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item key="3">
+                      <Link href="/search?type=buy&property=apartment">
+                        Condo
+                      </Link>
+                    </Menu.Item>
+                  </Menu.ItemGroup>
+                  <Menu.ItemGroup title="Commercial">
+                    <Menu.Item key="1">
+                      <Link href="/search?type=buy&property=office">
+                        Office
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item key="2">
+                      <Link href="/search?type=buy&property=shop">Shop</Link>
+                    </Menu.Item>
+                  </Menu.ItemGroup>
+                </Menu>
+              }>
+              <Link strong>Buy</Link>
+            </Dropdown>
           </li>
           <li>
-            <Link strong href="/search?type=rent">
-              Rent
-            </Link>
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.ItemGroup title="Living">
+                    <Menu.Item key="1">
+                      <Link href="/search?type=rent&property=house">House</Link>
+                    </Menu.Item>
+                    <Menu.Item key="2">
+                      <Link href="/search?type=rent&property=apartment">
+                        Apartment
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item key="3">
+                      <Link href="/search?type=rent&property=apartment">
+                        Condo
+                      </Link>
+                    </Menu.Item>
+                  </Menu.ItemGroup>
+                  <Menu.ItemGroup title="Commercial">
+                    <Menu.Item key="1">
+                      <Link href="/search?type=rent&property=office">
+                        Office
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item key="2">
+                      <Link href="/search?type=rent&property=shop">Shop</Link>
+                    </Menu.Item>
+                  </Menu.ItemGroup>
+                </Menu>
+              }>
+              <Link strong>Rent</Link>
+            </Dropdown>
           </li>
           <li>
             <Link strong href="/create">
