@@ -30,10 +30,6 @@ function* workerAddAction() {
   }
 }
 
-export function* watchCreateUserAction() {
-  yield takeEvery(UserActions.CREATE_USER, workerCreateUserAction)
-}
-
 function* workerCreateUserAction(action: ReturnType<IAction<CreateUserDto>>) {
   try {
     const {payload} = action
@@ -42,6 +38,7 @@ function* workerCreateUserAction(action: ReturnType<IAction<CreateUserDto>>) {
       method: 'POST',
     })
     setCookie('token', user.token)
+
     yield put({
       type: UserActions.SET_USER,
       payload: {
@@ -57,10 +54,6 @@ function* workerCreateUserAction(action: ReturnType<IAction<CreateUserDto>>) {
   } finally {
     yield put(loadingUserAction(true))
   }
-}
-
-export function* watchLoginUserAction() {
-  yield takeEvery(UserActions.LOGIN_USER, workerLoginUserAction)
 }
 
 export function* workerLoginUserAction(
@@ -87,4 +80,12 @@ export function* workerLoginUserAction(
   } finally {
     yield put(loadingUserAction(true))
   }
+}
+
+export function* watchCreateUserAction() {
+  yield takeEvery(UserActions.CREATE_USER, workerCreateUserAction)
+}
+
+export function* watchLoginUserAction() {
+  yield takeEvery(UserActions.LOGIN_USER, workerLoginUserAction)
 }
