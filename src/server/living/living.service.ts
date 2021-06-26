@@ -17,7 +17,12 @@ export class LivingService {
   }
 
   async getOne(id: ObjectId): Promise<Living> {
-    return await this.LivingModel.findById(id).exec()
+    return await this.LivingModel.findById(id)
+      .populate('region')
+      .populate('author')
+      .populate('layout')
+      .populate('category')
+      .exec()
   }
 
   async create(dto: CreateLivingDto): Promise<Living> {

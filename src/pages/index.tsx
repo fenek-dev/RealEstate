@@ -30,11 +30,6 @@ export default function Home() {
           property="og:description"
           content="Real Estate website to search your dream property"
         />
-        {/* <meta property="og:image" content={} />
-        <meta
-          property="og:image:alt"
-          content={city + ' ' + address + ' for ' + type}
-        /> */}
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />

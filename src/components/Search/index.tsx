@@ -42,7 +42,14 @@ const Search: React.FC<ISearch> = ({
           placeholder="City"
         />
       </Form.Item>
-      <Form.Item name="property">
+      <Form.Item
+        name="property"
+        rules={[
+          {
+            required: true,
+            message: 'Please input property type',
+          },
+        ]}>
         <Select
           aria-label="property"
           aria-selected="true"
@@ -60,11 +67,7 @@ const Search: React.FC<ISearch> = ({
         </Select>
       </Form.Item>
       <Form.Item name="type">
-        <Select
-          aria-label="type"
-          aria-selected="true"
-          style={{width: 100}}
-          placeholder="Rent/Buy">
+        <Select aria-label="type" aria-selected="true" placeholder="Rent/Buy">
           <Select.Option value="rent">Rent</Select.Option>
           <Select.Option value="buy">Buy</Select.Option>
         </Select>
