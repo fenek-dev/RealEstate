@@ -9,6 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common'
 import {JwtAuthGuard} from '../auth/jwt/jwt-auth.guard'
+import {ISearchBody} from '../living/types'
 import {CommercialService} from './commercial.service'
 import {CreateCommercialDto} from './dto/create-commercial.dto'
 import {UpdateCommercialDto} from './dto/update-commercial.dto'
@@ -26,6 +27,11 @@ export class CommercialController {
   @Post('create')
   create(@Body() createCommercialDto: CreateCommercialDto) {
     return this.commercialService.create(createCommercialDto)
+  }
+
+  @Post('/search')
+  search(@Body() body: ISearchBody) {
+    return this.commercialService.search(body)
   }
 
   @Get(':id')

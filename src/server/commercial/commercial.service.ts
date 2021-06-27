@@ -3,6 +3,7 @@ import {InjectModel} from '@nestjs/mongoose'
 import {Model} from 'mongoose'
 import {User, UserDocument} from '../auth/schema/user.schema'
 import {CloudinaryService} from '../cloudinary/cloudinary.service'
+import {ISearchBody} from '../living/types'
 import {CreateCommercialDto} from './dto/create-commercial.dto'
 import {UpdateCommercialDto} from './dto/update-commercial.dto'
 import {Commercial, CommercialDocument} from './schema/commercial.schema'
@@ -46,6 +47,27 @@ export class CommercialService {
       .populate('layout')
       .populate('category')
       .exec()
+  }
+
+  async search(body: ISearchBody) {
+    const {baths, beds, property, type, city} = body
+
+    const regCity = new RegExp(city, 'ig')
+    const max = +body.max || Number.MAX_VALUE
+    const min = +body.min || Number.MIN_VALUE
+
+    const condidate = await this.commercialModel
+      .where('type', type)
+      .where('city', regCity)
+      .where('price')
+      .lte(max)
+      .gte(min)
+      .where('property', property)
+      .where('baths', baths)
+      .where('beds', beds)
+      .exec()
+
+    return condidate
   }
 
   async update(id: string, updateCommercialDto: UpdateCommercialDto) {
