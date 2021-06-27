@@ -14,8 +14,9 @@ import {
 import {PlusOutlined} from '@ant-design/icons'
 import {useEffect, useState} from 'react'
 import {useRouter} from 'next/router'
-import {useSelector} from 'react-redux'
-import {IRootReducer} from 'src/redux/rootReducer'
+import {useDispatch, useSelector} from 'react-redux'
+import {IRootReducer} from '../redux/rootReducer'
+import {addProductAction} from '../redux/product/productAction'
 
 const {Title} = Typography
 
@@ -34,8 +35,10 @@ const Create: React.FC = () => {
   const [previewVisible, setPreviewVisible] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
   const [fileList, setFileList] = useState([])
+  const [files, setFiles] = useState([])
+  const [error, setError] = useState<{statusCode: number; message: string}>()
   const router = useRouter()
-
+  const dispatch = useDispatch()
   useEffect(() => {
     if (!store.user._id && store.user.loading) {
       router.push('/signup')
@@ -53,10 +56,33 @@ const Create: React.FC = () => {
     setPreviewImage(file.url || file.preview)
   }
 
-  const handleChange = ({fileList}) => setFileList(fileList)
+  const handleChange = ({fileList}) => {
+    setFileList(fileList)
+    setFiles([])
+    fileList.forEach(file => {
+      if (file.status !== 'uploading') {
+        const reader = new FileReader()
+        reader.readAsDataURL(file.originFileObj)
+        reader.onloadend = () => {
+          setFiles(prev => [...prev, reader.result])
+        }
+      }
+    })
+  }
 
   const onFinish = (values: any) => {
-    console.log('Success:', values)
+    if (fileList.length < 1) {
+      setError({statusCode: 0, message: 'Required at least 1 image'})
+    } else {
+      dispatch(
+        addProductAction({
+          ...values,
+          photos: files,
+          author: store.user._id,
+          date: Date.now(),
+        }),
+      )
+    }
   }
 
   return (
@@ -71,6 +97,7 @@ const Create: React.FC = () => {
         listType="picture-card"
         fileList={fileList}
         onPreview={handlePreview}
+        beforeUpload={() => false}
         onChange={handleChange}>
         {fileList.length >= 8 ? null : (
           <div>

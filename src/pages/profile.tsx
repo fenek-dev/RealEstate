@@ -30,7 +30,6 @@ const ProfilePage = () => {
       router.push('/signup')
     }
   }, [store._id, store.loading])
-console.log(store);
 
   useEffect(() => {
     setImageUrl(store.photo)

@@ -1,61 +1,38 @@
-import {takeEvery, put} from 'redux-saga/effects'
-import {ProductActions} from '../types'
+import {takeEvery, put, call, all} from 'redux-saga/effects'
+import {CreateCommercialDto} from '../../server/commercial/dto/create-commercial.dto'
+import {CreateLivingDto} from '../../server/living/dto/create-living.dto'
+import {Api} from '../../utils/api'
+import {IAction, ProductActions} from '../types'
+
+function* workerAddProductAction(
+  action: ReturnType<IAction<CreateLivingDto | CreateCommercialDto>>,
+) {
+  const type =
+    action?.payload.property === 'office' || action?.payload.property === 'shop'
+      ? 'commercial'
+      : 'living'
+  const result = yield call(Api, `api/${type}/create`, {
+    method: 'POST',
+    body: action.payload,
+  })
+  yield put({
+    type: ProductActions.SET_PRODUCT,
+    payload: result,
+  })
+}
+
+function* workerGetProductAction(action: ReturnType<IAction<{id: string}>>) {
+  const result = yield all([
+    call(Api, `api/living/${action.payload.id}`),
+    call(Api, `api/living/${action.payload.id}`),
+  ])
+  console.log(result)
+}
 
 export function* watchAddProductAction() {
   yield takeEvery(ProductActions.ADD_PRODUCT, workerAddProductAction)
 }
 
-function* workerAddProductAction() {
-  yield put({
-    type: ProductActions.SET_PRODUCT,
-    payload: {
-      address: 'Moscow, Red Square',
-      area: 123,
-      photos: [
-        'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-        'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-        'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-      ],
-      author: {
-        email: 'email',
-        name: 'arthur',
-        type: 'buyer',
-      },
-      city: 'Moscow',
-      date: 23235,
-      description: 'A brilliant flat in Moscow',
-      price: 120,
-      region: {
-        averageCost: 100,
-        hospitals: 21,
-        name: 'Moscow',
-        parks: 2,
-        population: 244,
-        shopCenters: 3,
-      },
-      baths: 2,
-      beds: 2,
-      tax: 0,
-      property: 'brick',
-      type: 'rent',
-      category: {
-        name: 'sdf',
-        type: 'asdf',
-        year: 2010,
-        area: 1235,
-        class: 'a',
-        floors: 12,
-        parking: false,
-      },
-      layout: {
-        name: 'A83',
-        maxArea: 123,
-        minArea: 12,
-        rooms: 2,
-        photos: [
-          'https://s.iha.com/1155100002994/Ferienwohnungen-Toronto-Pied-a-Terre_2.jpeg',
-        ],
-      },
-    },
-  })
+export function* watchGetProductAction() {
+  yield takeEvery(ProductActions.GET_PRODUCT, workerGetProductAction)
 }

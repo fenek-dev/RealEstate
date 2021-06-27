@@ -15,6 +15,7 @@ export enum UserActions {
 export enum ProductActions {
   ADD_PRODUCT = 'ADD_PRODUCT',
   SET_PRODUCT = 'SET_PRODUCT',
+  GET_PRODUCT = 'GET_PRODUCT',
 }
 
 export enum SearchActions {

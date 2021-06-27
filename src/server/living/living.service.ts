@@ -1,6 +1,8 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common'
 import {InjectModel} from '@nestjs/mongoose'
 import {Model, ObjectId} from 'mongoose'
+import {User, UserDocument} from '../auth/schema/user.schema'
+import {CloudinaryService} from '../cloudinary/cloudinary.service'
 import {CreateLivingDto} from './dto/create-living.dto'
 import {UpdateLivingDto} from './dto/update-living.dto'
 import {Living, LivingDocument} from './schema/living.schema'
@@ -10,6 +12,8 @@ import {ISearchBody} from './types'
 export class LivingService {
   constructor(
     @InjectModel(Living.name) private LivingModel: Model<LivingDocument>,
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    private cloudinaryService: CloudinaryService,
   ) {}
 
   async getAll(): Promise<Living[]> {
@@ -26,7 +30,20 @@ export class LivingService {
   }
 
   async create(dto: CreateLivingDto): Promise<Living> {
-    return await (await this.LivingModel.create({...dto})).save()
+    const photos = await Promise.all(
+      dto.photos.map(
+        async (item): Promise<string> =>
+          (
+            await this.cloudinaryService.uploadImage(item)
+          ).url,
+      ),
+    )
+    const living = await this.LivingModel.create({...dto, photos})
+    await living.save()
+    await this.userModel.findByIdAndUpdate(living.author, {
+      $push: {products: living._id},
+    })
+    return living
   }
 
   async remove(id: ObjectId): Promise<ObjectId> {

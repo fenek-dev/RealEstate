@@ -16,8 +16,8 @@ export class Living {
   @Prop({required: true})
   readonly address: string
 
-  @Prop({type: [{required: false}]})
-  readonly photos?: string[]
+  @Prop({type: [String]})
+  readonly photos: string[]
 
   @Prop({required: false})
   readonly type?: string
@@ -43,8 +43,8 @@ export class Living {
   @Prop({required: false})
   readonly property?: string
 
-  @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Region', required: true})
-  readonly region: Region
+  @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Region', required: false})
+  readonly region?: Region
 
   @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true})
   readonly author: User
