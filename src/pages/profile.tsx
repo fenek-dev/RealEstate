@@ -9,6 +9,9 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useRouter} from 'next/router'
 import {IRootReducer} from '../redux/rootReducer'
 import {editUserAction, uploadUserAction} from '../redux/user/userAction'
+import {wrapper} from '../redux/store'
+import {END} from 'redux-saga'
+import {ParsedUrlQuery} from 'querystring'
 
 const {TabPane} = Tabs
 const {Title} = Typography
@@ -19,7 +22,11 @@ function getBase64(img, callback) {
   reader.readAsDataURL(img)
 }
 
-const ProfilePage = () => {
+interface IProfilePage {
+  query: ParsedUrlQuery
+}
+
+const ProfilePage: React.FC<IProfilePage> = ({query}) => {
   const store = useSelector((state: IRootReducer) => state.user)
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
@@ -73,9 +80,7 @@ const ProfilePage = () => {
         <title>DigitalEstate | Profile</title>
       </Head>
       <Title level={1}>My profile</Title>
-      <Tabs
-        defaultActiveKey="1"
-        activeKey={!Array.isArray(router.query.tab) ? router.query.tab : '1'}>
+      <Tabs defaultActiveKey={!Array.isArray(query.tab) ? query.tab : '1'}>
         <TabPane tab="Profile" key="1">
           {store.loading ? (
             <Profile
@@ -107,3 +112,15 @@ const ProfilePage = () => {
 }
 
 export default ProfilePage
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async ({store, query}) => {
+    store.dispatch(END)
+
+    return {
+      props: {
+        query,
+      },
+    }
+  },
+)
