@@ -9,6 +9,7 @@ export enum UserActions {
   CLEAN_USER = 'CLEAN_USER',
   EDIT_USER = 'EDIT_USER',
   PRODUCTS_USER = 'PRODUCTS_USER',
+  UPLOAD_IMAGE = 'UPLOAD_IMAGE',
 }
 
 export enum ProductActions {
@@ -32,6 +33,7 @@ export interface IUserResponse {
   phone: string
   products: string[]
   token: string
+  photo: string
 }
 
 export interface IError {

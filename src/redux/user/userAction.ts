@@ -35,3 +35,9 @@ export const editUserAction: IAction<UpdateUserDto> = payload => ({
   type: UserActions.EDIT_USER,
   payload,
 })
+
+export const uploadUserAction: IAction<{file: string; id: string}> =
+  payload => ({
+    type: UserActions.UPLOAD_IMAGE,
+    payload,
+  })

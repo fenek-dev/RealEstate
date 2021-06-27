@@ -7,13 +7,11 @@ export class CloudinaryService {
   async uploadImage(
     file: any,
   ): Promise<UploadApiResponse | UploadApiErrorResponse> {
-    return new Promise((resolve, reject) => {
-      const upload = v2.uploader.upload_stream((error, result) => {
-        if (error) return reject(error)
+    return new Promise((resolve, reject) =>
+      v2.uploader.upload(file, {}, (err, result) => {
+        if (err) return reject(err)
         resolve(result)
-      })
-
-      toStream(file.buffer).pipe(upload)
-    })
+      }),
+    )
   }
 }

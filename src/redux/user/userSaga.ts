@@ -23,6 +23,7 @@ function* workerAddAction() {
         _id: user._id,
         name: user.name,
         phone: user.phone,
+        photo: user.photo,
       },
     })
   } catch (error) {
@@ -85,8 +86,6 @@ export function* workerLoginUserAction(
 }
 
 function* workerLogoutAction() {
-  console.log('hello')
-
   setCookie('token', 'hello')
   yield put({type: UserActions.CLEAN_USER})
 }
@@ -97,6 +96,14 @@ function* workerEditUserAction(action: ReturnType<IAction<UpdateUserDto>>) {
     method: 'PATCH',
   })
   yield put({type: UserActions.SET_USER, payload: result})
+}
+
+function* workerUploadUserAction(action: ReturnType<IAction>) {
+  const photo = yield call(Api, 'api/auth/avatar', {
+    method: 'POST',
+    body: action.payload,
+  })
+  yield put({type: UserActions.SET_USER, payload: {photo}})
 }
 
 export function* watchCreateUserAction() {
@@ -113,4 +120,8 @@ export function* watchLogoutUserAction() {
 
 export function* watchEditUserAction() {
   yield takeEvery(UserActions.EDIT_USER, workerEditUserAction)
+}
+
+export function* watchUploadUserAction() {
+  yield takeEvery(UserActions.UPLOAD_IMAGE, workerUploadUserAction)
 }

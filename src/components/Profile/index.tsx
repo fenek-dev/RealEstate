@@ -25,6 +25,7 @@ interface IProfile {
   imageUrl: string
   loading: boolean
   onFinish: (values: any) => void
+  onUpload: (file: any) => void
   user: UserInitialStateInterface
 }
 const Profile: React.FC<IProfile> = ({
@@ -33,6 +34,7 @@ const Profile: React.FC<IProfile> = ({
   loading,
   onFinish,
   user,
+  onUpload,
 }) => {
   const [form] = useForm()
   return (
@@ -43,6 +45,8 @@ const Profile: React.FC<IProfile> = ({
           supportServerRender
           name="avatar"
           listType="picture-card"
+          // action="api/auth/avatar"
+          customRequest={onUpload}
           showUploadList={false}
           beforeUpload={beforeUpload}
           onChange={handleChange}>

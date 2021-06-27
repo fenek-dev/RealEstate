@@ -7,6 +7,7 @@ import {JwtStrategy} from './jwt/jwt.strategy'
 import {ConfigModule} from '@nestjs/config'
 import {MongooseModule} from '@nestjs/mongoose'
 import {User, UserSchema} from './schema/user.schema'
+import {CloudinaryService} from '../cloudinary/cloudinary.service'
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import {User, UserSchema} from './schema/user.schema'
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, CloudinaryService],
 })
 export class AuthModule {}

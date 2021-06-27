@@ -8,7 +8,7 @@ import Properties from '../components/Properties'
 import {useDispatch, useSelector} from 'react-redux'
 import {useRouter} from 'next/router'
 import {IRootReducer} from '../redux/rootReducer'
-import {editUserAction} from '../redux/user/userAction'
+import {editUserAction, uploadUserAction} from '../redux/user/userAction'
 
 const {TabPane} = Tabs
 const {Title} = Typography
@@ -30,7 +30,11 @@ const ProfilePage = () => {
       router.push('/signup')
     }
   }, [store._id, store.loading])
-  console.log(!Array.isArray(router.query.tab) ? router.query.tab : '1')
+console.log(store);
+
+  useEffect(() => {
+    setImageUrl(store.photo)
+  }, [store.photo])
 
   const handleChange = info => {
     if (info.file.status === 'uploading') {
@@ -52,6 +56,18 @@ const ProfilePage = () => {
     },
     [store],
   )
+
+  const onUpload = useCallback(
+    file => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file.file)
+      reader.onloadend = () => {
+        const image = reader.result as string
+        dispatch(uploadUserAction({file: image, id: store._id}))
+      }
+    },
+    [store._id],
+  )
   return (
     <MainLayout>
       <Head>
@@ -69,6 +85,7 @@ const ProfilePage = () => {
               imageUrl={imageUrl}
               loading={loading}
               user={store}
+              onUpload={onUpload}
             />
           ) : (
             <Space align="center" size="large">

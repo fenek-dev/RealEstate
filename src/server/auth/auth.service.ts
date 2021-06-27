@@ -7,12 +7,14 @@ import {InjectModel} from '@nestjs/mongoose'
 import {Model} from 'mongoose'
 import {CreateUserDto} from './dto/create-user.dto'
 import {UpdateUserDto} from './dto/update-user.dto'
+import {CloudinaryService} from '../cloudinary/cloudinary.service'
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private jwtService: JwtService,
+    private cloudinaryService: CloudinaryService,
   ) {}
 
   /**
@@ -44,6 +46,7 @@ export class AuthService {
       type: user.type,
       products: user.products,
       phone: user.phone,
+      photo: user.photo,
     }
   }
 
@@ -100,5 +103,11 @@ export class AuthService {
       .exec()
 
     return dto
+  }
+
+  async upload(file: string, id: string) {
+    const result = await this.cloudinaryService.uploadImage(file)
+    await this.userModel.findByIdAndUpdate(id, {photo: result.url})
+    return result.url
   }
 }

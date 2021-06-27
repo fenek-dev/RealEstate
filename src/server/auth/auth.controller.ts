@@ -49,4 +49,9 @@ export class AuthController {
   updateProfile(@Body() body: UpdateUserDto) {
     return this.authService.update(body)
   }
+
+  @Post('avatar')
+  addAvatar(@Body() body) {
+    return this.authService.upload(body.file, body.id)
+  }
 }
