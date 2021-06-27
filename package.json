@@ -37,6 +37,8 @@
     "@types/bcrypt": "^5.0.0",
     "antd": "^4.15.6",
     "bcrypt": "^5.0.1",
+    "buffer-to-stream": "^1.0.0",
+    "cloudinary": "^1.26.1",
     "mongoose": "^5.12.9",
     "next": "^10.2.0",
     "next-redux-wrapper": "^6.0.2",

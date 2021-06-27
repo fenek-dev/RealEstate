@@ -8,6 +8,8 @@ import {CommercialModule} from './commercial/commercial.module'
 import {CategoryModule} from './category/category.module'
 import {LayoutModule} from './layout/layout.module'
 import {RegionModule} from './region/region.module'
+import {CloudinaryModule} from './cloudinary/cloudinary.module'
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -19,6 +21,7 @@ import {RegionModule} from './region/region.module'
     RegionModule,
     AuthModule,
     ViewModule,
+    CloudinaryModule,
   ],
 })
 export class AppModule {}
