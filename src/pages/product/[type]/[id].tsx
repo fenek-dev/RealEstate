@@ -5,9 +5,8 @@ import MainLayout from '../../../layouts/Main'
 import Head from 'next/head'
 import styles from './product.module.scss'
 import {IProduct} from '../../../types'
-import {GetServerSidePropsContext, GetStaticPaths} from 'next'
+import {GetServerSidePropsContext} from 'next'
 import {useRouter} from 'next/router'
-import {GetStaticPropsContext} from 'next-redux-wrapper'
 const {Title, Paragraph, Text} = Typography
 
 const Product: React.FC<IProduct> = ({
@@ -232,7 +231,6 @@ const Product: React.FC<IProduct> = ({
 export default Product
 
 export async function getServerSideProps({params}: GetServerSidePropsContext) {
-  console.log(params)
   const res = await fetch(
     `http://localhost:5000/api/${params.type}/${params.id}`,
   )

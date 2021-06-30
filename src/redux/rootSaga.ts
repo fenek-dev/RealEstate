@@ -1,8 +1,5 @@
 import {all} from 'redux-saga/effects'
-import {
-  watchAddProductAction,
-  watchGetProductAction,
-} from './product/productSaga'
+import {watchAddProductAction} from './product/productSaga'
 import {watchAddSearchAction} from './search/searchSaga'
 import {
   watchAddAction,
@@ -19,7 +16,6 @@ export default function* rootSaga() {
     watchLoginUserAction(),
     watchAddAction(),
     watchAddProductAction(),
-    watchGetProductAction(),
     watchAddSearchAction(),
     watchLogoutUserAction(),
     watchEditUserAction(),

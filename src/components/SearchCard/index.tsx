@@ -5,7 +5,7 @@ import styles from './searchCard.module.scss'
 import {memo} from 'react'
 import {useRouter} from 'next/router'
 
-const {Paragraph, Text} = Typography
+const {Text} = Typography
 
 const SearchCard: React.FC<ISearchProduct> = ({
   address,
@@ -18,10 +18,13 @@ const SearchCard: React.FC<ISearchProduct> = ({
   photos,
   type,
   _id,
+  property,
 }) => {
   const router = useRouter()
   const onClick = () => {
-    router.push(`/product/${_id}`)
+    const propertyType =
+      property === 'office' || property === 'shop' ? 'commercial' : 'living'
+    router.push(`/product/${propertyType}/${_id}`)
   }
   return (
     <Card

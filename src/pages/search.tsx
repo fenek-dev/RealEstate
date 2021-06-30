@@ -70,6 +70,7 @@ const SearchPage: React.FC<ISearchPage> = ({query}) => {
               city={item.city}
               price={item.price}
               date={item.date}
+              property={item.property}
             />
           ))
         ) : (

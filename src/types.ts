@@ -7,13 +7,7 @@ export type ErrorType = {
 
 export type ISearchProduct = Omit<
   IProduct,
-  | 'region'
-  | 'layout'
-  | 'tax'
-  | 'description'
-  | 'category'
-  | 'author'
-  | 'property'
+  'region' | 'layout' | 'tax' | 'description' | 'category' | 'author'
 >
 
 export interface ISearchState {
