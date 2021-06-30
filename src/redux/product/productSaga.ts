@@ -1,4 +1,4 @@
-import {takeEvery, put, call, all, race} from 'redux-saga/effects'
+import {takeEvery, put, call} from 'redux-saga/effects'
 import {CreateCommercialDto} from '../../server/commercial/dto/create-commercial.dto'
 import {CreateLivingDto} from '../../server/living/dto/create-living.dto'
 import {Api} from '../../utils/api'

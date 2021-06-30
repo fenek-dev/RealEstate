@@ -41,3 +41,9 @@ export const uploadUserAction: IAction<{file: string; id: string}> =
     type: UserActions.UPLOAD_IMAGE,
     payload,
   })
+
+export const deleteUserProductAction: IAction<{id: string; type: string}> =
+  payload => ({
+    type: UserActions.DELETE_USER_PRODUCT,
+    payload,
+  })

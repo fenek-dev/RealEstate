@@ -4,6 +4,7 @@ import {watchAddSearchAction} from './search/searchSaga'
 import {
   watchAddAction,
   watchCreateUserAction,
+  watchDeleteProductAction,
   watchEditUserAction,
   watchLoginUserAction,
   watchLogoutUserAction,
@@ -20,5 +21,6 @@ export default function* rootSaga() {
     watchLogoutUserAction(),
     watchEditUserAction(),
     watchUploadUserAction(),
+    watchDeleteProductAction(),
   ])
 }

@@ -2,6 +2,7 @@ import {HYDRATE} from 'next-redux-wrapper'
 import {IProduct} from '../../types'
 import {ProductActions} from '../types'
 const initialState: IProduct = {
+  _id: '',
   address: '',
   area: 0,
   photos: [],

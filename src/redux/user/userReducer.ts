@@ -46,6 +46,13 @@ function reducer(state = initialState, action): UserInitialStateInterface {
       return {...state, ...initialState}
     }
 
+    case UserActions.REMOVE_USER_PRODUCT: {
+      return {
+        ...state,
+        products: state.products.filter(item => item._id !== action.payload),
+      }
+    }
+
     default:
       return state
   }

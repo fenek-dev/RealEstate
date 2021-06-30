@@ -106,6 +106,23 @@ function* workerUploadUserAction(action: ReturnType<IAction>) {
   yield put({type: UserActions.SET_USER, payload: {photo}})
 }
 
+function* workerDeleteProductAction(
+  action: ReturnType<IAction<{id: string; type: string}>>,
+) {
+  const id = yield call(
+    Api,
+    `api/${action.payload.type}/delete/${action.payload.id}`,
+    {
+      method: 'DELETE',
+    },
+  )
+  yield put({type: UserActions.REMOVE_USER_PRODUCT, payload: id})
+}
+
+export function* watchDeleteProductAction() {
+  yield takeEvery(UserActions.DELETE_USER_PRODUCT, workerDeleteProductAction)
+}
+
 export function* watchCreateUserAction() {
   yield takeEvery(UserActions.CREATE_USER, workerCreateUserAction)
 }

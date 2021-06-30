@@ -77,6 +77,7 @@ export class CommercialService {
   }
 
   async remove(id: string) {
-    return await this.commercialModel.findByIdAndDelete(id).exec()
+    const result = await this.commercialModel.findByIdAndDelete(id).exec()
+    return result._id
   }
 }
