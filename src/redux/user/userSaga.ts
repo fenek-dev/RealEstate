@@ -13,7 +13,7 @@ export function* watchAddAction() {
 
 function* workerAddAction() {
   try {
-    const user: IUserResponse = yield call(Api, 'api/auth/profile')
+    const user: IUserResponse = yield call(Api, '/api/auth/profile')
     yield put({
       type: UserActions.SET_USER,
       payload: {
@@ -63,7 +63,7 @@ export function* workerLoginUserAction(
   action: ReturnType<IAction<IEmailAndPassword>>,
 ) {
   try {
-    const user = yield call(Api, 'api/auth/login', {
+    const user = yield call(Api, '/api/auth/login', {
       body: action.payload,
       method: 'POST',
     })
@@ -91,7 +91,7 @@ function* workerLogoutAction() {
 }
 
 function* workerEditUserAction(action: ReturnType<IAction<UpdateUserDto>>) {
-  const result = yield call(Api, 'api/auth/profile', {
+  const result = yield call(Api, '/api/auth/profile', {
     body: action.payload,
     method: 'PATCH',
   })
@@ -99,7 +99,7 @@ function* workerEditUserAction(action: ReturnType<IAction<UpdateUserDto>>) {
 }
 
 function* workerUploadUserAction(action: ReturnType<IAction>) {
-  const photo = yield call(Api, 'api/auth/avatar', {
+  const photo = yield call(Api, '/api/auth/avatar', {
     method: 'POST',
     body: action.payload,
   })

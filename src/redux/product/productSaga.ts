@@ -1,4 +1,4 @@
-import {takeEvery, put, call, all} from 'redux-saga/effects'
+import {takeEvery, put, call, all, race} from 'redux-saga/effects'
 import {CreateCommercialDto} from '../../server/commercial/dto/create-commercial.dto'
 import {CreateLivingDto} from '../../server/living/dto/create-living.dto'
 import {Api} from '../../utils/api'
@@ -21,18 +21,6 @@ function* workerAddProductAction(
   })
 }
 
-function* workerGetProductAction(action: ReturnType<IAction<{id: string}>>) {
-  const result = yield all([
-    call(Api, `api/living/${action.payload.id}`),
-    call(Api, `api/living/${action.payload.id}`),
-  ])
-  console.log(result)
-}
-
 export function* watchAddProductAction() {
   yield takeEvery(ProductActions.ADD_PRODUCT, workerAddProductAction)
-}
-
-export function* watchGetProductAction() {
-  yield takeEvery(ProductActions.GET_PRODUCT, workerGetProductAction)
 }

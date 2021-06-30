@@ -3,6 +3,7 @@ import {ISearchProduct} from '../../types'
 import {Typography, Image} from 'antd'
 import styles from './searchCard.module.scss'
 import {memo} from 'react'
+import {useRouter} from 'next/router'
 
 const {Paragraph, Text} = Typography
 
@@ -16,9 +17,16 @@ const SearchCard: React.FC<ISearchProduct> = ({
   beds,
   photos,
   type,
+  _id,
 }) => {
+  const router = useRouter()
+  const onClick = () => {
+    router.push(`/product/${_id}`)
+  }
   return (
     <Card
+      style={{cursor: 'pointer'}}
+      onClick={onClick}
       cover={
         <Carousel dotPosition="top" lazyLoad="progressive">
           {photos?.map((src, index) => (

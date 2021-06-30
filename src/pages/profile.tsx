@@ -74,6 +74,8 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
     },
     [store._id],
   )
+  console.log(store);
+  
   return (
     <MainLayout>
       <Head>
