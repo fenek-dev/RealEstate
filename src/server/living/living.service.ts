@@ -65,8 +65,12 @@ export class LivingService {
       .lte(max)
       .gte(min)
       .where('property', property)
-      .where('baths', baths)
-      .where('beds', beds)
+      .where('baths')
+      .lte(baths || max)
+      .gte(baths || min)
+      .where('beds')
+      .lte(beds || max)
+      .gte(beds || min)
       .exec()
 
     return condidate

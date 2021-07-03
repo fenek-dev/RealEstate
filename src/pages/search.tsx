@@ -13,7 +13,7 @@ import {addSearchAction} from '../redux/search/searchAction'
 import {wrapper} from '../redux/store'
 import {END} from 'redux-saga'
 
-const {Title} = Typography
+const {Title, Paragraph} = Typography
 
 interface ISearchPage {
   query: IQuery
@@ -56,6 +56,9 @@ const SearchPage: React.FC<ISearchPage> = ({query}) => {
         {city ? city : 'World'} {property ? property + 's' : ''}{' '}
         {type ? `for ${type}` : ''}
       </Title>
+      <Paragraph>
+        Found {products.length} object{products.length === 1 ? '' : 's'}
+      </Paragraph>
       <section className={styles.result}>
         {products.length > 0 ? (
           products.map((item, index) => (

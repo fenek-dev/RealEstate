@@ -195,9 +195,36 @@ const Create: React.FC = () => {
               aria-label="region"
               aria-selected="true"
               placeholder="Region name">
-              <Select.Option value="moscow">Moscow</Select.Option>
-              <Select.Option value="newYork">New York</Select.Option>
-              <Select.Option value="toronto">Toronto</Select.Option>
+              <Select.Option value="60d6dd40ecd5268a328f377f">
+                Moscow
+              </Select.Option>
+              <Select.Option value="60e01aefb6703860e824dab2">
+                New York
+              </Select.Option>
+              <Select.Option value="60e01a89b6703860e824dab1">
+                Ontario
+              </Select.Option>
+              <Select.Option value="60e01c38b6703860e824dab7">
+                British Columbia
+              </Select.Option>
+              <Select.Option value="60e01be0b6703860e824dab6">
+                Alberta
+              </Select.Option>
+              <Select.Option value="60e01b46b6703860e824dab3">
+                Nova Scotia
+              </Select.Option>
+              <Select.Option value="60e01b75b6703860e824dab4">
+                Quebec
+              </Select.Option>
+              <Select.Option value="60e01b9bb6703860e824dab5">
+                Saskatchewan
+              </Select.Option>
+              <Select.Option value="60e01c6cb6703860e824dab8">
+                New Brunswick
+              </Select.Option>
+              <Select.Option value="60e01d30b6703860e824dab9">
+                Newfoundland and Labrador
+              </Select.Option>
             </Select>
           </Form.Item>
 
