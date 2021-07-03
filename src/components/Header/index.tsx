@@ -33,9 +33,7 @@ const Header: React.FC<IHeader> = ({userName, onLogout}) => {
                       </Link>
                     </Menu.Item>
                     <Menu.Item key="3">
-                      <Link href="/search?type=buy&property=apartment">
-                        Condo
-                      </Link>
+                      <Link href="/search?type=buy&property=condo">Condo</Link>
                     </Menu.Item>
                   </Menu.ItemGroup>
                   <Menu.ItemGroup title="Commercial">
@@ -67,9 +65,7 @@ const Header: React.FC<IHeader> = ({userName, onLogout}) => {
                       </Link>
                     </Menu.Item>
                     <Menu.Item key="3">
-                      <Link href="/search?type=rent&property=apartment">
-                        Condo
-                      </Link>
+                      <Link href="/search?type=rent&property=condo">Condo</Link>
                     </Menu.Item>
                   </Menu.ItemGroup>
                   <Menu.ItemGroup title="Commercial">

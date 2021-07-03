@@ -191,6 +191,7 @@ const Create: React.FC = () => {
 
           <Form.Item name="region" label="Region">
             <Select
+              allowClear
               showSearch
               aria-label="region"
               aria-selected="true"
@@ -230,25 +231,73 @@ const Create: React.FC = () => {
 
           <Form.Item name="layout" label="Layout">
             <Select
+            allowClear
               showSearch
               aria-label="layout"
               aria-selected="true"
               placeholder="Layout name">
-              <Select.Option value="ac1">AC-1</Select.Option>
-              <Select.Option value="ac2">AC-2</Select.Option>
-              <Select.Option value="a74">A-74</Select.Option>
+              <Select.Option value="60a6330b3462902a9c2a04cd">
+                T22
+              </Select.Option>
+              <Select.Option value="60e0359956993d63d3cba224">
+                4M421
+              </Select.Option>
+              <Select.Option value="60e035ab56993d63d3cba225">
+                4M750
+              </Select.Option>
+              <Select.Option value="60e035c856993d63d3cba226">
+                2M342
+              </Select.Option>
+              <Select.Option value="60e0360c56993d63d3cba227">
+                3M222
+              </Select.Option>
+              <Select.Option value="60e0363756993d63d3cba228">
+                3M5122
+              </Select.Option>
+              <Select.Option value="60e0366956993d63d3cba229">
+                5C22
+              </Select.Option>
+              <Select.Option value="60e0367656993d63d3cba22a">
+                1B111
+              </Select.Option>
+              <Select.Option value="60e036bf56993d63d3cba22b">
+                3WC311
+              </Select.Option>
+              <Select.Option value="60e036cd56993d63d3cba22c">
+                A11
+              </Select.Option>
             </Select>
           </Form.Item>
 
           <Form.Item name="category" label="Building">
             <Select
+            allowClear
               showSearch
               aria-label="building"
               aria-selected="true"
               placeholder="Building name">
-              <Select.Option value="ac1">AC-1</Select.Option>
-              <Select.Option value="ac2">AC-2</Select.Option>
-              <Select.Option value="a74">A-74</Select.Option>
+              <Select.Option value="60a61885c8a60e39b013aa71">A1</Select.Option>
+              <Select.Option value="60a61f12338ddd11f4f07cd9">A2</Select.Option>
+              <Select.Option value="60e03e2e56993d63d3cba22d">A3</Select.Option>
+              <Select.Option value="60e03e3456993d63d3cba22e">A4</Select.Option>
+              <Select.Option value="60e03e4556993d63d3cba22f">
+                Gallery
+              </Select.Option>
+              <Select.Option value="60e03e4e56993d63d3cba230">
+                World
+              </Select.Option>
+              <Select.Option value="60e03e5a56993d63d3cba231">
+                Halifax
+              </Select.Option>
+              <Select.Option value="60e03e7756993d63d3cba232">
+                GUM
+              </Select.Option>
+              <Select.Option value="60e03e9656993d63d3cba233">
+                Metropolis
+              </Select.Option>
+              <Select.Option value="60e03ea856993d63d3cba234">
+                ANeapolis
+              </Select.Option>
             </Select>
           </Form.Item>
 
