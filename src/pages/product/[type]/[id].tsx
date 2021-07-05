@@ -232,7 +232,7 @@ export default Product
 
 export async function getServerSideProps({params}: GetServerSidePropsContext) {
   const res = await fetch(
-    `http://localhost:5000/api/${params.type}/${params.id}`,
+    `https://digitestate.herokuapp.com/api/${params.type}/${params.id}`,
   )
   const data = await res.json()
 
