@@ -8,7 +8,7 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common'
-import {JwtAuthGuard} from '../auth/jwt/jwt-auth.guard'
+import {JwtAuthGuard} from '../user/jwt/jwt-auth.guard'
 import {CategoryService} from './category.service'
 import {CreateCategoryDto} from './dto/create-category.dto'
 import {UpdateCategoryDto} from './dto/update-category.dto'

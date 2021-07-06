@@ -1,9 +1,9 @@
-import {User} from '../../auth/schema/user.schema'
+import {User} from '../../user/schema/user.schema'
 import {Category} from '../../category/schema/category.schema'
 import {Layout} from '../../layout/schema/layout.schema'
 import {Region} from '../../region/schema/region.schema'
 
-export class CreateLivingDto {
+export class CreateProductDto {
   readonly city: string
   readonly address: string
   photos: string[]

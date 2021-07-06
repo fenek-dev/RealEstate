@@ -1,13 +1,14 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose'
 import {Document} from 'mongoose'
 import * as mongoose from 'mongoose'
-import {Living} from '../../living/schema/living.schema'
-import {Commercial} from '../../commercial/schema/commercial.schema'
+import {Product} from '../../product/schema/product.schema'
 
 export type UserDocument = User & Document
 
 @Schema()
 export class User {
+  _id: mongoose.Schema.Types.ObjectId
+
   @Prop()
   readonly name: string
 
@@ -27,12 +28,9 @@ export class User {
   readonly photo: string
 
   @Prop({
-    type: [
-      {type: mongoose.Schema.Types.ObjectId, ref: 'Living', default: []},
-      {type: mongoose.Schema.Types.ObjectId, ref: 'Commercial', default: []},
-    ],
+    type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product', default: []}],
   })
-  products: Living[] | Commercial[]
+  products: Product[]
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

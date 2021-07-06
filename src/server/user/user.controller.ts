@@ -7,7 +7,7 @@ import {
   Request,
   Patch,
 } from '@nestjs/common'
-import {AuthService} from './auth.service'
+import {AuthService} from './user.service'
 import {CreateUserDto} from './dto/create-user.dto'
 import {UpdateUserDto} from './dto/update-user.dto'
 import {JwtAuthGuard} from './jwt/jwt-auth.guard'

@@ -1,15 +1,15 @@
 import {Body, Delete, Get, Param, Patch, Post, UseGuards} from '@nestjs/common'
 import {Controller} from '@nestjs/common'
 import {ObjectId} from 'mongoose'
-import {JwtAuthGuard} from '../auth/jwt/jwt-auth.guard'
-import {CreateLivingDto} from './dto/create-living.dto'
-import {UpdateLivingDto} from './dto/update-living.dto'
-import {LivingService} from './living.service'
+import {JwtAuthGuard} from '../user/jwt/jwt-auth.guard'
+import {CreateProductDto} from './dto/create-product.dto'
+import {UpdateProductDto} from './dto/update-product.dto'
+import {ProductService} from './product.service'
 import {ISearchBody} from './types'
 
-@Controller('api/living')
-export class LivingController {
-  constructor(private livingServise: LivingService) {}
+@Controller('api/product')
+export class ProductController {
+  constructor(private livingServise: ProductService) {}
 
   /**
    * Get all living(houses) as an array
@@ -32,7 +32,7 @@ export class LivingController {
    */
   @UseGuards(JwtAuthGuard)
   @Post('/create')
-  create(@Body() dto: CreateLivingDto) {
+  create(@Body() dto: CreateProductDto) {
     return this.livingServise.create(dto)
   }
 
@@ -58,7 +58,7 @@ export class LivingController {
    */
   @UseGuards(JwtAuthGuard)
   @Patch('/update/:id')
-  edit(@Body() body: UpdateLivingDto, @Param() id: string) {
-    return this.livingServise.editLiving(id, body)
+  edit(@Body() body: UpdateProductDto, @Param() id: string) {
+    return this.livingServise.editProduct(id, body)
   }
 }

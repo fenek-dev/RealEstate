@@ -1,15 +1,15 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose'
 import {Document} from 'mongoose'
 import * as mongoose from 'mongoose'
-import {User} from '../../auth/schema/user.schema'
+import {User} from '../../user/schema/user.schema'
 import {Region} from '../../region/schema/region.schema'
 import {Layout} from '../../layout/schema/layout.schema'
 import {Category} from '../../category/schema/category.schema'
 
-export type LivingDocument = Living & Document
+export type ProductDocument = Product & Document
 
 @Schema()
-export class Living {
+export class Product {
   @Prop({required: true})
   readonly city: string
 
@@ -60,4 +60,4 @@ export class Living {
   readonly category?: Category
 }
 
-export const LivingSchema = SchemaFactory.createForClass(Living)
+export const ProductSchema = SchemaFactory.createForClass(Product)

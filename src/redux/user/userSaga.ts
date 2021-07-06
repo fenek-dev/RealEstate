@@ -3,7 +3,7 @@ import {CreateUserDto} from 'src/server/auth/dto/create-user.dto'
 import {IEmailAndPassword} from 'src/server/auth/types'
 import {Api} from '../../utils/api'
 import {setCookie} from 'src/utils/cookie'
-import {UpdateUserDto} from '../../server/auth/dto/update-user.dto'
+import {UpdateUserDto} from '../../server/user/dto/update-user.dto'
 import {IAction, IUserResponse, UserActions} from '../types'
 import {errorUserAction, loadingUserAction} from './userAction'
 
