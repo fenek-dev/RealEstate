@@ -1,6 +1,6 @@
 import {User} from '../../user/user.model'
 import {Category} from '../../category/category.model'
-import {Layout} from '../../layout/schema/layout.schema'
+import {Layout} from '../../layout/layout.model'
 import {Region} from '../../region/schema/region.schema'
 
 export class CreateProductDto {
