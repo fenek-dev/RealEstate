@@ -1,14 +1,13 @@
 import {Module} from '@nestjs/common'
 import {RegionService} from './region.service'
-import {RegionController} from './region.controller'
 import {MongooseModule} from '@nestjs/mongoose'
-import {Region, RegionSchema} from './schema/region.schema'
+import {Region, RegionSchema} from './region.model'
+import {RegionResolver} from './region.resolver'
 
 @Module({
   imports: [
     MongooseModule.forFeature([{name: Region.name, schema: RegionSchema}]),
   ],
-  controllers: [RegionController],
-  providers: [RegionService],
+  providers: [RegionService, RegionResolver],
 })
 export class RegionModule {}
