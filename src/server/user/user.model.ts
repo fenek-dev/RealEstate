@@ -2,7 +2,7 @@ import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose'
 import {Document} from 'mongoose'
 import * as mongoose from 'mongoose'
 import {Field, ObjectType} from '@nestjs/graphql'
-import {Product} from '../product/schema/product.schema'
+import {Product} from '../product/product.model'
 
 export type UserDocument = User & Document
 

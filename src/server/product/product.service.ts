@@ -1,12 +1,11 @@
-import {HttpException, HttpStatus, Injectable} from '@nestjs/common'
+import {Injectable} from '@nestjs/common'
 import {InjectModel} from '@nestjs/mongoose'
 import {Model, ObjectId} from 'mongoose'
 import {User, UserDocument} from '../user/user.model'
 import {CloudinaryService} from '../cloudinary/cloudinary.service'
-import {CreateProductDto} from './dto/create-product.dto'
-import {UpdateProductDto} from './dto/update-product.dto'
-import {Product, ProductDocument} from './schema/product.schema'
+import {Product, ProductDocument} from './product.model'
 import {ISearchBody} from './types'
+import {CreateProductInput} from './product.inputs'
 
 @Injectable()
 export class ProductService {
@@ -16,20 +15,15 @@ export class ProductService {
     private cloudinaryService: CloudinaryService,
   ) {}
 
-  async getAll(): Promise<Product[]> {
+  async findAll(): Promise<Product[]> {
     return await this.ProductModel.find().exec()
   }
 
-  async getOne(id: ObjectId): Promise<Product> {
-    return await this.ProductModel.findById(id)
-      .populate('region')
-      .populate('author')
-      .populate('layout')
-      .populate('category')
-      .exec()
+  async findOne(id: ObjectId) {
+    return await this.ProductModel.findById(id).exec()
   }
 
-  async create(dto: CreateProductDto): Promise<Product> {
+  async create(dto: CreateProductInput) {
     const photos = await Promise.all(
       dto.photos.map(
         async (item): Promise<string> =>
@@ -38,26 +32,32 @@ export class ProductService {
           ).url,
       ),
     )
-    const living = await this.ProductModel.create({...dto, photos})
-    await living.save()
-    await this.userModel.findByIdAndUpdate(living.author, {
-      $push: {products: living._id},
+    const product = await this.ProductModel.create({...dto, photos})
+    await product.save()
+    await this.userModel.findByIdAndUpdate(product.author, {
+      $push: {products: product._id},
     })
-    return living
+    return product
   }
 
-  async remove(id: ObjectId): Promise<ObjectId> {
-    const Product = await this.ProductModel.findByIdAndDelete(id).exec()
-    return Product._id
+  async delete(id: ObjectId) {
+    const product = await this.ProductModel.findByIdAndDelete(id).exec()
+    return product
   }
 
   async search(body: ISearchBody): Promise<Product[]> {
     // Get all setting parametrs from given body object
-    const {baths, beds, property, type, city} = body
+    const {
+      baths,
+      beds,
+      property,
+      type,
+      city,
+      min = Number.MIN_SAFE_INTEGER,
+      max = Number.MAX_SAFE_INTEGER,
+    } = body
     // Search for suitable Products
     const regCity = new RegExp(city, 'ig')
-    const max = +body.max || Number.MAX_VALUE
-    const min = +body.min || Number.MIN_VALUE
 
     const condidate = await this.ProductModel.where('type', type)
       .where('city', regCity)
@@ -66,25 +66,13 @@ export class ProductService {
       .gte(min)
       .where('property', property)
       .where('baths')
-      .lte(baths || max)
-      .gte(baths || min)
+      .lte(baths || Number.MAX_VALUE)
+      .gte(baths || Number.MIN_VALUE)
       .where('beds')
-      .lte(beds || max)
-      .gte(beds || min)
+      .lte(beds || Number.MAX_VALUE)
+      .gte(beds || Number.MIN_VALUE)
       .exec()
 
     return condidate
-  }
-
-  /**
-   * Updating Product fields
-   */
-  async editProduct(id: string, dto: UpdateProductDto) {
-    const Product = await this.ProductModel.findById(id)
-    if (!Product) {
-      throw new HttpException('Product not found', HttpStatus.NOT_FOUND)
-    }
-    await Product.updateOne(dto).exec()
-    return dto
   }
 }
