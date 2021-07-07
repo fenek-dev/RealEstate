@@ -15,6 +15,8 @@ import {User} from '../user/user.model'
 import {Region} from '../region/region.model'
 import Layout from 'antd/lib/layout/layout'
 import {Category} from '../category/category.model'
+import {UseGuards} from '@nestjs/common'
+import {JwtAuthGuard} from '../user/jwt/jwt-auth.guard'
 
 @Resolver(() => Product)
 export class ProductResolver {
@@ -33,11 +35,13 @@ export class ProductResolver {
   }
 
   @Mutation(() => Product)
+  @UseGuards(JwtAuthGuard)
   async createProduct(@Args('payload') payload: CreateProductInput) {
     return await this.productService.create(payload)
   }
 
   @Mutation(() => Product)
+  @UseGuards(JwtAuthGuard)
   async deleteProduct(
     @Args('_id', {type: () => String}) _id: MongooseSchema.Types.ObjectId,
   ) {

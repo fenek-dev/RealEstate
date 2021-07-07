@@ -3,6 +3,8 @@ import {Schema as MongooseSchema} from 'mongoose'
 import {LayoutService} from './layout.service'
 import {Layout} from './layout.model'
 import {CreateLayoutInput} from './layout.inputs'
+import {UseGuards} from '@nestjs/common'
+import {JwtAuthGuard} from '../user/jwt/jwt-auth.guard'
 
 @Resolver(() => Layout)
 export class LayoutResolver {
@@ -21,6 +23,7 @@ export class LayoutResolver {
   }
 
   @Mutation(() => Layout)
+  @UseGuards(JwtAuthGuard)
   async createCategory(@Args('payload') payload: CreateLayoutInput) {
     return await this.layoutService.create(payload)
   }

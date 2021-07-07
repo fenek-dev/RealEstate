@@ -3,6 +3,8 @@ import {Schema as MongooseSchema} from 'mongoose'
 import {Category} from './category.model'
 import {CategoryService} from './category.service'
 import {CreateCategoryInput} from './category.inputs'
+import {UseGuards} from '@nestjs/common'
+import {JwtAuthGuard} from '../user/jwt/jwt-auth.guard'
 
 @Resolver(() => Category)
 export class CategoryResolver {
@@ -21,6 +23,7 @@ export class CategoryResolver {
   }
 
   @Mutation(() => Category)
+  @UseGuards(JwtAuthGuard)
   async createCategory(@Args('payload') payload: CreateCategoryInput) {
     return await this.categoryService.create(payload)
   }
