@@ -12,7 +12,7 @@ export class UserResolver {
   constructor(private userService: UserService) {}
 
   @Query(() => User)
-  async login(
+  async loginUser(
     @Args('email') email: string,
     @Args('password') password: string,
   ) {
@@ -20,20 +20,20 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  async person(
+  async findUserById(
     @Args('_id', {type: () => String}) _id: MongooseSchema.Types.ObjectId,
   ) {
     return this.userService.findById(_id)
   }
 
   @Mutation(() => User)
-  async createPerson(@Args('payload') payload: CreateUserInput) {
+  async createUser(@Args('payload') payload: CreateUserInput) {
     return this.userService.create(payload)
   }
 
   @Mutation(() => User)
   @UseGuards(JwtAuthGuard)
-  async updatePerson(@Args('payload') payload: UpdateUserInput) {
+  async updateUser(@Args('payload') payload: UpdateUserInput) {
     return this.userService.update(payload)
   }
 }

@@ -1,5 +1,5 @@
 import {User} from '../../user/user.model'
-import {Category} from '../../category/schema/category.schema'
+import {Category} from '../../category/category.model'
 import {Layout} from '../../layout/schema/layout.schema'
 import {Region} from '../../region/schema/region.schema'
 

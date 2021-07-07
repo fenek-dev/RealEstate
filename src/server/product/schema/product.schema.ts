@@ -4,7 +4,7 @@ import * as mongoose from 'mongoose'
 import {User} from '../../user/user.model'
 import {Region} from '../../region/schema/region.schema'
 import {Layout} from '../../layout/schema/layout.schema'
-import {Category} from '../../category/schema/category.schema'
+import {Category} from '../../category/category.model'
 
 export type ProductDocument = Product & Document
 
