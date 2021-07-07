@@ -1,13 +1,13 @@
 import {Module} from '@nestjs/common'
-import {AuthController} from './user.controller'
-import {AuthService} from './user.service'
+import {UserService} from './user.service'
 import {PassportModule} from '@nestjs/passport'
 import {JwtModule} from '@nestjs/jwt'
 import {JwtStrategy} from './jwt/jwt.strategy'
 import {ConfigModule} from '@nestjs/config'
 import {MongooseModule} from '@nestjs/mongoose'
-import {User, UserSchema} from './schema/user.schema'
+import {User, UserSchema} from './user.model'
 import {CloudinaryService} from '../cloudinary/cloudinary.service'
+import {UserResolver} from './user.resolver'
 
 @Module({
   imports: [
@@ -19,7 +19,6 @@ import {CloudinaryService} from '../cloudinary/cloudinary.service'
       signOptions: {expiresIn: '30d'},
     }),
   ],
-  controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, CloudinaryService],
+  providers: [UserService, JwtStrategy, CloudinaryService, UserResolver],
 })
 export class AuthModule {}

@@ -1,4 +1,4 @@
-import {User} from '../../user/schema/user.schema'
+import {User} from '../../user/user.model'
 import {Category} from '../../category/schema/category.schema'
 import {Layout} from '../../layout/schema/layout.schema'
 import {Region} from '../../region/schema/region.schema'
@@ -6,7 +6,7 @@ import {Region} from '../../region/schema/region.schema'
 export class CreateProductDto {
   readonly city: string
   readonly address: string
-  photos: string[]
+  readonly photos: string[]
   readonly type: string
   readonly area: number
   readonly beds?: number

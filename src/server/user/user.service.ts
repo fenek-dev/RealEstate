@@ -1,16 +1,16 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common'
 import {JwtService} from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
-import {User, UserDocument} from './schema/user.schema'
+import {User, UserDocument} from './user.model'
 import {IEmailAndPassword} from './types'
 import {InjectModel} from '@nestjs/mongoose'
 import {Model} from 'mongoose'
-import {CreateUserDto} from './dto/create-user.dto'
-import {UpdateUserDto} from './dto/update-user.dto'
 import {CloudinaryService} from '../cloudinary/cloudinary.service'
+import {CreateUserInput, UpdateUserInput} from './user.inputs'
+import {Schema as MongooseSchema} from 'mongoose'
 
 @Injectable()
-export class AuthService {
+export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private jwtService: JwtService,
@@ -21,7 +21,7 @@ export class AuthService {
    * Util function for checking user existing
    */
   async validateUser(email: string, password: string) {
-    const user = await this.findOne(email)
+    const user = await this.userModel.findOne({email}).exec()
     if (!user) {
       throw new HttpException('Incorrect email/password', HttpStatus.CONFLICT)
     }
@@ -53,16 +53,16 @@ export class AuthService {
   /**
    * Find a user by email
    */
-  async findOne(email: string) {
-    return await this.userModel.findOne({email}).populate('products').exec()
+  async findById(_id: MongooseSchema.Types.ObjectId) {
+    return await this.userModel.findById(_id).populate('products').exec()
   }
 
   /**
    * Creating user
    */
-  async create(dto: CreateUserDto) {
+  async create(dto: CreateUserInput) {
     const {email, password, type, name, phone} = dto
-    const candidate = await this.findOne(email)
+    const candidate = await this.userModel.findOne({email}).exec()
     if (candidate) {
       throw new HttpException('User already exists', HttpStatus.CONFLICT)
     }
@@ -85,7 +85,7 @@ export class AuthService {
     return {_id: user._id, email, name, type, products: [], token, phone}
   }
 
-  async update(dto: UpdateUserDto) {
+  async update(dto: UpdateUserInput) {
     const user = await this.userModel.findById(dto._id)
     if (user.email !== dto.email) {
       const condidate = await this.userModel.find({email: user.email}).exec()

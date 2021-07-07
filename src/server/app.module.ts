@@ -8,17 +8,25 @@ import {CategoryModule} from './category/category.module'
 import {LayoutModule} from './layout/layout.module'
 import {RegionModule} from './region/region.module'
 import {CloudinaryModule} from './cloudinary/cloudinary.module'
+import {GraphQLModule} from '@nestjs/graphql'
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_URI, {useFindAndModify: false}),
+    GraphQLModule.forRoot({
+      autoSchemaFile: true,
+      sortSchema: true,
+      playground: true,
+      debug: false,
+      context: ({req}) => ({req}),
+    }),
     ProductModule,
     CategoryModule,
     LayoutModule,
     RegionModule,
     AuthModule,
-    ViewModule,
+    // ViewModule,
     CloudinaryModule,
   ],
 })

@@ -1,7 +1,7 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common'
 import {InjectModel} from '@nestjs/mongoose'
 import {Model, ObjectId} from 'mongoose'
-import {User, UserDocument} from '../user/schema/user.schema'
+import {User, UserDocument} from '../user/user.model'
 import {CloudinaryService} from '../cloudinary/cloudinary.service'
 import {CreateProductDto} from './dto/create-product.dto'
 import {UpdateProductDto} from './dto/update-product.dto'

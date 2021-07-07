@@ -3,7 +3,7 @@ import {ProductController} from './product.controller'
 import {ProductService} from './product.service'
 import {MongooseModule} from '@nestjs/mongoose'
 import {Product, ProductSchema} from './schema/product.schema'
-import {User, UserSchema} from '../user/schema/user.schema'
+import {User, UserSchema} from '../user/user.model'
 import {CloudinaryService} from '../cloudinary/cloudinary.service'
 @Module({
   imports: [

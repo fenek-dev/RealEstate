@@ -1,7 +1,7 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose'
 import {Document} from 'mongoose'
 import * as mongoose from 'mongoose'
-import {User} from '../../user/schema/user.schema'
+import {User} from '../../user/user.model'
 import {Region} from '../../region/schema/region.schema'
 import {Layout} from '../../layout/schema/layout.schema'
 import {Category} from '../../category/schema/category.schema'
