@@ -22,7 +22,7 @@ const Signup: React.FC = () => {
     })
     if (data) {
       setCookie('token', data.createUser.token)
-      router.push('/profile')
+      router.replace('profile')
     }
   }, [])
 

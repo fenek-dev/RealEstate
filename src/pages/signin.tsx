@@ -1,29 +1,34 @@
 import MainLayout from '../layouts/Main'
-import React, {useCallback, useEffect} from 'react'
+import React, {useCallback} from 'react'
 import {Form, Input, Button} from 'antd'
 import {Typography} from 'antd'
 import styles from '../styles/signin.module.scss'
 import Head from 'next/head'
-import {useDispatch, useSelector} from 'react-redux'
 import {useRouter} from 'next/router'
-import {loginUserAction} from '../redux/user/userAction'
-import {IRootReducer} from '../redux/rootReducer'
+import {LOGIN_USER} from '../queries'
+import {setCookie} from '../utils/cookie'
+import client from '../utils/graphql-client'
 
 const {Title, Text, Link} = Typography
 
 const Signin: React.FC = () => {
-  const state = useSelector((store: IRootReducer) => store.user)
-  const dispatch = useDispatch()
   const router = useRouter()
-  const onFinish = useCallback((values: any) => {
-    dispatch(loginUserAction(values))
-  }, [])
-
-  useEffect(() => {
-    if (state._id) {
-      router.replace('profile')
-    }
-  }, [state])
+  const onFinish = useCallback(
+    async ({email, password}: {email: string; password: string}) => {
+      const {data, error} = await client.query({
+        query: LOGIN_USER,
+        variables: {
+          email,
+          password,
+        },
+      })
+      if (data) {
+        setCookie('token', data.loginUser.token)
+        router.replace('profile')
+      }
+    },
+    [],
+  )
 
   return (
     <MainLayout>
