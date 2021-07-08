@@ -12,8 +12,8 @@ export class User {
   @Field(() => String)
   readonly _id: mongoose.Schema.Types.ObjectId
 
-  @Field(() => String)
-  readonly token: string
+  @Field(() => String, {nullable: true})
+  readonly token?: string
 
   @Field(() => String)
   @Prop()
@@ -31,13 +31,13 @@ export class User {
   @Prop()
   readonly type: string
 
-  @Field(() => String)
+  @Field(() => String, {nullable: true})
   @Prop()
-  readonly phone: string
+  readonly phone?: string
 
-  @Field(() => String)
+  @Field(() => String, {nullable: true})
   @Prop()
-  readonly photo: string
+  readonly photo?: string
 
   @Field(() => [String])
   @Prop({

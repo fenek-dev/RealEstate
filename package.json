@@ -5,10 +5,6 @@
   "author": "Maks_Fenek",
   "private": true,
   "license": "UNLICENSED",
-  "engines": {
-    "node": "14.x",
-    "npm": "6.x"
-  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "next build && nest build",
@@ -30,6 +26,7 @@
   "dependencies": {
     "-": "0.0.1",
     "@ant-design/icons": "^4.6.2",
+    "@apollo/client": "^3.3.21",
     "@nestjs/cli": "^7.6.0",
     "@nestjs/common": "^7.6.15",
     "@nestjs/config": "^0.6.3",

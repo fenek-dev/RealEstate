@@ -26,7 +26,7 @@ import {GraphQLModule} from '@nestjs/graphql'
     LayoutModule,
     RegionModule,
     AuthModule,
-    // ViewModule,
+    ViewModule,
     CloudinaryModule,
   ],
 })

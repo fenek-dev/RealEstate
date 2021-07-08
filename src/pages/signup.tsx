@@ -2,26 +2,30 @@ import MainLayout from '../layouts/Main'
 import Head from 'next/head'
 import {Button, Checkbox, Form, Input, Radio, Typography} from 'antd'
 import styles from '../styles/signin.module.scss'
-import {useDispatch, useSelector} from 'react-redux'
-import {useCallback, useEffect} from 'react'
-import {createUserAction} from '../redux/user/userAction'
+import {useCallback} from 'react'
 import {useRouter} from 'next/router'
-import {IRootReducer} from '../redux/rootReducer'
+import {useMutation} from '@apollo/client'
+import {SIGNUP_USER} from '../queries'
+import {User} from '../server/user/user.model'
+import {setCookie} from '../utils/cookie'
 const {Title, Text, Link} = Typography
 
 const Signup: React.FC = () => {
-  const state = useSelector((store: IRootReducer) => store.user)
-  const dispatch = useDispatch()
+  const [signupUser, {data, loading, error}] =
+    useMutation<{createUser: User}>(SIGNUP_USER)
   const router = useRouter()
-  const onFinish = useCallback((values: any) => {
-    dispatch(createUserAction(values))
+  const onFinish = useCallback(async (input: any) => {
+    const {data, errors} = await signupUser({
+      variables: {
+        input,
+      },
+    })
+    if (data) {
+      setCookie('token', data.createUser.token)
+      router.push('/profile')
+    }
   }, [])
 
-  useEffect(() => {
-    if (state._id) {
-      router.replace('profile')
-    }
-  }, [state])
   return (
     <MainLayout>
       <Head>
