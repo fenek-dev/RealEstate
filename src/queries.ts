@@ -20,3 +20,14 @@ export const LOGIN_USER = gql`
     }
   }
 `
+
+export const TOKEN_USER = gql`
+  query TokenUser {
+    token {
+      _id
+      name
+      type
+      email
+    }
+  }
+`

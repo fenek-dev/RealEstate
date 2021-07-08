@@ -1,26 +1,40 @@
-import {useCallback, useEffect} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {addUserAction} from 'src/redux/user/userAction'
+import {useRouter} from 'next/router'
+import {useCallback, useEffect, useState} from 'react'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
-import {IRootReducer} from '../../redux/rootReducer'
-import {logoutUserAction} from '../../redux/user/userAction'
+import {TOKEN_USER} from '../../queries'
+import {User} from '../../server/user/user.model'
+import {getCookie, setCookie} from '../../utils/cookie'
+import client from '../../utils/graphql-client'
 import styles from './main.module.scss'
 
 const MainLayout: React.FC = ({children}) => {
-  const dispatch = useDispatch()
-  const state = useSelector((store: IRootReducer) => store)
+  const router = useRouter()
+  const [user, setUser] = useState('')
 
   const onLogout = useCallback(() => {
-    dispatch(logoutUserAction())
+    setCookie('token', 'hello')
+    router.replace('/')
   }, [])
 
   useEffect(() => {
-    dispatch(addUserAction())
-  }, [])
+    client
+      .query<{token: User}>({
+        query: TOKEN_USER,
+        context: {
+          headers: {
+            Authorization: `Bearer ${getCookie('token')}`,
+          },
+        },
+      })
+      .then(res => {
+        setUser(res.data.token.name)
+      })
+      .catch(err => console.error(err))
+  })
   return (
     <div className={styles.container}>
-      <Header userName={state.user.name} onLogout={onLogout} />
+      <Header userName={user} onLogout={onLogout} />
       {children}
       <Footer />
     </div>

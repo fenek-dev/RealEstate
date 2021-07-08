@@ -1,15 +1,32 @@
-import {Args, Mutation, Query, Resolver} from '@nestjs/graphql'
+import {
+  Args,
+  GqlExecutionContext,
+  Mutation,
+  Query,
+  Resolver,
+} from '@nestjs/graphql'
 import {Schema as MongooseSchema} from 'mongoose'
 
 import {User} from './user.model'
 import {UserService} from './user.service'
 import {CreateUserInput, UpdateUserInput} from './user.inputs'
-import {UseGuards} from '@nestjs/common'
+import {createParamDecorator, UseGuards} from '@nestjs/common'
 import {JwtAuthGuard} from './jwt/jwt-auth.guard'
+
+const CurrentUser = createParamDecorator((data, req) => {
+  const ctx = GqlExecutionContext.create(req).getContext()
+  return ctx.req.user
+})
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(private userService: UserService) {}
+
+  @Query(() => User)
+  @UseGuards(JwtAuthGuard)
+  async token(@CurrentUser() user: User) {
+    return user
+  }
 
   @Query(() => User)
   async loginUser(
