@@ -1,4 +1,3 @@
-import MainLayout from '../layouts/Main'
 import Head from 'next/head'
 import {Button, Checkbox, Form, Input, Radio, Typography} from 'antd'
 import styles from '../styles/signin.module.scss'
@@ -27,7 +26,7 @@ const Signup: React.FC = () => {
   }, [])
 
   return (
-    <MainLayout>
+    <>
       <Head>
         <title>DigitalEstate | Sign up</title>
       </Head>
@@ -114,7 +113,7 @@ const Signup: React.FC = () => {
           </Link>
         </Text>
       </section>
-    </MainLayout>
+    </>
   )
 }
 

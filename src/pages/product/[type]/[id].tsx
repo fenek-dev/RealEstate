@@ -1,7 +1,6 @@
 import React from 'react'
 import {Carousel, Typography, Card, Image, Divider, Button} from 'antd'
 import {HomeOutlined, ExpandOutlined} from '@ant-design/icons'
-import MainLayout from '../../../layouts/Main'
 import Head from 'next/head'
 import styles from './product.module.scss'
 import {IProduct} from '../../../types'
@@ -33,7 +32,7 @@ const Product: React.FC<IProduct> = ({
   }
 
   return (
-    <MainLayout>
+    <>
       <Head>
         <title>DigitalEstate | {address}</title>
         <meta name="description" content={description} />
@@ -224,7 +223,7 @@ const Product: React.FC<IProduct> = ({
           </Card>
         </aside>
       </section>
-    </MainLayout>
+    </>
   )
 }
 

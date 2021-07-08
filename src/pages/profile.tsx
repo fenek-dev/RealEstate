@@ -1,4 +1,3 @@
-import MainLayout from '../layouts/Main'
 import {Space, Typography} from 'antd'
 import Head from 'next/head'
 import {useCallback, useEffect, useState} from 'react'
@@ -76,7 +75,7 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
   )
 
   return (
-    <MainLayout>
+    <>
       <Head>
         <title>DigitalEstate | Profile</title>
       </Head>
@@ -108,7 +107,7 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
           )}
         </TabPane>
       </Tabs>
-    </MainLayout>
+    </>
   )
 }
 

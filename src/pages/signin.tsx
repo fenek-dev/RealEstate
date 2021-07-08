@@ -1,4 +1,3 @@
-import MainLayout from '../layouts/Main'
 import React, {useCallback} from 'react'
 import {Form, Input, Button} from 'antd'
 import {Typography} from 'antd'
@@ -31,7 +30,7 @@ const Signin: React.FC = () => {
   )
 
   return (
-    <MainLayout>
+    <>
       <Head>
         <title>DigitalEstate | Sign in</title>
       </Head>
@@ -81,7 +80,7 @@ const Signin: React.FC = () => {
           <Link href="/signup">Create an account</Link>
         </Button>
       </section>
-    </MainLayout>
+    </>
   )
 }
 

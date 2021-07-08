@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import MainLayout from '../layouts/Main'
 import {
   Space,
   Typography,
@@ -86,7 +85,7 @@ const Create: React.FC = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       <Head>
         <title>DigitalEstate | Create a product</title>
       </Head>
@@ -231,7 +230,7 @@ const Create: React.FC = () => {
 
           <Form.Item name="layout" label="Layout">
             <Select
-            allowClear
+              allowClear
               showSearch
               aria-label="layout"
               aria-selected="true"
@@ -271,7 +270,7 @@ const Create: React.FC = () => {
 
           <Form.Item name="category" label="Building">
             <Select
-            allowClear
+              allowClear
               showSearch
               aria-label="building"
               aria-selected="true"
@@ -312,7 +311,7 @@ const Create: React.FC = () => {
           </Form.Item>
         </Form>
       </Space>
-    </MainLayout>
+    </>
   )
 }
 

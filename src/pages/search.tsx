@@ -1,5 +1,4 @@
 import {useRouter} from 'next/dist/client/router'
-import MainLayout from '../layouts/Main'
 import Search from '../components/Search'
 import {Empty, Typography} from 'antd'
 import styles from '../styles/search.module.scss'
@@ -39,7 +38,7 @@ const SearchPage: React.FC<ISearchPage> = ({query}) => {
     setProducts(state.search.products)
   }, [state.search])
   return (
-    <MainLayout>
+    <>
       <Head>
         <title>
           DigitalEstate | {city ? city : 'World'}{' '}
@@ -80,7 +79,7 @@ const SearchPage: React.FC<ISearchPage> = ({query}) => {
           <Empty />
         )}
       </section>
-    </MainLayout>
+    </>
   )
 }
 
