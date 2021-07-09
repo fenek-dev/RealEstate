@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import {Form, Input, Button} from 'antd'
 import {Typography} from 'antd'
 import styles from '../styles/signin.module.scss'
@@ -7,27 +7,28 @@ import {useRouter} from 'next/router'
 import {LOGIN_USER} from '../queries'
 import {setCookie} from '../utils/cookie'
 import client from '../utils/graphql-client'
+import {useLazyQuery} from '@apollo/client'
+import {User} from '../server/user/user.model'
 
 const {Title, Text, Link} = Typography
 
 const Signin: React.FC = () => {
+  const [loginUser, {data}] = useLazyQuery<{loginUser: User}>(LOGIN_USER)
   const router = useRouter()
-  const onFinish = useCallback(
-    async ({email, password}: {email: string; password: string}) => {
-      const {data, error} = await client.query({
-        query: LOGIN_USER,
-        variables: {
-          email,
-          password,
-        },
-      })
-      if (data) {
-        setCookie('token', data.loginUser.token)
-        router.replace('profile')
-      }
-    },
-    [],
-  )
+  const onFinish = useCallback((payload: any) => {
+    loginUser({
+      variables: {
+        ...payload,
+      },
+    })
+  }, [])
+
+  useEffect(() => {
+    if (data) {
+      setCookie('token', data.loginUser.token)
+      router.replace('profile')
+    }
+  }, [data])
 
   return (
     <>

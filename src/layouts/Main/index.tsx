@@ -1,3 +1,4 @@
+import {useLazyQuery} from '@apollo/client'
 import {useRouter} from 'next/router'
 import {useCallback, useEffect, useState} from 'react'
 import Footer from '../../components/Footer'
@@ -10,6 +11,7 @@ import styles from './main.module.scss'
 
 const MainLayout: React.FC = ({children}) => {
   const router = useRouter()
+  const [getUserFromToken, {data}] = useLazyQuery<{token: User}>(TOKEN_USER)
   const [user, setUser] = useState('')
 
   const onLogout = useCallback(() => {
@@ -18,20 +20,14 @@ const MainLayout: React.FC = ({children}) => {
   }, [])
 
   useEffect(() => {
-    client
-      .query<{token: User}>({
-        query: TOKEN_USER,
-        context: {
-          headers: {
-            Authorization: `Bearer ${getCookie('token')}`,
-          },
+    getUserFromToken({
+      context: {
+        headers: {
+          Authorization: `Bearer ${getCookie('token')}`,
         },
-      })
-      .then(res => {
-        setUser(res.data.token.name)
-      })
-      .catch(err => console.error(err))
-  })
+      },
+    })
+  }, [])
   return (
     <div className={styles.container}>
       <Header userName={user} onLogout={onLogout} />
