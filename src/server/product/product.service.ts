@@ -32,7 +32,11 @@ export class ProductService {
           ).url,
       ),
     )
-    const product = await this.ProductModel.create({...dto, photos})
+    const product = await this.ProductModel.create({
+      ...dto,
+      photos,
+      date: Date.now(),
+    })
     await product.save()
     await this.userModel.findByIdAndUpdate(product.author, {
       $push: {products: product._id},

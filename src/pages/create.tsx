@@ -11,11 +11,13 @@ import {
   Radio,
 } from 'antd'
 import {PlusOutlined} from '@ant-design/icons'
-import {useEffect, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import {useRouter} from 'next/router'
-import {useDispatch, useSelector} from 'react-redux'
-import {IRootReducer} from '../redux/rootReducer'
-import {addProductAction} from '../redux/product/productAction'
+import {useMutation} from '@apollo/client'
+import {CREATE_PRODUCT} from '../queries'
+import {Product} from '../server/product/product.model'
+import {UserContext} from '../utils/context'
+import {getCookie} from '../utils/cookie'
 
 const {Title} = Typography
 
@@ -29,20 +31,21 @@ function getBase64(file) {
 }
 
 const Create: React.FC = () => {
-  const store = useSelector((state: IRootReducer) => state)
-
+  const [createProduct, {data, loading, error}] = useMutation<{
+    createProduct: Product
+  }>(CREATE_PRODUCT)
+  const {user} = useContext(UserContext)
   const [previewVisible, setPreviewVisible] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
   const [fileList, setFileList] = useState([])
   const [files, setFiles] = useState([])
-  const [error, setError] = useState<{statusCode: number; message: string}>()
   const router = useRouter()
-  const dispatch = useDispatch()
+
   useEffect(() => {
-    if (!store.user._id && store.user.loading) {
+    if (!user?._id) {
       router.push('/signup')
     }
-  }, [store.user._id, store.user.loading])
+  }, [user])
 
   const handleCancel = () => setPreviewVisible(false)
 
@@ -71,16 +74,27 @@ const Create: React.FC = () => {
 
   const onFinish = (values: any) => {
     if (fileList.length < 1) {
-      setError({statusCode: 0, message: 'Required at least 1 image'})
+      // setError({statusCode: 0, message: 'Required at least 1 image'})
     } else {
-      dispatch(
-        addProductAction({
-          ...values,
-          photos: files,
-          author: store.user._id,
-          date: Date.now(),
-        }),
-      )
+      const input = {
+        ...values,
+        area: +values.area,
+        beds: +values.beds,
+        baths: +values.baths,
+        price: +values.price,
+        photos: files,
+        author: user?._id,
+      }
+      createProduct({
+        variables: {
+          input,
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${getCookie('token')}`,
+          },
+        },
+      })
     }
   }
 

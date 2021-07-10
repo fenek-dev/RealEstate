@@ -31,3 +31,11 @@ export const TOKEN_USER = gql`
     }
   }
 `
+
+export const CREATE_PRODUCT = gql`
+  mutation CreateProduct($input: CreateProductInput!) {
+    createProduct(payload: $input) {
+      address
+    }
+  }
+`

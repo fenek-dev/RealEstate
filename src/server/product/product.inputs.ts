@@ -9,7 +9,7 @@ export class CreateProductInput {
   @Field(() => String)
   readonly address: string
 
-  @Field(() => [String])
+  @Field(() => [String], {defaultValue: []})
   readonly photos: string[]
 
   @Field(() => String)
@@ -29,9 +29,6 @@ export class CreateProductInput {
 
   @Field(() => Int)
   readonly price: number
-
-  @Field(() => Int)
-  readonly date: number
 
   @Field(() => String, {nullable: true})
   readonly property?: string
