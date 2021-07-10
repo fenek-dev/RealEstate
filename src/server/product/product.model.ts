@@ -75,7 +75,7 @@ export class Product {
   readonly region?: mongoose.Schema.Types.ObjectId | Region
 
   @Field(() => User)
-  @Prop({type: mongoose.Schema.Types.ObjectId, ref: User.name, required: true})
+  @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true})
   readonly author: mongoose.Schema.Types.ObjectId | User
 
   @Field(() => Layout, {nullable: true})

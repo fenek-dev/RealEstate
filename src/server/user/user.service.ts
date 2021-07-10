@@ -93,16 +93,21 @@ export class UserService {
         throw new HttpException('Email already exists', HttpStatus.CONFLICT)
       }
     }
-    await this.userModel
+    let photo
+    if (dto.photo) {
+      photo = await this.cloudinaryService.uploadImage(dto.photo)
+    }
+    const updatedUser = await this.userModel
       .findByIdAndUpdate(dto._id, {
         email: dto.email,
         name: dto.name,
         phone: dto.phone,
+        photo,
       })
       .select('-password')
       .exec()
 
-    return dto
+    return updatedUser
   }
 
   async upload(file: string, id: string) {

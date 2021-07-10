@@ -3,21 +3,23 @@ import {ISearchProduct} from '../../types'
 import SearchCard from '../SearchCard'
 import styles from '../../styles/search.module.scss'
 import {Empty, Typography} from 'antd'
+import {Product} from '../../server/product/product.model'
 
 const {Paragraph} = Typography
 
 interface IProperties {
-  products: ISearchProduct[]
+  products: ISearchProduct[] | Product[] | any
 }
 
 const Properties: React.FC<IProperties> = ({products}) => {
+  
   return (
     <>
       <Paragraph>
-        {products.length} object{products.length === 1 ? '' : 's'}
+        {products?.length} object{products?.length === 1 ? '' : 's'}
       </Paragraph>
       <section className={styles.result}>
-        {products.length > 0 ? (
+        {products?.length > 0 ? (
           products.map(item => (
             <SearchCard
               _id={item._id}

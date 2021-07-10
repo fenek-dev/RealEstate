@@ -39,9 +39,11 @@ export class User {
   @Prop()
   readonly photo?: string
 
-  @Field(() => [String])
+  @Field(() => [Product])
   @Prop({
-    type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product', default: []}],
+    type: [
+      {type: mongoose.Schema.Types.ObjectId, ref: Product.name, default: []},
+    ],
   })
   products: mongoose.Schema.Types.ObjectId[] | Product[]
 }

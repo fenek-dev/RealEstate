@@ -16,7 +16,7 @@ import {Region} from '../region/region.model'
 import {Category} from '../category/category.model'
 import {UseGuards} from '@nestjs/common'
 import {JwtAuthGuard} from '../user/jwt/jwt-auth.guard'
-import { Layout } from '../layout/layout.model'
+import {Layout} from '../layout/layout.model'
 
 @Resolver(() => Product)
 export class ProductResolver {

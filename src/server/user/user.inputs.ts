@@ -24,5 +24,7 @@ export class UpdateUserInput {
   @Field(() => String)
   readonly email: string
   @Field(() => String, {nullable: true})
+  readonly photo?: string
+  @Field(() => String, {nullable: true})
   readonly phone?: string
 }

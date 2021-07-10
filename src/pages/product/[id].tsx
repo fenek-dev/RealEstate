@@ -235,7 +235,7 @@ export default ProductPage
 export async function getServerSideProps({params}: GetServerSidePropsContext) {
   const {data} = await client.query<{getProductById: Product}>({
     query: GET_PRODUCT,
-    variables: {id: params.id}
+    variables: {id: params.id},
   })
 
   return {

@@ -32,6 +32,44 @@ export const TOKEN_USER = gql`
   }
 `
 
+export const FULL_USER = gql`
+  query GetFullUser($id: String!) {
+    findUserById(_id: $id) {
+      _id
+      name
+      type
+      email
+      photo
+      phone
+      products(populate: true) {
+        address
+        area
+        photos
+        property
+        price
+        description
+        date
+        type
+        city
+        beds
+        baths
+      }
+    }
+  }
+`
+
+export const EDIT_USER = gql`
+  mutation EditUser($input: UpdateUserInput!) {
+    updateUser(payload: $input) {
+      name
+      type
+      email
+      photo
+      phone
+    }
+  }
+`
+
 export const CREATE_PRODUCT = gql`
   mutation CreateProduct($input: CreateProductInput!) {
     createProduct(payload: $input) {

@@ -4,7 +4,7 @@ import {UploadChangeParam} from 'antd/lib/upload'
 import {UploadFile} from 'antd/lib/upload/interface'
 import {useForm} from 'antd/lib/form/Form'
 import {memo} from 'react'
-import {UserInitialStateInterface} from '../../redux/user/userReducer'
+import {User} from '../../server/user/user.model'
 
 const {Title} = Typography
 
@@ -26,7 +26,7 @@ interface IProfile {
   loading: boolean
   onFinish: (values: any) => void
   onUpload: (file: any) => void
-  user: UserInitialStateInterface
+  user: Partial<User>
 }
 const Profile: React.FC<IProfile> = ({
   handleChange,

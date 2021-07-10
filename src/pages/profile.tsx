@@ -1,16 +1,16 @@
 import {Space, Typography} from 'antd'
 import Head from 'next/head'
-import {useCallback, useEffect, useState} from 'react'
+import {useCallback, useContext, useEffect, useState} from 'react'
 import {Tabs, Spin} from 'antd'
 import Profile from '../components/Profile'
 import Properties from '../components/Properties'
-import {useDispatch, useSelector} from 'react-redux'
-import {useRouter} from 'next/router'
-import {IRootReducer} from '../redux/rootReducer'
-import {editUserAction, uploadUserAction} from '../redux/user/userAction'
-import {wrapper} from '../redux/store'
-import {END} from 'redux-saga'
 import {ParsedUrlQuery} from 'querystring'
+import {useLazyQuery, useMutation} from '@apollo/client'
+import {EDIT_USER, FULL_USER} from '../utils/queries'
+import {UserContext} from '../utils/context'
+import {User} from '../server/user/user.model'
+import {GetServerSidePropsContext} from 'next'
+import {getCookie} from '../utils/cookie'
 
 const {TabPane} = Tabs
 const {Title} = Typography
@@ -26,20 +26,37 @@ interface IProfilePage {
 }
 
 const ProfilePage: React.FC<IProfilePage> = ({query}) => {
-  const store = useSelector((state: IRootReducer) => state.user)
-  const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState('')
-  const router = useRouter()
-  useEffect(() => {
-    if (!store._id && store.loading) {
-      router.push('/signup')
-    }
-  }, [store._id, store.loading])
+
+  const {user, setUser} = useContext(UserContext)
+  const [getFullUser, fullUser] = useLazyQuery<{findUserById: User}>(FULL_USER)
+  const [editUser, updatedUser] = useMutation<{updateUser: User}>(EDIT_USER)
 
   useEffect(() => {
-    setImageUrl(store.photo)
-  }, [store.photo])
+    if (fullUser.data) {
+      setUser(prev => ({...prev, ...fullUser.data.findUserById}))
+      setImageUrl(fullUser.data.findUserById.photo)
+    }
+  }, [fullUser.data])
+
+  useEffect(() => {
+    if (updatedUser.data) {
+      setUser(prev => ({...prev, ...updatedUser.data.updateUser}))
+    }
+  }, [updatedUser.data])
+
+  useEffect(() => {
+    if (user) {
+      console.log(user)
+
+      getFullUser({
+        variables: {
+          id: user._id,
+        },
+      })
+    }
+  }, [user])
 
   const handleChange = info => {
     if (info.file.status === 'uploading') {
@@ -57,22 +74,28 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
 
   const onFinish = useCallback(
     (values: any) => {
-      dispatch(editUserAction({...values, _id: store._id}))
+      console.log({...values, photo: imageUrl, _id: user._id})
+
+      editUser({
+        variables: {input: {...values, photo: imageUrl, _id: user._id}},
+        context: {
+          headers: {
+            Authorization: `Bearer ${getCookie('token')}`,
+          },
+        },
+      })
     },
-    [store],
+    [user, imageUrl],
   )
 
-  const onUpload = useCallback(
-    file => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file.file)
-      reader.onloadend = () => {
-        const image = reader.result as string
-        dispatch(uploadUserAction({file: image, id: store._id}))
-      }
-    },
-    [store._id],
-  )
+  const onUpload = useCallback(file => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file.file)
+    reader.onloadend = () => {
+      const image = reader.result as string
+      setUser(prev => ({...prev, photo: image}))
+    }
+  }, [])
 
   return (
     <>
@@ -82,13 +105,13 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
       <Title level={1}>My profile</Title>
       <Tabs defaultActiveKey={!Array.isArray(query.tab) ? query.tab : '1'}>
         <TabPane tab="Profile" key="1">
-          {store.loading ? (
+          {!fullUser.loading ? (
             <Profile
               onFinish={onFinish}
               handleChange={handleChange}
               imageUrl={imageUrl}
               loading={loading}
-              user={store}
+              user={user}
               onUpload={onUpload}
             />
           ) : (
@@ -98,8 +121,8 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
           )}
         </TabPane>
         <TabPane tab="My properties" key="2">
-          {store.loading ? (
-            <Properties products={store.products} />
+          {!fullUser.loading ? (
+            <Properties products={user?.products} />
           ) : (
             <Space align="center" size="large">
               <Spin size="large" />
@@ -113,14 +136,10 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
 
 export default ProfilePage
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  async ({store, query}) => {
-    store.dispatch(END)
-
-    return {
-      props: {
-        query,
-      },
-    }
-  },
-)
+export async function getServerSideProps({query}: GetServerSidePropsContext) {
+  return {
+    props: {
+      query,
+    },
+  }
+}
