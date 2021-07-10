@@ -45,7 +45,15 @@ export class ProductService {
   }
 
   async delete(id: ObjectId) {
-    const product = await this.ProductModel.findByIdAndDelete(id).exec()
+    const product = await this.ProductModel.findById(id).exec()
+    const user = await this.userModel.findById(product?.author)
+
+    await product.remove()
+    await user.updateOne({
+      $pull: {
+        products: {_id: id},
+      },
+    })
     return product
   }
 

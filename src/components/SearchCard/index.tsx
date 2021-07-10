@@ -5,8 +5,6 @@ import {Typography, Image} from 'antd'
 import styles from './searchCard.module.scss'
 import {memo} from 'react'
 import {useRouter} from 'next/router'
-import {useDispatch} from 'react-redux'
-import {deleteUserProductAction} from '../../redux/user/userAction'
 
 const {Text} = Typography
 
@@ -21,27 +19,22 @@ const SearchCard: React.FC<ISearchProduct> = ({
   photos,
   type,
   _id,
-  property,
+  onDelete,
 }) => {
   const router = useRouter()
-  const dispatch = useDispatch()
-
-  const propertyType =
-    property === 'office' || property === 'shop' ? 'commercial' : 'living'
-
   const onClick = () => {
-    router.push(`/product/${propertyType}/${_id}`)
+    router.push(`/product/${_id}`)
   }
 
-  const onDelete = () => {
-    dispatch(deleteUserProductAction({id: _id, type: propertyType}))
+  const handleClick = () => {
+    onDelete(_id)
   }
 
   return (
     <Card
       extra={
         router.pathname === '/profile' && (
-          <DeleteOutlined onClick={onDelete} style={{cursor: 'pointer'}} />
+          <DeleteOutlined onClick={handleClick} style={{cursor: 'pointer'}} />
         )
       }
       cover={

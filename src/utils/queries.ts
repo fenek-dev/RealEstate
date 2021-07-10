@@ -42,6 +42,7 @@ export const FULL_USER = gql`
       photo
       phone
       products(populate: true) {
+        _id
         address
         area
         photos
@@ -117,6 +118,13 @@ export const GET_PRODUCT = gql`
         type
         parking
       }
+    }
+  }
+`
+export const DELETE_PRODUCT = gql`
+  mutation DeleteProduct($id: String!) {
+    deleteProduct(_id: $id) {
+      _id
     }
   }
 `

@@ -9,10 +9,10 @@ const {Paragraph} = Typography
 
 interface IProperties {
   products: ISearchProduct[] | Product[] | any
+  onDelete: (_id: string) => void
 }
 
-const Properties: React.FC<IProperties> = ({products}) => {
-  
+const Properties: React.FC<IProperties> = ({products, onDelete}) => {
   return (
     <>
       <Paragraph>
@@ -32,6 +32,7 @@ const Properties: React.FC<IProperties> = ({products}) => {
               city={item.city}
               price={item.price}
               date={item.date}
+              onDelete={onDelete}
             />
           ))
         ) : (

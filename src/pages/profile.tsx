@@ -6,11 +6,12 @@ import Profile from '../components/Profile'
 import Properties from '../components/Properties'
 import {ParsedUrlQuery} from 'querystring'
 import {useLazyQuery, useMutation} from '@apollo/client'
-import {EDIT_USER, FULL_USER} from '../utils/queries'
+import {DELETE_PRODUCT, EDIT_USER, FULL_USER} from '../utils/queries'
 import {UserContext} from '../utils/context'
 import {User} from '../server/user/user.model'
 import {GetServerSidePropsContext} from 'next'
 import {getCookie} from '../utils/cookie'
+import {Product} from '../server/product/product.model'
 
 const {TabPane} = Tabs
 const {Title} = Typography
@@ -32,6 +33,8 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
   const {user, setUser} = useContext(UserContext)
   const [getFullUser, fullUser] = useLazyQuery<{findUserById: User}>(FULL_USER)
   const [editUser, updatedUser] = useMutation<{updateUser: User}>(EDIT_USER)
+  const [deleteProduct, deletedProduct] =
+    useMutation<{deleteProduct: Product}>(DELETE_PRODUCT)
 
   useEffect(() => {
     if (fullUser.data) {
@@ -48,8 +51,6 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
 
   useEffect(() => {
     if (user) {
-      console.log(user)
-
       getFullUser({
         variables: {
           id: user._id,
@@ -57,6 +58,19 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
       })
     }
   }, [user])
+
+  useEffect(() => {
+    if (deletedProduct.data) {
+      setUser(prev => ({
+        ...prev,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        products: prev.products.filter(
+          item => item._id !== deletedProduct.data.deleteProduct._id,
+        ),
+      }))
+    }
+  }, [deletedProduct.data])
 
   const handleChange = info => {
     if (info.file.status === 'uploading') {
@@ -75,7 +89,6 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
   const onFinish = useCallback(
     (values: any) => {
       console.log({...values, photo: imageUrl, _id: user._id})
-
       editUser({
         variables: {input: {...values, photo: imageUrl, _id: user._id}},
         context: {
@@ -95,6 +108,17 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
       const image = reader.result as string
       setUser(prev => ({...prev, photo: image}))
     }
+  }, [])
+
+  const onDelete = useCallback((_id: string) => {
+    deleteProduct({
+      variables: {id: _id},
+      context: {
+        headers: {
+          Authorization: `Bearer ${getCookie('token')}`,
+        },
+      },
+    })
   }, [])
 
   return (
@@ -122,7 +146,7 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
         </TabPane>
         <TabPane tab="My properties" key="2">
           {!fullUser.loading ? (
-            <Properties products={user?.products} />
+            <Properties products={user?.products} onDelete={onDelete} />
           ) : (
             <Space align="center" size="large">
               <Spin size="large" />
