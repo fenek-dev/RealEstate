@@ -4,7 +4,7 @@ import styles from '../styles/signin.module.scss'
 import {useCallback} from 'react'
 import {useRouter} from 'next/router'
 import {useMutation} from '@apollo/client'
-import {SIGNUP_USER} from '../queries'
+import {SIGNUP_USER} from '../utils/queries'
 import {User} from '../server/user/user.model'
 import {setCookie} from '../utils/cookie'
 const {Title, Text, Link} = Typography

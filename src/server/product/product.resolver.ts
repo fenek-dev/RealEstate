@@ -13,10 +13,10 @@ import {ProductService} from './product.service'
 import {CreateProductInput} from './product.inputs'
 import {User} from '../user/user.model'
 import {Region} from '../region/region.model'
-import Layout from 'antd/lib/layout/layout'
 import {Category} from '../category/category.model'
 import {UseGuards} from '@nestjs/common'
 import {JwtAuthGuard} from '../user/jwt/jwt-auth.guard'
+import { Layout } from '../layout/layout.model'
 
 @Resolver(() => Product)
 export class ProductResolver {

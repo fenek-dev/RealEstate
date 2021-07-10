@@ -39,3 +39,46 @@ export const CREATE_PRODUCT = gql`
     }
   }
 `
+
+export const GET_PRODUCT = gql`
+  query GetProduct($id: String!) {
+    getProductById(_id: $id) {
+      address
+      area
+      photos
+      property
+      price
+      description
+      date
+      tax
+      type
+      city
+      beds
+      baths
+      region(populate: true) {
+        name
+        population
+        averageCost
+        shopCenters
+        hospitals
+        parks
+      }
+      layout(populate: true) {
+        name
+        minArea
+        maxArea
+        rooms
+        photos
+      }
+      category(populate: true) {
+        name
+        area
+        year
+        floors
+        class
+        type
+        parking
+      }
+    }
+  }
+`

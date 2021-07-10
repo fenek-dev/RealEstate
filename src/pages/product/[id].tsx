@@ -3,12 +3,15 @@ import {Carousel, Typography, Card, Image, Divider, Button} from 'antd'
 import {HomeOutlined, ExpandOutlined} from '@ant-design/icons'
 import Head from 'next/head'
 import styles from './product.module.scss'
-import {IProduct} from '../../../types'
+import {IProduct} from '../../types'
 import {GetServerSidePropsContext} from 'next'
 import {useRouter} from 'next/router'
+import client from '../../utils/graphql-client'
+import {GET_PRODUCT} from '../../utils/queries'
+import {Product} from '../../server/product/product.model'
 const {Title, Paragraph, Text} = Typography
 
-const Product: React.FC<IProduct> = ({
+const ProductPage: React.FC<IProduct> = ({
   address,
   area,
   author,
@@ -227,15 +230,15 @@ const Product: React.FC<IProduct> = ({
   )
 }
 
-export default Product
+export default ProductPage
 
 export async function getServerSideProps({params}: GetServerSidePropsContext) {
-  const res = await fetch(
-    `https://digitestate.herokuapp.com/api/${params.type}/${params.id}`,
-  )
-  const data = await res.json()
+  const {data} = await client.query<{getProductById: Product}>({
+    query: GET_PRODUCT,
+    variables: {id: params.id}
+  })
 
   return {
-    props: data, // will be passed to the page component as props
+    props: data.getProductById,
   }
 }

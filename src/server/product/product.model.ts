@@ -26,7 +26,7 @@ export class Product {
   @Prop({required: true})
   readonly address: string
 
-  @Field(() => String)
+  @Field(() => [String])
   @Prop({type: [String]})
   readonly photos: string[]
 
@@ -54,7 +54,11 @@ export class Product {
   @Prop({required: true})
   readonly price: number
 
-  @Field(() => Int)
+  @Field(() => Int, {nullable: true})
+  @Prop({required: false})
+  readonly tax?: number
+
+  @Field(() => Number)
   @Prop({required: true})
   readonly date: number
 

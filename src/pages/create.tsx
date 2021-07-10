@@ -14,7 +14,7 @@ import {PlusOutlined} from '@ant-design/icons'
 import {useContext, useEffect, useState} from 'react'
 import {useRouter} from 'next/router'
 import {useMutation} from '@apollo/client'
-import {CREATE_PRODUCT} from '../queries'
+import {CREATE_PRODUCT} from '../utils/queries'
 import {Product} from '../server/product/product.model'
 import {UserContext} from '../utils/context'
 import {getCookie} from '../utils/cookie'
@@ -40,12 +40,6 @@ const Create: React.FC = () => {
   const [fileList, setFileList] = useState([])
   const [files, setFiles] = useState([])
   const router = useRouter()
-
-  useEffect(() => {
-    if (!user?._id) {
-      router.push('/signup')
-    }
-  }, [user])
 
   const handleCancel = () => setPreviewVisible(false)
 
