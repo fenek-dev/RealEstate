@@ -5,6 +5,7 @@ import {User, UserDocument} from '../user/user.model'
 import {CloudinaryService} from '../cloudinary/cloudinary.service'
 import {Product, ProductDocument} from './product.model'
 import {CreateProductInput, SearchProductInput} from './product.inputs'
+import {GraphQLError} from 'graphql'
 
 @Injectable()
 export class ProductService {
@@ -19,7 +20,9 @@ export class ProductService {
   }
 
   async findOne(id: ObjectId) {
-    return await this.ProductModel.findById(id).exec()
+    const result = await this.ProductModel.findById(id).exec()
+    if (!result) throw new GraphQLError('Product nor found')
+    return result
   }
 
   async create(dto: CreateProductInput) {
