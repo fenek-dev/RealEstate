@@ -1,7 +1,6 @@
-import {Space, Typography} from 'antd'
+import {Space, Typography, Tabs, Spin, notification} from 'antd'
 import Head from 'next/head'
 import {useCallback, useContext, useEffect, useState} from 'react'
-import {Tabs, Spin} from 'antd'
 import Profile from '../components/Profile'
 import Properties from '../components/Properties'
 import {ParsedUrlQuery} from 'querystring'
@@ -31,23 +30,48 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
   const [imageUrl, setImageUrl] = useState('')
 
   const {user, setUser} = useContext(UserContext)
-  const [getFullUser, fullUser] = useLazyQuery<{findUserById: User}>(FULL_USER)
-  const [editUser, updatedUser] = useMutation<{updateUser: User}>(EDIT_USER)
-  const [deleteProduct, deletedProduct] =
+  const [
+    getFullUser,
+    {data: fullUserData, error: fullUserError, loading: fullUserLoading},
+  ] = useLazyQuery<{findUserById: User}>(FULL_USER)
+  const [editUser, {data: editUserData, error: editUserError}] =
+    useMutation<{updateUser: User}>(EDIT_USER)
+  const [deleteProduct, {data: deleteProductData, error: deleteProductError}] =
     useMutation<{deleteProduct: Product}>(DELETE_PRODUCT)
 
   useEffect(() => {
-    if (fullUser.data) {
-      setUser(prev => ({...prev, ...fullUser.data.findUserById}))
-      setImageUrl(fullUser.data.findUserById.photo)
+    if (fullUserError) {
+      notification.error({
+        message: fullUserError.name,
+        description: fullUserError.message,
+      })
     }
-  }, [fullUser.data])
+    if (editUserError) {
+      notification.error({
+        message: editUserError.name,
+        description: editUserError.message,
+      })
+    }
+    if (deleteProductError) {
+      notification.error({
+        message: deleteProductError.name,
+        description: deleteProductError.message,
+      })
+    }
+  }, [fullUserError, editUserError, deleteProductError])
 
   useEffect(() => {
-    if (updatedUser.data) {
-      setUser(prev => ({...prev, ...updatedUser.data.updateUser}))
+    if (fullUserData) {
+      setUser(prev => ({...prev, ...fullUserData.findUserById}))
+      setImageUrl(fullUserData.findUserById.photo)
     }
-  }, [updatedUser.data])
+  }, [fullUserData])
+
+  useEffect(() => {
+    if (editUserData) {
+      setUser(prev => ({...prev, ...editUserData.updateUser}))
+    }
+  }, [editUserData])
 
   useEffect(() => {
     if (user) {
@@ -60,17 +84,17 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
   }, [user])
 
   useEffect(() => {
-    if (deletedProduct.data) {
+    if (deleteProductData) {
       setUser(prev => ({
         ...prev,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         products: prev.products.filter(
-          item => item._id !== deletedProduct.data.deleteProduct._id,
+          item => item._id !== deleteProductData.deleteProduct._id,
         ),
       }))
     }
-  }, [deletedProduct.data])
+  }, [deleteProductData])
 
   const handleChange = info => {
     if (info.file.status === 'uploading') {
@@ -129,7 +153,7 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
       <Title level={1}>My profile</Title>
       <Tabs defaultActiveKey={!Array.isArray(query.tab) ? query.tab : '1'}>
         <TabPane tab="Profile" key="1">
-          {!fullUser.loading ? (
+          {!fullUserLoading ? (
             <Profile
               onFinish={onFinish}
               handleChange={handleChange}
@@ -145,7 +169,7 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
           )}
         </TabPane>
         <TabPane tab="My properties" key="2">
-          {!fullUser.loading ? (
+          {!fullUserLoading ? (
             <Properties products={user?.products} onDelete={onDelete} />
           ) : (
             <Space align="center" size="large">
