@@ -9,10 +9,10 @@ import {
   Button,
   Select,
   Radio,
+  notification,
 } from 'antd'
 import {PlusOutlined} from '@ant-design/icons'
 import {useContext, useEffect, useState} from 'react'
-import {useRouter} from 'next/router'
 import {useMutation} from '@apollo/client'
 import {CREATE_PRODUCT} from '../utils/queries'
 import {Product} from '../server/product/product.model'
@@ -31,7 +31,7 @@ function getBase64(file) {
 }
 
 const Create: React.FC = () => {
-  const [createProduct, {data, loading, error}] = useMutation<{
+  const [createProduct, {data, error}] = useMutation<{
     createProduct: Product
   }>(CREATE_PRODUCT)
   const {user} = useContext(UserContext)
@@ -39,7 +39,24 @@ const Create: React.FC = () => {
   const [previewImage, setPreviewImage] = useState('')
   const [fileList, setFileList] = useState([])
   const [files, setFiles] = useState([])
-  const router = useRouter()
+
+  useEffect(() => {
+    if (error) {
+      notification.error({
+        message: error.name,
+        description: error.message,
+      })
+    }
+  }, [error])
+
+  useEffect(() => {
+    if (data) {
+      notification.success({
+        message: 'Product successfully created',
+        duration: 10,
+      })
+    }
+  }, [data])
 
   const handleCancel = () => setPreviewVisible(false)
 
@@ -47,7 +64,6 @@ const Create: React.FC = () => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj)
     }
-
     setPreviewVisible(true)
     setPreviewImage(file.url || file.preview)
   }
