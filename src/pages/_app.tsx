@@ -1,7 +1,6 @@
 import {ApolloProvider} from '@apollo/client'
 import React from 'react'
 import MainLayout from '../layouts/Main'
-import {wrapper} from '../redux/store'
 import '../styles/globals.scss'
 import client from '../utils/graphql-client'
 
@@ -15,4 +14,4 @@ function MyApp({Component, pageProps}) {
   )
 }
 
-export default wrapper.withRedux(MyApp)
+export default MyApp

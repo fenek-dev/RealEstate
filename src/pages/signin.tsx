@@ -6,7 +6,6 @@ import Head from 'next/head'
 import {useRouter} from 'next/router'
 import {LOGIN_USER} from '../utils/queries'
 import {setCookie} from '../utils/cookie'
-import client from '../utils/graphql-client'
 import {useLazyQuery} from '@apollo/client'
 import {User} from '../server/user/user.model'
 
