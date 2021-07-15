@@ -1,25 +1,38 @@
 import {useRouter} from 'next/dist/client/router'
 import Search from '../components/Search'
-import {Empty, Typography} from 'antd'
+import {Empty, notification, Typography} from 'antd'
 import styles from '../styles/search.module.scss'
 import Head from 'next/head'
 import SearchCard from '../components/SearchCard'
 import {IQuery, ISearchProduct} from '../types'
-import {useCallback} from 'react'
+import {useCallback, useEffect} from 'react'
 import {GetServerSidePropsContext} from 'next'
 import client from '../utils/graphql-client'
 import {SEARCH_PRODUCT} from '../utils/queries'
+import {ApolloError} from '@apollo/client'
 
 const {Title, Paragraph} = Typography
 
 interface ISearchPage {
   query: IQuery
   products: ISearchProduct[]
+  errors?: ApolloError[]
 }
 
-const SearchPage: React.FC<ISearchPage> = ({query, products}) => {
+const SearchPage: React.FC<ISearchPage> = ({query, products, errors}) => {
   const router = useRouter()
   const {city, type, property} = query
+
+  useEffect(() => {
+    if (errors) {
+      errors.forEach(error => {
+        notification.error({
+          message: error.name,
+          description: error.message,
+        })
+      })
+    }
+  }, [errors])
 
   const handleFinish = useCallback((values: IQuery) => {
     const nonNullQuery = {}
@@ -96,14 +109,24 @@ export async function getServerSideProps({query}: GetServerSidePropsContext) {
       nonNullQuery[key] = null
     }
   }
-  const {data} = await client.query<{searchProduct: ISearchProduct[]}>({
-    query: SEARCH_PRODUCT,
-    variables: {input: nonNullQuery},
-  })
-  return {
-    props: {
-      query,
-      products: data.searchProduct,
-    },
+  try {
+    const {data} = await client.query<{searchProduct: ISearchProduct[]}>({
+      query: SEARCH_PRODUCT,
+      variables: {input: nonNullQuery},
+    })
+    return {
+      props: {
+        query,
+        products: data.searchProduct,
+      },
+    }
+  } catch (error) {
+    return {
+      props: {
+        query,
+        products: [],
+        errors: error?.networkError?.result?.errors || [],
+      },
+    }
   }
 }

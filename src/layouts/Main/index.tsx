@@ -22,8 +22,6 @@ const MainLayout: React.FC = ({children}) => {
 
   useEffect(() => {
     if (error) {
-      console.log(error);
-      
       notification.error({
         message: error.name,
         description: error.message,
