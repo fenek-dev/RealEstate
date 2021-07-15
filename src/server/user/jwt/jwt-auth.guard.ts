@@ -18,7 +18,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
   handleRequest(err: any, user: any) {
     if (err || !user) {
-      throw err || new AuthenticationError('GqlAuthGuard')
+      throw err || new AuthenticationError('Authorization token is incorrect')
     }
     return user
   }
