@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect} from 'react'
-import {Form, Input, Button} from 'antd'
-import {Typography} from 'antd'
+import {Form, Input, Button, Typography, notification} from 'antd'
 import styles from '../styles/signin.module.scss'
 import Head from 'next/head'
 import {useRouter} from 'next/router'
@@ -12,7 +11,7 @@ import {User} from '../server/user/user.model'
 const {Title, Text, Link} = Typography
 
 const Signin: React.FC = () => {
-  const [loginUser, {data}] = useLazyQuery<{loginUser: User}>(LOGIN_USER)
+  const [loginUser, {data, error}] = useLazyQuery<{loginUser: User}>(LOGIN_USER)
   const router = useRouter()
   const onFinish = useCallback((payload: any) => {
     loginUser({
@@ -21,6 +20,15 @@ const Signin: React.FC = () => {
       },
     })
   }, [])
+
+  useEffect(() => {
+    if (error) {
+      notification.error({
+        message: error.name,
+        description: error.message,
+      })
+    }
+  }, [error])
 
   useEffect(() => {
     if (data) {
