@@ -128,3 +128,21 @@ export const DELETE_PRODUCT = gql`
     }
   }
 `
+export const SEARCH_PRODUCT = gql`
+  query SearchProduct($input: SearchProductInput!) {
+    searchProduct(payload: $input) {
+      _id
+      address
+      area
+      photos
+      property
+      price
+      description
+      date
+      type
+      city
+      beds
+      baths
+    }
+  }
+`

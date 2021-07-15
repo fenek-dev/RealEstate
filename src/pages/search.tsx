@@ -5,38 +5,38 @@ import styles from '../styles/search.module.scss'
 import Head from 'next/head'
 import SearchCard from '../components/SearchCard'
 import {IQuery, ISearchProduct} from '../types'
-import {useCallback, useEffect, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {IRootReducer} from '../redux/rootReducer'
-import {addSearchAction} from '../redux/search/searchAction'
-import {wrapper} from '../redux/store'
-import {END} from 'redux-saga'
+import {useCallback} from 'react'
+import {GetServerSidePropsContext} from 'next'
+import client from '../utils/graphql-client'
+import {SEARCH_PRODUCT} from '../utils/queries'
 
 const {Title, Paragraph} = Typography
 
 interface ISearchPage {
   query: IQuery
+  products: ISearchProduct[]
 }
 
-const SearchPage: React.FC<ISearchPage> = ({query}) => {
+const SearchPage: React.FC<ISearchPage> = ({query, products}) => {
   const router = useRouter()
-  const state = useSelector((store: IRootReducer) => store)
-  const dispatch = useDispatch()
-  const [products, setProducts] = useState<ISearchProduct[]>([])
-
   const {city, type, property} = query
 
   const handleFinish = useCallback((values: IQuery) => {
-    router.push({pathname: 'search', query: {...values}})
+    const nonNullQuery = {}
+    for (const key in values) {
+      if (values[key]) {
+        nonNullQuery[key] = isNaN(Number(values[key]))
+          ? values[key]
+          : Number(values[key])
+      } else {
+        nonNullQuery[key] = null
+      }
+    }
+    console.log(nonNullQuery)
+
+    router.push({pathname: 'search', query: {...nonNullQuery}})
   }, [])
 
-  useEffect(() => {
-    dispatch(addSearchAction(router.query))
-  }, [router.query])
-
-  useEffect(() => {
-    setProducts(state.search.products)
-  }, [state.search])
   return (
     <>
       <Head>
@@ -85,14 +85,25 @@ const SearchPage: React.FC<ISearchPage> = ({query}) => {
 
 export default SearchPage
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  async ({store, query}) => {
-    store.dispatch(END)
-
-    return {
-      props: {
-        query,
-      },
+export async function getServerSideProps({query}: GetServerSidePropsContext) {
+  const nonNullQuery = {}
+  for (const key in query) {
+    if (query[key]) {
+      nonNullQuery[key] = isNaN(Number(query[key]))
+        ? query[key]
+        : Number(query[key])
+    } else {
+      nonNullQuery[key] = null
     }
-  },
-)
+  }
+  const {data} = await client.query<{searchProduct: ISearchProduct[]}>({
+    query: SEARCH_PRODUCT,
+    variables: {input: nonNullQuery},
+  })
+  return {
+    props: {
+      query,
+      products: data.searchProduct,
+    },
+  }
+}

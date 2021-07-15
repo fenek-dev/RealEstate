@@ -45,3 +45,27 @@ export class CreateProductInput {
   @Field(() => String, {nullable: true})
   readonly category?: MongooseSchema.Types.ObjectId
 }
+
+@InputType()
+export class SearchProductInput {
+  @Field(() => String, {nullable: true})
+  readonly city?: string
+
+  @Field(() => String, {nullable: true})
+  readonly type?: string
+
+  @Field(() => String, {nullable: true})
+  readonly property?: string
+
+  @Field(() => Int, {nullable: true})
+  readonly min?: number
+
+  @Field(() => Int, {nullable: true})
+  readonly max?: number
+
+  @Field(() => Int, {nullable: true})
+  readonly beds?: number
+
+  @Field(() => Int, {nullable: true})
+  readonly baths?: number
+}

@@ -4,8 +4,7 @@ import {Model, ObjectId} from 'mongoose'
 import {User, UserDocument} from '../user/user.model'
 import {CloudinaryService} from '../cloudinary/cloudinary.service'
 import {Product, ProductDocument} from './product.model'
-import {ISearchBody} from './types'
-import {CreateProductInput} from './product.inputs'
+import {CreateProductInput, SearchProductInput} from './product.inputs'
 
 @Injectable()
 export class ProductService {
@@ -57,32 +56,24 @@ export class ProductService {
     return product
   }
 
-  async search(body: ISearchBody): Promise<Product[]> {
+  async search(body: SearchProductInput): Promise<Product[]> {
     // Get all setting parametrs from given body object
-    const {
-      baths,
-      beds,
-      property,
-      type,
-      city,
-      min = Number.MIN_SAFE_INTEGER,
-      max = Number.MAX_SAFE_INTEGER,
-    } = body
+    const {baths, beds, property, type, city, min, max} = body
     // Search for suitable Products
     const regCity = new RegExp(city, 'ig')
 
     const condidate = await this.ProductModel.where('type', type)
       .where('city', regCity)
       .where('price')
-      .lte(max)
-      .gte(min)
+      .lte(max ?? Number.MAX_SAFE_INTEGER)
+      .gte(min ?? Number.MIN_SAFE_INTEGER)
       .where('property', property)
       .where('baths')
-      .lte(baths || Number.MAX_VALUE)
-      .gte(baths || Number.MIN_VALUE)
+      .lte(baths ?? Number.MAX_SAFE_INTEGER)
+      .gte(baths ?? Number.MIN_SAFE_INTEGER)
       .where('beds')
-      .lte(beds || Number.MAX_VALUE)
-      .gte(beds || Number.MIN_VALUE)
+      .lte(beds ?? Number.MAX_SAFE_INTEGER)
+      .gte(beds ?? Number.MIN_SAFE_INTEGER)
       .exec()
 
     return condidate

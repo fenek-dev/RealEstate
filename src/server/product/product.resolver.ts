@@ -5,12 +5,11 @@ import {
   Resolver,
   ResolveField,
   Parent,
-  Int,
 } from '@nestjs/graphql'
 import {Schema as MongooseSchema} from 'mongoose'
 import {Product, ProductDocument} from './product.model'
 import {ProductService} from './product.service'
-import {CreateProductInput} from './product.inputs'
+import {CreateProductInput, SearchProductInput} from './product.inputs'
 import {User} from '../user/user.model'
 import {Region} from '../region/region.model'
 import {Category} from '../category/category.model'
@@ -49,32 +48,8 @@ export class ProductResolver {
   }
 
   @Query(() => [Product], {defaultValue: []})
-  async searchProduct(
-    @Args('city', {type: () => String, nullable: true}) city: string,
-    @Args('type', {type: () => String, nullable: true}) type: string,
-    @Args('property', {type: () => String, nullable: true}) property: string,
-    @Args('min', {
-      type: () => Int,
-      nullable: true,
-    })
-    min: number,
-    @Args('max', {
-      type: () => Int,
-      nullable: true,
-    })
-    max: number,
-    @Args('beds', {type: () => Int, nullable: true}) beds: number,
-    @Args('baths', {type: () => Int, nullable: true}) baths: number,
-  ) {
-    return await this.productService.search({
-      city,
-      type,
-      property,
-      min,
-      max,
-      beds,
-      baths,
-    })
+  async searchProduct(@Args('payload') payload: SearchProductInput) {
+    return await this.productService.search(payload)
   }
 
   @ResolveField()
