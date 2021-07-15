@@ -1,7 +1,15 @@
 import Head from 'next/head'
-import {Button, Checkbox, Form, Input, Radio, Typography} from 'antd'
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  notification,
+  Radio,
+  Typography,
+} from 'antd'
 import styles from '../styles/signin.module.scss'
-import {useCallback} from 'react'
+import {useCallback, useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {useMutation} from '@apollo/client'
 import {SIGNUP_USER} from '../utils/queries'
@@ -10,20 +18,32 @@ import {setCookie} from '../utils/cookie'
 const {Title, Text, Link} = Typography
 
 const Signup: React.FC = () => {
-  const [signupUser, {data, loading, error}] =
+  const [signupUser, {data, error}] =
     useMutation<{createUser: User}>(SIGNUP_USER)
   const router = useRouter()
-  const onFinish = useCallback(async (input: any) => {
-    const {data, errors} = await signupUser({
+  const onFinish = useCallback((input: any) => {
+    signupUser({
       variables: {
         input,
       },
     })
+  }, [])
+
+  useEffect(() => {
     if (data) {
       setCookie('token', data.createUser.token)
       router.replace('profile')
     }
-  }, [])
+  }, [data])
+
+  useEffect(() => {
+    if (error) {
+      notification.error({
+        message: error.name,
+        description: error.message,
+      })
+    }
+  }, [error])
 
   return (
     <>
