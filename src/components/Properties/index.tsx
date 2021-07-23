@@ -3,12 +3,11 @@ import {ISearchProduct} from '../../types'
 import SearchCard from '../SearchCard'
 import styles from '../../styles/search.module.scss'
 import {Empty, Typography} from 'antd'
-import {Product} from '../../server/product/product.model'
 
 const {Paragraph} = Typography
 
 interface IProperties {
-  products: ISearchProduct[] | Product[] | any
+  products: ISearchProduct[]
   onDelete: (_id: string) => void
 }
 
@@ -23,7 +22,7 @@ const Properties: React.FC<IProperties> = ({products, onDelete}) => {
           products.map(item => (
             <SearchCard
               _id={item._id}
-              key={item.date}
+              key={item._id}
               address={item.address}
               photos={item.photos}
               area={item.area}

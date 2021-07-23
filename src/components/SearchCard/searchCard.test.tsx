@@ -52,11 +52,12 @@ describe('SearchCard component', () => {
   })
 
   it('delete button should work', async () => {
-    expect.assertions(1)
+    expect.assertions(2)
     const deleteBtn = await screen.findByRole('button')
 
     fireEvent.click(deleteBtn)
 
     expect(onDelete).toHaveBeenCalledTimes(1)
+    expect(onDelete).toHaveBeenCalledWith(product._id)
   })
 })
