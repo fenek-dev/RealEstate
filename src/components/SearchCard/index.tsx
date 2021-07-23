@@ -1,3 +1,4 @@
+import React from 'react'
 import {Card, Carousel, Divider, Space} from 'antd'
 import {DeleteOutlined} from '@ant-design/icons'
 import {ISearchProduct} from '../../types'
@@ -34,7 +35,11 @@ const SearchCard: React.FC<ISearchProduct> = ({
     <Card
       extra={
         router.pathname === '/profile' && (
-          <DeleteOutlined onClick={handleClick} style={{cursor: 'pointer'}} />
+          <DeleteOutlined
+            role="button"
+            onClick={handleClick}
+            style={{cursor: 'pointer'}}
+          />
         )
       }
       cover={
@@ -61,9 +66,9 @@ const SearchCard: React.FC<ISearchProduct> = ({
 
       <Divider />
       <Space direction="horizontal" className={styles.options}>
-        {area && <Text>{area}sq</Text>}
-        {beds && <Text>{beds}bd</Text>}
-        {baths && <Text>{baths}bt</Text>}
+        {area && <Text>{area} sq</Text>}
+        {beds && <Text>{beds} bd</Text>}
+        {baths && <Text>{baths} bt</Text>}
         <Text>
           {new Date(date).toLocaleDateString('en-US', {
             day: 'numeric',
