@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import MainLayout from '../layouts/Main'
 import {
   Space,
   Typography,
@@ -10,13 +9,15 @@ import {
   Button,
   Select,
   Radio,
+  notification,
 } from 'antd'
 import {PlusOutlined} from '@ant-design/icons'
-import {useEffect, useState} from 'react'
-import {useRouter} from 'next/router'
-import {useDispatch, useSelector} from 'react-redux'
-import {IRootReducer} from '../redux/rootReducer'
-import {addProductAction} from '../redux/product/productAction'
+import {useContext, useEffect, useState} from 'react'
+import {useMutation} from '@apollo/client'
+import {CREATE_PRODUCT} from '../utils/queries'
+import {Product} from '../server/product/product.model'
+import {UserContext} from '../utils/context'
+import {getCookie} from '../utils/cookie'
 
 const {Title} = Typography
 
@@ -30,20 +31,32 @@ function getBase64(file) {
 }
 
 const Create: React.FC = () => {
-  const store = useSelector((state: IRootReducer) => state)
-
+  const [createProduct, {data, error}] = useMutation<{
+    createProduct: Product
+  }>(CREATE_PRODUCT)
+  const {user} = useContext(UserContext)
   const [previewVisible, setPreviewVisible] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
   const [fileList, setFileList] = useState([])
   const [files, setFiles] = useState([])
-  const [error, setError] = useState<{statusCode: number; message: string}>()
-  const router = useRouter()
-  const dispatch = useDispatch()
+
   useEffect(() => {
-    if (!store.user._id && store.user.loading) {
-      router.push('/signup')
+    if (error) {
+      notification.error({
+        message: error.name,
+        description: error.message,
+      })
     }
-  }, [store.user._id, store.user.loading])
+  }, [error])
+
+  useEffect(() => {
+    if (data) {
+      notification.success({
+        message: 'Product successfully created',
+        duration: 10,
+      })
+    }
+  }, [data])
 
   const handleCancel = () => setPreviewVisible(false)
 
@@ -51,7 +64,6 @@ const Create: React.FC = () => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj)
     }
-
     setPreviewVisible(true)
     setPreviewImage(file.url || file.preview)
   }
@@ -72,21 +84,32 @@ const Create: React.FC = () => {
 
   const onFinish = (values: any) => {
     if (fileList.length < 1) {
-      setError({statusCode: 0, message: 'Required at least 1 image'})
+      // setError({statusCode: 0, message: 'Required at least 1 image'})
     } else {
-      dispatch(
-        addProductAction({
-          ...values,
-          photos: files,
-          author: store.user._id,
-          date: Date.now(),
-        }),
-      )
+      const input = {
+        ...values,
+        area: +values.area,
+        beds: +values.beds,
+        baths: +values.baths,
+        price: +values.price,
+        photos: files,
+        author: user?._id,
+      }
+      createProduct({
+        variables: {
+          input,
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${getCookie('token')}`,
+          },
+        },
+      })
     }
   }
 
   return (
-    <MainLayout>
+    <>
       <Head>
         <title>DigitalEstate | Create a product</title>
       </Head>
@@ -231,7 +254,7 @@ const Create: React.FC = () => {
 
           <Form.Item name="layout" label="Layout">
             <Select
-            allowClear
+              allowClear
               showSearch
               aria-label="layout"
               aria-selected="true"
@@ -271,7 +294,7 @@ const Create: React.FC = () => {
 
           <Form.Item name="category" label="Building">
             <Select
-            allowClear
+              allowClear
               showSearch
               aria-label="building"
               aria-selected="true"
@@ -312,7 +335,7 @@ const Create: React.FC = () => {
           </Form.Item>
         </Form>
       </Space>
-    </MainLayout>
+    </>
   )
 }
 

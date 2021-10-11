@@ -1,14 +1,10 @@
 {
   "name": "digitalestate",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "author": "Maks_Fenek",
   "private": true,
   "license": "UNLICENSED",
-  "engines": {
-    "node": "14.x",
-    "npm": "6.x"
-  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "next build && nest build",
@@ -30,33 +26,34 @@
   "dependencies": {
     "-": "0.0.1",
     "@ant-design/icons": "^4.6.2",
-    "@nestjs/common": "^7.6.15",
+    "@apollo/client": "^3.3.21",
     "@nestjs/cli": "^7.6.0",
+    "@nestjs/common": "^7.6.15",
     "@nestjs/config": "^0.6.3",
     "@nestjs/core": "^7.6.15",
-    "@nestjs/schematics": "^7.3.0",
+    "@nestjs/graphql": "^7.11.0",
     "@nestjs/jwt": "^7.2.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/mongoose": "^7.2.4",
     "@nestjs/passport": "^7.1.5",
     "@nestjs/platform-express": "^7.6.15",
+    "@nestjs/schematics": "^7.3.0",
     "@types/bcrypt": "^5.0.0",
     "antd": "^4.15.6",
+    "apollo-server-express": "^2.25.2",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "buffer-to-stream": "^1.0.0",
     "cloudinary": "^1.26.1",
+    "graphql": "^15.5.1",
+    "graphql-tools": "^4.0.8",
     "mongoose": "^5.12.9",
     "next": "^10.2.0",
-    "next-redux-wrapper": "^6.0.2",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.4",
-    "redux": "^4.1.0",
-    "redux-saga": "^1.1.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6",
@@ -65,6 +62,8 @@
   },
   "devDependencies": {
     "@nestjs/testing": "^7.6.15",
+    "@testing-library/dom": "^8.1.0",
+    "@testing-library/react": "^12.0.0",
     "@types/express": "^4.17.11",
     "@types/jest": "^26.0.22",
     "@types/node": "^14.14.36",
@@ -72,39 +71,20 @@
     "@types/passport-local": "^1.0.33",
     "@types/react": "^17.0.5",
     "@types/react-dom": "^17.0.5",
-    "@types/react-redux": "^7.1.16",
-    "@types/redux": "^3.6.0",
-    "@types/redux-devtools-extension": "^2.13.2",
     "@types/supertest": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
+    "babel-jest": "^26.6.3",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
-    "redux-devtools-extension": "^2.13.9",
     "supertest": "^6.1.3",
     "ts-jest": "^26.5.4",
     "ts-loader": "^8.0.18",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.9.0"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
   }
 }

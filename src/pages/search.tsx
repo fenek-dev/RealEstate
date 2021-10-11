@@ -1,45 +1,57 @@
 import {useRouter} from 'next/dist/client/router'
-import MainLayout from '../layouts/Main'
 import Search from '../components/Search'
-import {Empty, Typography} from 'antd'
+import {Empty, notification, Typography} from 'antd'
 import styles from '../styles/search.module.scss'
 import Head from 'next/head'
 import SearchCard from '../components/SearchCard'
 import {IQuery, ISearchProduct} from '../types'
-import {useCallback, useEffect, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {IRootReducer} from '../redux/rootReducer'
-import {addSearchAction} from '../redux/search/searchAction'
-import {wrapper} from '../redux/store'
-import {END} from 'redux-saga'
+import {useCallback, useEffect} from 'react'
+import {GetServerSidePropsContext} from 'next'
+import client from '../utils/graphql-client'
+import {SEARCH_PRODUCT} from '../utils/queries'
+import {ApolloError} from '@apollo/client'
 
 const {Title, Paragraph} = Typography
 
 interface ISearchPage {
   query: IQuery
+  products: ISearchProduct[]
+  errors?: ApolloError[]
 }
 
-const SearchPage: React.FC<ISearchPage> = ({query}) => {
+const SearchPage: React.FC<ISearchPage> = ({query, products, errors}) => {
   const router = useRouter()
-  const state = useSelector((store: IRootReducer) => store)
-  const dispatch = useDispatch()
-  const [products, setProducts] = useState<ISearchProduct[]>([])
-
   const {city, type, property} = query
 
+  useEffect(() => {
+    if (errors) {
+      errors.forEach(error => {
+        notification.error({
+          message: error.name,
+          description: error.message,
+        })
+      })
+    }
+  }, [errors])
+
   const handleFinish = useCallback((values: IQuery) => {
-    router.push({pathname: 'search', query: {...values}})
+    const nonNullQuery = {}
+    for (const key in values) {
+      if (values[key]) {
+        nonNullQuery[key] = isNaN(Number(values[key]))
+          ? values[key]
+          : Number(values[key])
+      } else {
+        nonNullQuery[key] = null
+      }
+    }
+    console.log(nonNullQuery)
+
+    router.push({pathname: 'search', query: {...nonNullQuery}})
   }, [])
 
-  useEffect(() => {
-    dispatch(addSearchAction(router.query))
-  }, [router.query])
-
-  useEffect(() => {
-    setProducts(state.search.products)
-  }, [state.search])
   return (
-    <MainLayout>
+    <>
       <Head>
         <title>
           DigitalEstate | {city ? city : 'World'}{' '}
@@ -80,20 +92,41 @@ const SearchPage: React.FC<ISearchPage> = ({query}) => {
           <Empty />
         )}
       </section>
-    </MainLayout>
+    </>
   )
 }
 
 export default SearchPage
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  async ({store, query}) => {
-    store.dispatch(END)
-
+export async function getServerSideProps({query}: GetServerSidePropsContext) {
+  const nonNullQuery = {}
+  for (const key in query) {
+    if (query[key]) {
+      nonNullQuery[key] = isNaN(Number(query[key]))
+        ? query[key]
+        : Number(query[key])
+    } else {
+      nonNullQuery[key] = null
+    }
+  }
+  try {
+    const {data} = await client.query<{searchProduct: ISearchProduct[]}>({
+      query: SEARCH_PRODUCT,
+      variables: {input: nonNullQuery},
+    })
     return {
       props: {
         query,
+        products: data.searchProduct,
       },
     }
-  },
-)
+  } catch (error) {
+    return {
+      props: {
+        query,
+        products: [],
+        errors: error?.networkError?.result?.errors || [],
+      },
+    }
+  }
+}

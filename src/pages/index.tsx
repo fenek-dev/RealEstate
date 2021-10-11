@@ -1,12 +1,9 @@
-import {END} from 'redux-saga'
-import {wrapper} from '../redux/store'
 import Head from 'next/head'
-import MainLayout from '../layouts/Main'
 import {Typography} from 'antd'
 import Image from 'next/image'
 import styles from '../styles/index.module.scss'
 import Search from '../components/Search'
-import {IQuery} from 'src/types'
+import {IQuery} from '../types'
 import {useRouter} from 'next/router'
 import {useCallback} from 'react'
 const {Title, Text, Paragraph} = Typography
@@ -17,7 +14,7 @@ export default function Home() {
   }, [])
 
   return (
-    <MainLayout>
+    <>
       <Head>
         <title>DigitalEstate</title>
         <meta
@@ -61,10 +58,6 @@ export default function Home() {
           onFinish={handleFinish}
         />
       </section>
-    </MainLayout>
+    </>
   )
 }
-
-export const getStaticProps = wrapper.getStaticProps(({store}) => {
-  store.dispatch(END)
-})

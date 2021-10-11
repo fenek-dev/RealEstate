@@ -5,10 +5,13 @@ export type ErrorType = {
   message: string
 }
 
-export type ISearchProduct = Omit<
-  IProduct,
-  'region' | 'layout' | 'tax' | 'description' | 'category' | 'author'
->
+export interface ISearchProduct
+  extends Omit<
+    IProduct,
+    'region' | 'layout' | 'tax' | 'description' | 'category' | 'author'
+  > {
+  onDelete?: (_id: string) => void
+}
 
 export interface ISearchState {
   products: ISearchProduct[]

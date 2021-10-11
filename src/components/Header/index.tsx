@@ -1,3 +1,4 @@
+import React from 'react'
 import Image from 'next/image'
 import {Button, Typography, Avatar, Menu, Dropdown, Space} from 'antd'
 import styles from './header.module.scss'

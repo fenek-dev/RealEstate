@@ -1,4 +1,3 @@
-import MainLayout from '../layouts/Main'
 import {Space, Typography, Divider} from 'antd'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -7,7 +6,7 @@ const {Title, Paragraph, Link} = Typography
 
 const About = () => {
   return (
-    <MainLayout>
+    <>
       <Head>
         <title>DigitalEstate | About us</title>
         <meta
@@ -210,7 +209,7 @@ const About = () => {
           </Space>
         </Space>
       </section>
-    </MainLayout>
+    </>
   )
 }
 

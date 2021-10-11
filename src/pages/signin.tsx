@@ -1,32 +1,44 @@
-import MainLayout from '../layouts/Main'
 import React, {useCallback, useEffect} from 'react'
-import {Form, Input, Button} from 'antd'
-import {Typography} from 'antd'
+import {Form, Input, Button, Typography, notification} from 'antd'
 import styles from '../styles/signin.module.scss'
 import Head from 'next/head'
-import {useDispatch, useSelector} from 'react-redux'
 import {useRouter} from 'next/router'
-import {loginUserAction} from '../redux/user/userAction'
-import {IRootReducer} from '../redux/rootReducer'
+import {LOGIN_USER} from '../utils/queries'
+import {setCookie} from '../utils/cookie'
+import {useLazyQuery} from '@apollo/client'
+import {User} from '../server/user/user.model'
 
 const {Title, Text, Link} = Typography
 
 const Signin: React.FC = () => {
-  const state = useSelector((store: IRootReducer) => store.user)
-  const dispatch = useDispatch()
+  const [loginUser, {data, error}] = useLazyQuery<{loginUser: User}>(LOGIN_USER)
   const router = useRouter()
-  const onFinish = useCallback((values: any) => {
-    dispatch(loginUserAction(values))
+  const onFinish = useCallback((payload: any) => {
+    loginUser({
+      variables: {
+        ...payload,
+      },
+    })
   }, [])
 
   useEffect(() => {
-    if (state._id) {
+    if (error) {
+      notification.error({
+        message: error.name,
+        description: error.message,
+      })
+    }
+  }, [error])
+
+  useEffect(() => {
+    if (data) {
+      setCookie('token', data.loginUser.token)
       router.replace('profile')
     }
-  }, [state])
+  }, [data])
 
   return (
-    <MainLayout>
+    <>
       <Head>
         <title>DigitalEstate | Sign in</title>
       </Head>
@@ -76,7 +88,7 @@ const Signin: React.FC = () => {
           <Link href="/signup">Create an account</Link>
         </Button>
       </section>
-    </MainLayout>
+    </>
   )
 }
 

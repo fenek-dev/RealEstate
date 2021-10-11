@@ -1,29 +1,52 @@
-import MainLayout from '../layouts/Main'
 import Head from 'next/head'
-import {Button, Checkbox, Form, Input, Radio, Typography} from 'antd'
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  notification,
+  Radio,
+  Typography,
+} from 'antd'
 import styles from '../styles/signin.module.scss'
-import {useDispatch, useSelector} from 'react-redux'
 import {useCallback, useEffect} from 'react'
-import {createUserAction} from '../redux/user/userAction'
 import {useRouter} from 'next/router'
-import {IRootReducer} from '../redux/rootReducer'
+import {useMutation} from '@apollo/client'
+import {SIGNUP_USER} from '../utils/queries'
+import {User} from '../server/user/user.model'
+import {setCookie} from '../utils/cookie'
 const {Title, Text, Link} = Typography
 
 const Signup: React.FC = () => {
-  const state = useSelector((store: IRootReducer) => store.user)
-  const dispatch = useDispatch()
+  const [signupUser, {data, error}] =
+    useMutation<{createUser: User}>(SIGNUP_USER)
   const router = useRouter()
-  const onFinish = useCallback((values: any) => {
-    dispatch(createUserAction(values))
+  const onFinish = useCallback((input: any) => {
+    signupUser({
+      variables: {
+        input,
+      },
+    })
   }, [])
 
   useEffect(() => {
-    if (state._id) {
+    if (data) {
+      setCookie('token', data.createUser.token)
       router.replace('profile')
     }
-  }, [state])
+  }, [data])
+
+  useEffect(() => {
+    if (error) {
+      notification.error({
+        message: error.name,
+        description: error.message,
+      })
+    }
+  }, [error])
+
   return (
-    <MainLayout>
+    <>
       <Head>
         <title>DigitalEstate | Sign up</title>
       </Head>
@@ -110,7 +133,7 @@ const Signup: React.FC = () => {
           </Link>
         </Text>
       </section>
-    </MainLayout>
+    </>
   )
 }
 

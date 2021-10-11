@@ -1,3 +1,4 @@
+import React from 'react'
 import {Card, Carousel, Divider, Space} from 'antd'
 import {DeleteOutlined} from '@ant-design/icons'
 import {ISearchProduct} from '../../types'
@@ -5,8 +6,6 @@ import {Typography, Image} from 'antd'
 import styles from './searchCard.module.scss'
 import {memo} from 'react'
 import {useRouter} from 'next/router'
-import {useDispatch} from 'react-redux'
-import {deleteUserProductAction} from '../../redux/user/userAction'
 
 const {Text} = Typography
 
@@ -21,27 +20,26 @@ const SearchCard: React.FC<ISearchProduct> = ({
   photos,
   type,
   _id,
-  property,
+  onDelete,
 }) => {
   const router = useRouter()
-  const dispatch = useDispatch()
-
-  const propertyType =
-    property === 'office' || property === 'shop' ? 'commercial' : 'living'
-
   const onClick = () => {
-    router.push(`/product/${propertyType}/${_id}`)
+    router.push(`/product/${_id}`)
   }
 
-  const onDelete = () => {
-    dispatch(deleteUserProductAction({id: _id, type: propertyType}))
+  const handleClick = () => {
+    onDelete(_id)
   }
 
   return (
     <Card
       extra={
         router.pathname === '/profile' && (
-          <DeleteOutlined onClick={onDelete} style={{cursor: 'pointer'}} />
+          <DeleteOutlined
+            role="button"
+            onClick={handleClick}
+            style={{cursor: 'pointer'}}
+          />
         )
       }
       cover={
@@ -68,9 +66,9 @@ const SearchCard: React.FC<ISearchProduct> = ({
 
       <Divider />
       <Space direction="horizontal" className={styles.options}>
-        {area && <Text>{area}sq</Text>}
-        {beds && <Text>{beds}bd</Text>}
-        {baths && <Text>{baths}bt</Text>}
+        {area && <Text>{area} sq</Text>}
+        {beds && <Text>{beds} bd</Text>}
+        {baths && <Text>{baths} bt</Text>}
         <Text>
           {new Date(date).toLocaleDateString('en-US', {
             day: 'numeric',

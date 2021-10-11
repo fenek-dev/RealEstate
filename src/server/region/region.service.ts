@@ -1,9 +1,8 @@
 import {Injectable} from '@nestjs/common'
 import {InjectModel} from '@nestjs/mongoose'
-import {Model} from 'mongoose'
-import {CreateRegionDto} from './dto/create-region.dto'
-import {UpdateRegionDto} from './dto/update-region.dto'
-import {Region, RegionDocument} from './schema/region.schema'
+import {Model, Schema} from 'mongoose'
+import {CreateRegionInput} from './region.inputs'
+import {Region, RegionDocument} from './region.model'
 
 @Injectable()
 export class RegionService {
@@ -12,7 +11,7 @@ export class RegionService {
     private regionModel: Model<RegionDocument>,
   ) {}
 
-  async create(createRegionDto: CreateRegionDto) {
+  async create(createRegionDto: CreateRegionInput) {
     const region = await this.regionModel.create(createRegionDto)
     await region.save()
     return region
@@ -22,15 +21,7 @@ export class RegionService {
     return await this.regionModel.find().exec()
   }
 
-  async findOne(id: string) {
+  async findOne(id: Schema.Types.ObjectId) {
     return await this.regionModel.findById(id).exec()
-  }
-
-  async update(id: string, updateRegionDto: UpdateRegionDto) {
-    return await this.regionModel.findByIdAndUpdate(id, updateRegionDto)
-  }
-
-  async remove(id: string) {
-    return await this.regionModel.findByIdAndRemove(id)
   }
 }

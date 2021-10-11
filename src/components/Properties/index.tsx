@@ -8,20 +8,21 @@ const {Paragraph} = Typography
 
 interface IProperties {
   products: ISearchProduct[]
+  onDelete: (_id: string) => void
 }
 
-const Properties: React.FC<IProperties> = ({products}) => {
+const Properties: React.FC<IProperties> = ({products, onDelete}) => {
   return (
     <>
       <Paragraph>
-        {products.length} object{products.length === 1 ? '' : 's'}
+        {products?.length} object{products?.length === 1 ? '' : 's'}
       </Paragraph>
       <section className={styles.result}>
-        {products.length > 0 ? (
+        {products?.length > 0 ? (
           products.map(item => (
             <SearchCard
               _id={item._id}
-              key={item.date}
+              key={item._id}
               address={item.address}
               photos={item.photos}
               area={item.area}
@@ -30,6 +31,7 @@ const Properties: React.FC<IProperties> = ({products}) => {
               city={item.city}
               price={item.price}
               date={item.date}
+              onDelete={onDelete}
             />
           ))
         ) : (

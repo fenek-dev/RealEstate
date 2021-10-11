@@ -1,12 +1,11 @@
 import Head from 'next/head'
-import MainLayout from '../layouts/Main'
 import {Typography} from 'antd'
 import {CaretRightOutlined} from '@ant-design/icons'
 const {Title, Paragraph} = Typography
 
 const Agree: React.FC = () => {
   return (
-    <MainLayout>
+    <>
       <Head>
         <title>DigitalEstate | Privacy policy</title>
       </Head>
@@ -192,7 +191,7 @@ const Agree: React.FC = () => {
           By phone number: +380508447776
         </li>
       </ul>
-    </MainLayout>
+    </>
   )
 }
 
