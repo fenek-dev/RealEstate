@@ -1,14 +1,6 @@
-export interface ILinks {
-  title: string
-  list: IListItem[]
-}
+import {IFooterLinks} from '../types'
 
-interface IListItem {
-  label: string
-  href: string
-}
-
-export const links: ILinks[] = [
+export const links: IFooterLinks[] = [
   {
     title: 'DigitalEstate',
     list: [

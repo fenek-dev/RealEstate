@@ -5,6 +5,7 @@ import {Button, Typography, Avatar, Menu, Dropdown, Space} from 'antd'
 import {UserOutlined} from '@ant-design/icons'
 
 import styles from './header.module.scss'
+import {links} from './links'
 
 const {Link} = Typography
 
@@ -21,70 +22,26 @@ export const Header: React.FC<IHeader> = memo(({userName, onLogout}) => {
       </Link>
       <nav className={styles.nav}>
         <ul className={styles.navList}>
-          <li>
-            <Dropdown
-              overlay={
-                <Menu>
-                  <Menu.ItemGroup title="Living">
-                    <Menu.Item key="1">
-                      <Link href="/search?type=buy&property=house">House</Link>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                      <Link href="/search?type=buy&property=apartment">
-                        Apartment
-                      </Link>
-                    </Menu.Item>
-                    <Menu.Item key="3">
-                      <Link href="/search?type=buy&property=condo">Condo</Link>
-                    </Menu.Item>
-                  </Menu.ItemGroup>
-                  <Menu.ItemGroup title="Commercial">
-                    <Menu.Item key="1">
-                      <Link href="/search?type=buy&property=office">
-                        Office
-                      </Link>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                      <Link href="/search?type=buy&property=shop">Shop</Link>
-                    </Menu.Item>
-                  </Menu.ItemGroup>
-                </Menu>
-              }>
-              <Link strong>Buy</Link>
-            </Dropdown>
-          </li>
-          <li>
-            <Dropdown
-              overlay={
-                <Menu>
-                  <Menu.ItemGroup title="Living">
-                    <Menu.Item key="1">
-                      <Link href="/search?type=rent&property=house">House</Link>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                      <Link href="/search?type=rent&property=apartment">
-                        Apartment
-                      </Link>
-                    </Menu.Item>
-                    <Menu.Item key="3">
-                      <Link href="/search?type=rent&property=condo">Condo</Link>
-                    </Menu.Item>
-                  </Menu.ItemGroup>
-                  <Menu.ItemGroup title="Commercial">
-                    <Menu.Item key="1">
-                      <Link href="/search?type=rent&property=office">
-                        Office
-                      </Link>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                      <Link href="/search?type=rent&property=shop">Shop</Link>
-                    </Menu.Item>
-                  </Menu.ItemGroup>
-                </Menu>
-              }>
-              <Link strong>Rent</Link>
-            </Dropdown>
-          </li>
+          {links.map((item, index) => (
+            <li key={index}>
+              <Dropdown
+                overlay={
+                  <Menu>
+                    {item.groups.map((group, index) => (
+                      <Menu.ItemGroup key={index} title={group.name}>
+                        {group.list.map((listItem, index) => (
+                          <Menu.Item key={index}>
+                            <Link href={listItem.href}>{listItem.label}</Link>
+                          </Menu.Item>
+                        ))}
+                      </Menu.ItemGroup>
+                    ))}
+                  </Menu>
+                }>
+                <Link strong>{item.title}</Link>
+              </Dropdown>
+            </li>
+          ))}
           <li>
             <Link strong href="/create">
               Sell
