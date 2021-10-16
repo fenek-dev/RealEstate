@@ -1,5 +1,14 @@
 import React from 'react'
-import {Carousel, Typography, Card, Image, Divider, Button, Alert} from 'antd'
+import {
+  Carousel,
+  Typography,
+  Card,
+  Image,
+  Divider,
+  Button,
+  Alert,
+  Space,
+} from 'antd'
 import {HomeOutlined, ExpandOutlined} from '@ant-design/icons'
 import {GetServerSidePropsContext} from 'next'
 import Head from 'next/head'
@@ -37,6 +46,8 @@ const ProductPage: React.FC<ProductPageInterface> = ({
   date,
   errors,
 }) => {
+  console.log(category.year)
+
   return (
     <>
       {!errors ? (
@@ -55,6 +66,7 @@ const ProductPage: React.FC<ProductPageInterface> = ({
             <meta property="og:type" content="website" />
             <meta name="twitter:card" content="summary_large_image" />
           </Head>
+
           <Carousel
             adaptiveHeight
             centerMode
@@ -100,122 +112,131 @@ const ProductPage: React.FC<ProductPageInterface> = ({
                 </div>
               </div>
               <Paragraph className={styles.main__desc}>{description}</Paragraph>
-              <Card title="Features" className={styles.card}>
-                <Paragraph>
-                  <Text strong>Property type: </Text>
-                  {property}
-                </Paragraph>
-                <Paragraph>
-                  <Text strong>City: </Text>
-                  {city}
-                </Paragraph>
-                {!!tax && (
-                  <Paragraph>
-                    <Text strong>Tax value: </Text>
-                    {tax}
-                  </Paragraph>
+              <Space direction="vertical" size="middle">
+                <Card title="Features" className={styles.card}>
+                  <Space className={styles.card__content}>
+                    <Paragraph>
+                      <Text strong>Property type: </Text>
+                      {property}
+                    </Paragraph>
+                    <Paragraph>
+                      <Text strong>City: </Text>
+                      {city}
+                    </Paragraph>
+                    {!!tax && (
+                      <Paragraph>
+                        <Text strong>Tax value: </Text>
+                        {tax}
+                      </Paragraph>
+                    )}
+                  </Space>
+                </Card>
+                {region && (
+                  <Card title="Location" className={styles.card}>
+                    <Space className={styles.card__content}>
+                      <Paragraph>
+                        <Text strong>Name: </Text>
+                        {region.name}
+                      </Paragraph>
+                      <Paragraph>
+                        <Text strong>Population: </Text>
+                        {region.population}
+                      </Paragraph>
+                      <Paragraph>
+                        <Text strong>Average cost: </Text>
+                        {region.averageCost}
+                      </Paragraph>
+                      <Paragraph>
+                        <Text strong>Shop centers: </Text>
+                        {region.shopCenters}
+                      </Paragraph>
+                      <Paragraph>
+                        <Text strong>Hospitals: </Text>
+                        {region.hospitals}
+                      </Paragraph>
+                      <Paragraph>
+                        <Text strong>Parks: </Text>
+                        {region.parks}
+                      </Paragraph>
+                    </Space>
+                  </Card>
                 )}
-              </Card>
-              {region && (
-                <Card title="Location" className={styles.card}>
-                  <Paragraph>
-                    <Text strong>Name: </Text>
-                    {region.name}
-                  </Paragraph>
-                  <Paragraph>
-                    <Text strong>Population: </Text>
-                    {region.population}
-                  </Paragraph>
-                  <Paragraph>
-                    <Text strong>Average cost: </Text>
-                    {region.averageCost}
-                  </Paragraph>
-                  <Paragraph>
-                    <Text strong>Shop centers: </Text>
-                    {region.shopCenters}
-                  </Paragraph>
-                  <Paragraph>
-                    <Text strong>Hospitals: </Text>
-                    {region.hospitals}
-                  </Paragraph>
-                  <Paragraph>
-                    <Text strong>Parks: </Text>
-                    {region.parks}
-                  </Paragraph>
-                </Card>
-              )}
 
-              {layout && (
-                <Card title="Layout" className={styles.card}>
-                  <Carousel autoplay autoplaySpeed={5000}>
-                    {layout.photos.map((src, index) => (
-                      <Image
-                        src={src}
-                        key={index}
-                        alt={layout.name + 'plan'}
-                        loading="lazy"
-                      />
-                    ))}
-                  </Carousel>
-
-                  <Paragraph>
-                    <Text strong>Layout name: </Text>
-                    {layout.name}
-                  </Paragraph>
-                  <Paragraph>
-                    <Text strong>Rooms: </Text>
-                    {layout.rooms}
-                  </Paragraph>
-                  <Paragraph>
-                    <Text strong>Max area: </Text>
-                    {layout.maxArea}
-                  </Paragraph>
-                  <Paragraph>
-                    <Text strong>Min area: </Text>
-                    {layout.minArea}
-                  </Paragraph>
-                </Card>
-              )}
-              {category && (
-                <Card title="Building" className={styles.card}>
-                  <Paragraph>
-                    <Text strong>Name: </Text>
-                    {category.name}
-                  </Paragraph>
-                  <Paragraph>
-                    <Text strong>Build year: </Text>
-                    {category.year}
-                  </Paragraph>
-                  <Paragraph>
-                    <Text strong>Type: </Text>
-                    {category.type}
-                  </Paragraph>
-                  {category.class && (
-                    <Paragraph>
-                      <Text strong>Class: </Text>
-                      {category.class}
-                    </Paragraph>
-                  )}
-                  {category.area && (
-                    <Paragraph>
-                      <Text strong>Total area: </Text>
-                      {category.class}
-                    </Paragraph>
-                  )}
-                  {category.floors && (
-                    <Paragraph>
-                      <Text strong>Floors: </Text>
-                      {category.floors}
-                    </Paragraph>
-                  )}
-                  {category.parking && (
-                    <Paragraph>
-                      <Text strong>Parking slots: </Text>
-                      {category.parking}
-                    </Paragraph>
-                  )}
-                </Card>
-              )}
+                {layout && (
+                  <Card title="Layout" className={styles.card}>
+                    <Carousel autoplay autoplaySpeed={5000}>
+                      {layout.photos.map((src, index) => (
+                        <Image
+                          src={src}
+                          key={index}
+                          alt={layout.name + 'plan'}
+                          loading="lazy"
+                        />
+                      ))}
+                    </Carousel>
+                    <Space className={styles.card__content}>
+                      <Paragraph>
+                        <Text strong>Layout name: </Text>
+                        {layout.name}
+                      </Paragraph>
+                      <Paragraph>
+                        <Text strong>Rooms: </Text>
+                        {layout.rooms}
+                      </Paragraph>
+                      <Paragraph>
+                        <Text strong>Max area: </Text>
+                        {layout.maxArea}
+                      </Paragraph>
+                      <Paragraph>
+                        <Text strong>Min area: </Text>
+                        {layout.minArea}
+                      </Paragraph>
+                    </Space>
+                  </Card>
+                )}
+                {category && (
+                  <Card title="Building" className={styles.card}>
+                    <Space className={styles.card__content}>
+                      <Paragraph>
+                        <Text strong>Name: </Text>
+                        {category.name}
+                      </Paragraph>
+                      <Paragraph>
+                        <Text strong>Build year: </Text>
+                        {category.year}
+                      </Paragraph>
+                      <Paragraph>
+                        <Text strong>Type: </Text>
+                        {category.type}
+                      </Paragraph>
+                      {category.class && (
+                        <Paragraph>
+                          <Text strong>Class: </Text>
+                          {category.class}
+                        </Paragraph>
+                      )}
+                      {category.area && (
+                        <Paragraph>
+                          <Text strong>Total area: </Text>
+                          {category.class}
+                        </Paragraph>
+                      )}
+                      {category.floors && (
+                        <Paragraph>
+                          <Text strong>Floors: </Text>
+                          {category.floors}
+                        </Paragraph>
+                      )}
+                      {category.parking && (
+                        <Paragraph>
+                          <Text strong>Parking slots: </Text>
+                          {category.parking}
+                        </Paragraph>
+                      )}
+                    </Space>
+                  </Card>
+                )}
+              </Space>
             </main>
             <aside>
               <Card className={styles.card}>

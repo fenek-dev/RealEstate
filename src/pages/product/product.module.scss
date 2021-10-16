@@ -16,6 +16,16 @@
 
 .card {
   margin: 10px 0;
+  border-radius: 5px;
+
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+
+    > div {
+      width: 40%;
+    }
+  }
 }
 
 .main {
