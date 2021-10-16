@@ -12,7 +12,7 @@ interface IHeader {
   onLogout?: () => void
 }
 
-const Header: React.FC<IHeader> = ({userName, onLogout}) => {
+export const Header: React.FC<IHeader> = memo(({userName, onLogout}) => {
   return (
     <header className={styles.header}>
       <Link href="/">
@@ -120,6 +120,4 @@ const Header: React.FC<IHeader> = ({userName, onLogout}) => {
       </nav>
     </header>
   )
-}
-
-export default memo(Header)
+})

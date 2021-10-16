@@ -1,0 +1,6 @@
+export {Footer} from './Footer'
+export {Header} from './Header'
+export {Profile} from './Profile'
+export {Properties} from './Properties'
+export {Search} from './Search'
+export {SearchCard} from './SearchCard'

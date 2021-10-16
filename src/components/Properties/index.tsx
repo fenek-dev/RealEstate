@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { memo } from 'react'
 import {ISearchProduct} from '../../types'
-import SearchCard from '../SearchCard'
+import {SearchCard} from '../SearchCard'
 import styles from '../../styles/search.module.scss'
 import {Empty, Typography} from 'antd'
 
@@ -11,7 +11,7 @@ interface IProperties {
   onDelete: (_id: string) => void
 }
 
-const Properties: React.FC<IProperties> = ({products, onDelete}) => {
+export const Properties: React.FC<IProperties> = memo(({products, onDelete}) => {
   return (
     <>
       <Paragraph>
@@ -40,6 +40,4 @@ const Properties: React.FC<IProperties> = ({products, onDelete}) => {
       </section>
     </>
   )
-}
-
-export default Properties
+})

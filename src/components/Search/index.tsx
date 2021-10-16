@@ -11,7 +11,7 @@ interface ISearch {
   type: 'welcome' | 'main'
 }
 
-const Search: React.FC<ISearch> = ({
+export const Search: React.FC<ISearch> = memo(({
   className,
   onFinish,
   defaultValues,
@@ -109,6 +109,4 @@ const Search: React.FC<ISearch> = ({
       </Form.Item>
     </Form>
   )
-}
-
-export default memo(Search)
+})

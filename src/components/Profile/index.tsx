@@ -5,20 +5,9 @@ import {UploadFile} from 'antd/lib/upload/interface'
 import {useForm} from 'antd/lib/form/Form'
 import {memo} from 'react'
 import {User} from '../../server/user/user.model'
+import { beforeFileUpload } from '../../utils/file'
 
 const {Title} = Typography
-
-function beforeUpload(file) {
-  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
-  if (!isJpgOrPng) {
-    message.error('You can only upload JPG/PNG file!')
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2
-  if (!isLt2M) {
-    message.error('Image must smaller than 2MB!')
-  }
-  return isJpgOrPng && isLt2M
-}
 
 interface IProfile {
   handleChange: (info: UploadChangeParam<UploadFile<any>>) => void
@@ -28,7 +17,8 @@ interface IProfile {
   onUpload: (file: any) => void
   user: Partial<User>
 }
-const Profile: React.FC<IProfile> = ({
+
+export const Profile: React.FC<IProfile> = memo(({
   handleChange,
   imageUrl,
   loading,
@@ -45,10 +35,9 @@ const Profile: React.FC<IProfile> = ({
           supportServerRender
           name="avatar"
           listType="picture-card"
-          // action="api/auth/avatar"
           customRequest={onUpload}
           showUploadList={false}
-          beforeUpload={beforeUpload}
+          beforeUpload={beforeFileUpload}
           onChange={handleChange}>
           {imageUrl ? (
             <img src={imageUrl} alt="avatar" style={{width: '100%'}} />
@@ -109,6 +98,4 @@ const Profile: React.FC<IProfile> = ({
       </Space>
     </Space>
   )
-}
-
-export default memo(Profile)
+})

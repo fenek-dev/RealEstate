@@ -9,7 +9,7 @@ import {useRouter} from 'next/router'
 
 const {Text} = Typography
 
-const SearchCard: React.FC<ISearchProduct> = ({
+export const SearchCard: React.FC<ISearchProduct> = memo(({
   address,
   area,
   city,
@@ -79,6 +79,4 @@ const SearchCard: React.FC<ISearchProduct> = ({
       </Space>
     </Card>
   )
-}
-
-export default memo(SearchCard)
+})

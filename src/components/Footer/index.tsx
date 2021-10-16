@@ -10,7 +10,7 @@ import {Divider} from 'antd'
 import styles from './footer.module.scss'
 const {Title, Text} = Typography
 
-const Footer: React.FC = () => {
+export const Footer: React.FC = () => {
   return (
     <footer>
       <Divider />
@@ -94,5 +94,3 @@ const Footer: React.FC = () => {
     </footer>
   )
 }
-
-export default Footer
