@@ -14,9 +14,23 @@
   }
 }
 
+.aside {
+  transform: translateY(-50%);
+
+  &__price {
+    margin: 0 !important;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
 .card {
   margin: 10px 0;
   border-radius: 5px;
+  cursor: auto;
 
   &__content {
     display: flex;

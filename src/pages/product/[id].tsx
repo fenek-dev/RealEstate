@@ -9,7 +9,6 @@ import {
   Alert,
   Space,
 } from 'antd'
-import {HomeOutlined, ExpandOutlined} from '@ant-design/icons'
 import {GetServerSidePropsContext} from 'next'
 import Head from 'next/head'
 import {ApolloError} from '@apollo/client'
@@ -73,7 +72,8 @@ const ProductPage: React.FC<ProductPageInterface> = ({
           <Carousel
             adaptiveHeight
             centerMode
-            // autoplay
+            variableWidth
+            autoplay
             className={styles.carousel}
             infinite={false}
             autoplaySpeed={5000}
@@ -124,16 +124,11 @@ const ProductPage: React.FC<ProductPageInterface> = ({
                     </Space>
                   </Space>
                 </Space>
-                <Text className={styles.main__desc}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias
-                  neque molestias, enim unde dolorum, iusto voluptas et omnis
-                  aspernatur repellat possimus! Delectus eius ratione deleniti
-                  fugiat facere nulla incidunt impedit!
-                </Text>
+                <Text className={styles.main__desc}>{description}</Text>
               </Space>
 
               <Space direction="vertical" size="middle">
-                <Card title="Features" className={styles.card}>
+                <Card hoverable title="Features" className={styles.card}>
                   <Space className={styles.card__content}>
                     <Paragraph>
                       <Text strong>Property type: </Text>
@@ -152,7 +147,7 @@ const ProductPage: React.FC<ProductPageInterface> = ({
                   </Space>
                 </Card>
                 {region && (
-                  <Card title="Location" className={styles.card}>
+                  <Card hoverable title="Location" className={styles.card}>
                     <Space className={styles.card__content}>
                       <Paragraph>
                         <Text strong>Name: </Text>
@@ -183,7 +178,7 @@ const ProductPage: React.FC<ProductPageInterface> = ({
                 )}
 
                 {layout && (
-                  <Card title="Layout" className={styles.card}>
+                  <Card hoverable title="Layout" className={styles.card}>
                     <Carousel autoplay autoplaySpeed={5000}>
                       {layout.photos.map((src, index) => (
                         <Image
@@ -215,7 +210,7 @@ const ProductPage: React.FC<ProductPageInterface> = ({
                   </Card>
                 )}
                 {category && (
-                  <Card title="Building" className={styles.card}>
+                  <Card hoverable title="Building" className={styles.card}>
                     <Space className={styles.card__content}>
                       <Paragraph>
                         <Text strong>Name: </Text>
@@ -259,10 +254,19 @@ const ProductPage: React.FC<ProductPageInterface> = ({
               </Space>
             </main>
             <aside>
-              <Card className={styles.card}>
-                <Paragraph>Total price:</Paragraph>
-                <Title level={2}>{price} $</Title>
-                <Button type="primary">Contact</Button>
+              <Card hoverable className={`${styles.card} ${styles.aside}`}>
+                <Space className={styles.aside__header}>
+                  <header>
+                    <Text>Total price:</Text>
+                    <Title className={styles.aside__price} level={2}>
+                      ${price.toLocaleString('en-US')}
+                    </Title>
+                  </header>
+                  <Button size="large" type="primary">
+                    Send request
+                  </Button>
+                </Space>
+
                 <Divider />
                 <Paragraph>
                   {new Date(date).toLocaleDateString('en-US', {
