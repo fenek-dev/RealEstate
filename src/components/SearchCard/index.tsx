@@ -35,6 +35,9 @@ export const SearchCard: React.FC<ISearchProduct> = memo(
 
     return (
       <Card
+        hoverable
+        className={styles.card}
+        onClick={onClick}
         extra={
           router.pathname === '/profile' && (
             <DeleteOutlined
@@ -49,7 +52,6 @@ export const SearchCard: React.FC<ISearchProduct> = memo(
             {photos?.map((src, index) => (
               <Image
                 className={styles.image}
-                onClick={onClick}
                 loading="lazy"
                 preview={false}
                 src={src}

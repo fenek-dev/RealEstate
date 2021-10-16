@@ -96,28 +96,28 @@ const ProductPage: React.FC<ProductPageInterface> = ({
                 <Text>{address}</Text>
                 <Space size={30}>
                   <Space>
-                    <img src={House} alt="type" />
+                    <img className={styles.icons} src={House} alt="type" />
                     <Space size={0} direction="vertical">
                       <Text strong>{type.toUpperCase()}</Text>
                       <Text>Type</Text>
                     </Space>
                   </Space>
                   <Space>
-                    <img src={Sqrt} alt="sq. m" />
+                    <img className={styles.icons} src={Sqrt} alt="sq. m" />
                     <Space size={0} direction="vertical">
                       <Text strong>{area} </Text>
                       <Text>Sq. m</Text>
                     </Space>
                   </Space>
                   <Space>
-                    <img src={Bed} alt="beds" />
+                    <img className={styles.icons} src={Bed} alt="beds" />
                     <Space size={0} direction="vertical">
                       <Text strong>{beds} </Text>
                       <Text>Beds</Text>
                     </Space>
                   </Space>
                   <Space>
-                    <img src={Bath} alt="baths" />
+                    <img className={styles.icons} src={Bath} alt="baths" />
                     <Space size={0} direction="vertical">
                       <Text strong>{baths} </Text>
                       <Text>Baths</Text>

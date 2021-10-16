@@ -18,19 +18,26 @@ export const Header: React.FC<IHeader> = memo(({userName, onLogout}) => {
   return (
     <header className={styles.header}>
       <Link href="/">
-        <Image src="/logo.svg" width={128} height={22} alt="DigitalEstate" />
+        <Image
+          className={styles.header__logo}
+          src="/logo.svg"
+          width={128}
+          height={22}
+          alt="DigitalEstate"
+        />
       </Link>
       <nav className={styles.nav}>
-        <ul className={styles.navList}>
+        <ul className={styles.nav_list}>
           {links.map((item, index) => (
-            <li key={index}>
+            <li key={index} className={styles.nav_list__item}>
               <Dropdown
+                placement="bottomCenter"
                 overlay={
                   <Menu>
-                    {item.groups.map((group, index) => (
-                      <Menu.ItemGroup key={index} title={group.name}>
-                        {group.list.map((listItem, index) => (
-                          <Menu.Item key={index}>
+                    {item.groups.map(group => (
+                      <Menu.ItemGroup key={group.name} title={group.name}>
+                        {group.list.map(listItem => (
+                          <Menu.Item key={listItem.href}>
                             <Link href={listItem.href}>{listItem.label}</Link>
                           </Menu.Item>
                         ))}
@@ -42,7 +49,7 @@ export const Header: React.FC<IHeader> = memo(({userName, onLogout}) => {
               </Dropdown>
             </li>
           ))}
-          <li>
+          <li className={styles.nav_list__item}>
             <Link strong href="/create">
               Sell
             </Link>

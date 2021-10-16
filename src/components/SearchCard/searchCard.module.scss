@@ -1,3 +1,8 @@
+.card {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
 .price {
   position: absolute;
   top: 0;
@@ -14,4 +19,8 @@
   cursor: pointer;
   object-fit: cover;
   aspect-ratio: 16/9;
+  transition: 0.4s ease-in-out;
+  &:hover {
+    transform: scale(1.3);
+  }
 }
