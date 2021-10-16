@@ -1,12 +1,14 @@
 import React, {useCallback, useEffect} from 'react'
 import {Form, Input, Button, Typography, notification} from 'antd'
-import styles from '../styles/signin.module.scss'
 import Head from 'next/head'
 import {useRouter} from 'next/router'
-import {LOGIN_USER} from '../utils/queries'
-import {setCookie} from '../utils/cookie'
 import {useLazyQuery} from '@apollo/client'
+
+import {setCookie} from '../utils/cookie'
+import {LOGIN_USER} from '../utils/queries'
 import {User} from '../server/user/user.model'
+
+import styles from '../styles/signin.module.scss'
 
 const {Title, Text, Link} = Typography
 

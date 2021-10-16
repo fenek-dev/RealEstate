@@ -1,14 +1,17 @@
 import React from 'react'
 import {Carousel, Typography, Card, Image, Divider, Button, Alert} from 'antd'
 import {HomeOutlined, ExpandOutlined} from '@ant-design/icons'
-import Head from 'next/head'
-import styles from './product.module.scss'
-import {IProduct} from '../../types'
 import {GetServerSidePropsContext} from 'next'
+import Head from 'next/head'
+import {ApolloError} from '@apollo/client'
+
+import {IProduct} from '../../types'
 import client from '../../utils/graphql-client'
 import {GET_PRODUCT} from '../../utils/queries'
 import {Product} from '../../server/product/product.model'
-import {ApolloError} from '@apollo/client'
+
+import styles from './product.module.scss'
+
 const {Title, Paragraph, Text} = Typography
 
 interface ProductPageInterface extends Partial<IProduct> {

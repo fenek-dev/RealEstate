@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {memo} from 'react'
 import Image from 'next/image'
 import {Button, Typography, Avatar, Menu, Dropdown, Space} from 'antd'
-import styles from './header.module.scss'
-import {memo} from 'react'
+
 import {UserOutlined} from '@ant-design/icons'
+
+import styles from './header.module.scss'
 
 const {Link} = Typography
 

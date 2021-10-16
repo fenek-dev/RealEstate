@@ -1,15 +1,17 @@
-import {useRouter} from 'next/dist/client/router'
-import Search from '../components/Search'
-import {Empty, notification, Typography} from 'antd'
-import styles from '../styles/search.module.scss'
-import Head from 'next/head'
-import SearchCard from '../components/SearchCard'
-import {IQuery, ISearchProduct} from '../types'
 import {useCallback, useEffect} from 'react'
+import {Empty, notification, Typography} from 'antd'
 import {GetServerSidePropsContext} from 'next'
+import Head from 'next/head'
+import {useRouter} from 'next/router'
+import {ApolloError} from '@apollo/client'
+
+import {Search} from '../components/Search'
+import {SearchCard} from '../components/SearchCard'
+import {IQuery, ISearchProduct} from '../types'
 import client from '../utils/graphql-client'
 import {SEARCH_PRODUCT} from '../utils/queries'
-import {ApolloError} from '@apollo/client'
+
+import styles from '../styles/search.module.scss'
 
 const {Title, Paragraph} = Typography
 
@@ -101,7 +103,7 @@ export default SearchPage
 export async function getServerSideProps({query}: GetServerSidePropsContext) {
   const nonNullQuery = {}
   for (const key in query) {
-    if (query[key]) {
+    if (key in query) {
       nonNullQuery[key] = isNaN(Number(query[key]))
         ? query[key]
         : Number(query[key])

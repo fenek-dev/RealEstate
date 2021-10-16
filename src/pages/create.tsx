@@ -1,3 +1,4 @@
+import {useContext, useEffect, useState} from 'react'
 import Head from 'next/head'
 import {
   Space,
@@ -12,23 +13,15 @@ import {
   notification,
 } from 'antd'
 import {PlusOutlined} from '@ant-design/icons'
-import {useContext, useEffect, useState} from 'react'
 import {useMutation} from '@apollo/client'
-import {CREATE_PRODUCT} from '../utils/queries'
+
 import {Product} from '../server/product/product.model'
+import {CREATE_PRODUCT} from '../utils/queries'
 import {UserContext} from '../utils/context'
 import {getCookie} from '../utils/cookie'
+import {getBase64} from '../utils/file'
 
 const {Title} = Typography
-
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = error => reject(error)
-  })
-}
 
 const Create: React.FC = () => {
   const [createProduct, {data, error}] = useMutation<{
