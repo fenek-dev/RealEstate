@@ -56,7 +56,9 @@ const ProductPage: React.FC<ProductPageInterface> = ({
             <meta name="twitter:card" content="summary_large_image" />
           </Head>
           <Carousel
-            autoplay
+            adaptiveHeight
+            centerMode
+            // autoplay
             className={styles.carousel}
             infinite={false}
             autoplaySpeed={5000}

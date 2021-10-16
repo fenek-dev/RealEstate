@@ -1,44 +1,42 @@
 .page {
-    display: grid;
-    grid-template-columns: 8fr 4fr;
-    gap: 20px;
+  display: grid;
+  grid-template-columns: 8fr 4fr;
+  gap: 20px;
 }
 
 .carousel {
-    max-height: 420px;
-    width: auto;
+  margin: 20px 0;
+  height: 100%;
+  width: auto;
 
-    &__image {
-        max-height: 420px;
-        width: auto;
-        object-fit: scale-down;
-    }
+  &__image {
+    width: auto;
+  }
 }
 
 .card {
-    margin: 10px 0;
+  margin: 10px 0;
 }
 
 .main {
+  &__address {
+    padding: 10px 0;
+  }
 
-    &__address {
-        padding: 10px 0;
+  &__desc {
+    margin: 10px 0;
+  }
+
+  &Icons {
+    display: flex;
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      margin: 0 20px;
+      font-size: 18px;
     }
-
-    &__desc {
-        margin: 10px 0;
-    }
-
-    &Icons {
-        display: flex;
-
-        &__item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-evenly;
-            margin: 0 20px;
-            font-size: 18px;
-        }
-    }
+  }
 }

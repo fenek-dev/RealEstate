@@ -1,4 +1,4 @@
-import React, {memo} from 'react'
+import React, {memo, useCallback} from 'react'
 import {Card, Carousel, Divider, Space, Typography, Image} from 'antd'
 import {DeleteOutlined} from '@ant-design/icons'
 import {useRouter} from 'next/router'
@@ -24,13 +24,14 @@ export const SearchCard: React.FC<ISearchProduct> = memo(
     onDelete,
   }) => {
     const router = useRouter()
-    const onClick = () => {
-      router.push(`/product/${_id}`)
-    }
 
-    const handleClick = () => {
+    const onClick = useCallback(() => {
+      router.push(`/product/${_id}`)
+    }, [_id])
+
+    const handleClick = useCallback(() => {
       onDelete(_id)
-    }
+    }, [_id])
 
     return (
       <Card
@@ -47,7 +48,7 @@ export const SearchCard: React.FC<ISearchProduct> = memo(
           <Carousel dotPosition="top" lazyLoad="progressive">
             {photos?.map((src, index) => (
               <Image
-                style={{cursor: 'pointer', objectFit: 'cover'}}
+                className={styles.image}
                 onClick={onClick}
                 loading="lazy"
                 preview={false}

@@ -1,11 +1,17 @@
 .price {
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 20px;
 }
 
 .options {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+}
+
+.image {
+  cursor: pointer;
+  object-fit: cover;
+  aspect-ratio: 16/9;
 }

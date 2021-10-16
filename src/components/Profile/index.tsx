@@ -1,5 +1,5 @@
 import React, {memo} from 'react'
-import {Form, Input, Typography, Space, Upload, message, Button} from 'antd'
+import {Form, Input, Typography, Space, Upload, Button} from 'antd'
 import {LoadingOutlined, PlusOutlined} from '@ant-design/icons'
 import {UploadFile, UploadChangeParam} from 'antd/lib/upload/interface'
 import {useForm} from 'antd/lib/form/Form'
