@@ -19,6 +19,11 @@ import client from '../../utils/graphql-client'
 import {GET_PRODUCT} from '../../utils/queries'
 import {Product} from '../../server/product/product.model'
 
+import Bath from './icons/bath.svg'
+import Bed from './icons/bed.svg'
+import House from './icons/house.svg'
+import Sqrt from './icons/sqft.svg'
+
 import styles from './product.module.scss'
 
 const {Title, Paragraph, Text} = Typography
@@ -46,8 +51,6 @@ const ProductPage: React.FC<ProductPageInterface> = ({
   date,
   errors,
 }) => {
-  console.log(category.year)
-
   return (
     <>
       {!errors ? (
@@ -86,32 +89,49 @@ const ProductPage: React.FC<ProductPageInterface> = ({
           </Carousel>
           <section className={styles.page}>
             <main className={styles.main}>
-              <Title level={3} className={styles.main__address}>
-                {address}
-              </Title>
-              <div className={styles.mainIcons}>
-                <div className={styles.mainIcons__item}>
-                  <HomeOutlined />
-                  <Text strong>{type.toUpperCase()}</Text>
-                  <Text>Type</Text>
-                </div>
-                <div className={styles.mainIcons__item}>
-                  <ExpandOutlined />
-                  <Text strong>{area} </Text>
-                  <Text>Sq. m</Text>
-                </div>
-                <div className={styles.mainIcons__item}>
-                  <HomeOutlined />
-                  <Text strong>{beds} </Text>
-                  <Text>Beds</Text>
-                </div>
-                <div className={styles.mainIcons__item}>
-                  <HomeOutlined />
-                  <Text strong>{baths} </Text>
-                  <Text>Baths</Text>
-                </div>
-              </div>
-              <Paragraph className={styles.main__desc}>{description}</Paragraph>
+              <Space
+                className={styles.main__header}
+                direction="vertical"
+                size={28}>
+                <Text>{address}</Text>
+                <Space size={30}>
+                  <Space>
+                    <img src={House} alt="type" />
+                    <Space size={0} direction="vertical">
+                      <Text strong>{type.toUpperCase()}</Text>
+                      <Text>Type</Text>
+                    </Space>
+                  </Space>
+                  <Space>
+                    <img src={Sqrt} alt="sq. m" />
+                    <Space size={0} direction="vertical">
+                      <Text strong>{area} </Text>
+                      <Text>Sq. m</Text>
+                    </Space>
+                  </Space>
+                  <Space>
+                    <img src={Bed} alt="beds" />
+                    <Space size={0} direction="vertical">
+                      <Text strong>{beds} </Text>
+                      <Text>Beds</Text>
+                    </Space>
+                  </Space>
+                  <Space>
+                    <img src={Bath} alt="baths" />
+                    <Space size={0} direction="vertical">
+                      <Text strong>{baths} </Text>
+                      <Text>Baths</Text>
+                    </Space>
+                  </Space>
+                </Space>
+                <Text className={styles.main__desc}>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias
+                  neque molestias, enim unde dolorum, iusto voluptas et omnis
+                  aspernatur repellat possimus! Delectus eius ratione deleniti
+                  fugiat facere nulla incidunt impedit!
+                </Text>
+              </Space>
+
               <Space direction="vertical" size="middle">
                 <Card title="Features" className={styles.card}>
                   <Space className={styles.card__content}>

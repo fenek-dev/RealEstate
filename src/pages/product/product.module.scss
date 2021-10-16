@@ -37,16 +37,8 @@
     margin: 10px 0;
   }
 
-  &Icons {
-    display: flex;
-
-    &__item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-evenly;
-      margin: 0 20px;
-      font-size: 18px;
-    }
+  &__header {
+    margin-top: 50px;
+    margin-bottom: 80px;
   }
 }

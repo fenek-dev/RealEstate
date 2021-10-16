@@ -1,13 +1,15 @@
 @import '~antd/dist/antd.css';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
 
 :root {
-  --grey-bg: #D3DEE6;
+  --grey-bg: #d3dee6;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
 }
 
 ul {
