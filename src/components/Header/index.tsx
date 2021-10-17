@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {memo} from 'react'
 import Image from 'next/image'
 import {Button, Typography, Avatar, Menu, Dropdown, Space} from 'antd'
-import styles from './header.module.scss'
-import {memo} from 'react'
+
 import {UserOutlined} from '@ant-design/icons'
+
+import styles from './header.module.scss'
+import {links} from './links'
 
 const {Link} = Typography
 
@@ -12,79 +14,42 @@ interface IHeader {
   onLogout?: () => void
 }
 
-const Header: React.FC<IHeader> = ({userName, onLogout}) => {
+export const Header: React.FC<IHeader> = memo(({userName, onLogout}) => {
   return (
     <header className={styles.header}>
       <Link href="/">
-        <Image src="/logo.svg" width={128} height={22} alt="DigitalEstate" />
+        <Image
+          className={styles.header__logo}
+          src="/logo.svg"
+          width={128}
+          height={22}
+          alt="DigitalEstate"
+        />
       </Link>
       <nav className={styles.nav}>
-        <ul className={styles.navList}>
-          <li>
-            <Dropdown
-              overlay={
-                <Menu>
-                  <Menu.ItemGroup title="Living">
-                    <Menu.Item key="1">
-                      <Link href="/search?type=buy&property=house">House</Link>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                      <Link href="/search?type=buy&property=apartment">
-                        Apartment
-                      </Link>
-                    </Menu.Item>
-                    <Menu.Item key="3">
-                      <Link href="/search?type=buy&property=condo">Condo</Link>
-                    </Menu.Item>
-                  </Menu.ItemGroup>
-                  <Menu.ItemGroup title="Commercial">
-                    <Menu.Item key="1">
-                      <Link href="/search?type=buy&property=office">
-                        Office
-                      </Link>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                      <Link href="/search?type=buy&property=shop">Shop</Link>
-                    </Menu.Item>
-                  </Menu.ItemGroup>
-                </Menu>
-              }>
-              <Link strong>Buy</Link>
-            </Dropdown>
-          </li>
-          <li>
-            <Dropdown
-              overlay={
-                <Menu>
-                  <Menu.ItemGroup title="Living">
-                    <Menu.Item key="1">
-                      <Link href="/search?type=rent&property=house">House</Link>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                      <Link href="/search?type=rent&property=apartment">
-                        Apartment
-                      </Link>
-                    </Menu.Item>
-                    <Menu.Item key="3">
-                      <Link href="/search?type=rent&property=condo">Condo</Link>
-                    </Menu.Item>
-                  </Menu.ItemGroup>
-                  <Menu.ItemGroup title="Commercial">
-                    <Menu.Item key="1">
-                      <Link href="/search?type=rent&property=office">
-                        Office
-                      </Link>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                      <Link href="/search?type=rent&property=shop">Shop</Link>
-                    </Menu.Item>
-                  </Menu.ItemGroup>
-                </Menu>
-              }>
-              <Link strong>Rent</Link>
-            </Dropdown>
-          </li>
-          <li>
+        <ul className={styles.nav_list}>
+          {links.map((item, index) => (
+            <li key={index} className={styles.nav_list__item}>
+              <Dropdown
+                placement="bottomCenter"
+                overlay={
+                  <Menu>
+                    {item.groups.map(group => (
+                      <Menu.ItemGroup key={group.name} title={group.name}>
+                        {group.list.map(listItem => (
+                          <Menu.Item key={listItem.href}>
+                            <Link href={listItem.href}>{listItem.label}</Link>
+                          </Menu.Item>
+                        ))}
+                      </Menu.ItemGroup>
+                    ))}
+                  </Menu>
+                }>
+                <Link strong>{item.title}</Link>
+              </Dropdown>
+            </li>
+          ))}
+          <li className={styles.nav_list__item}>
             <Link strong href="/create">
               Sell
             </Link>
@@ -120,6 +85,4 @@ const Header: React.FC<IHeader> = ({userName, onLogout}) => {
       </nav>
     </header>
   )
-}
-
-export default memo(Header)
+})

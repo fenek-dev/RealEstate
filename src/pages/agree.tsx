@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import {Typography} from 'antd'
 import {CaretRightOutlined} from '@ant-design/icons'
+
 const {Title, Paragraph} = Typography
 
 const Agree: React.FC = () => {

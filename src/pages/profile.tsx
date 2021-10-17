@@ -1,25 +1,21 @@
-import {Space, Typography, Tabs, Spin, notification} from 'antd'
-import Head from 'next/head'
 import {useCallback, useContext, useEffect, useState} from 'react'
-import Profile from '../components/Profile'
-import Properties from '../components/Properties'
+import {Space, Typography, Tabs, Spin, notification} from 'antd'
+import {GetServerSidePropsContext} from 'next'
+import Head from 'next/head'
 import {ParsedUrlQuery} from 'querystring'
 import {useLazyQuery, useMutation} from '@apollo/client'
-import {DELETE_PRODUCT, EDIT_USER, FULL_USER} from '../utils/queries'
-import {UserContext} from '../utils/context'
+
+import {Profile} from '../components/Profile'
+import {Properties} from '../components/Properties'
 import {User} from '../server/user/user.model'
-import {GetServerSidePropsContext} from 'next'
-import {getCookie} from '../utils/cookie'
 import {Product} from '../server/product/product.model'
+import {getCookie} from '../utils/cookie'
+import {UserContext} from '../utils/context'
+import {DELETE_PRODUCT, EDIT_USER, FULL_USER} from '../utils/queries'
+import {getBase64WithCallBack} from '../utils/file'
 
 const {TabPane} = Tabs
 const {Title} = Typography
-
-function getBase64(img, callback) {
-  const reader = new FileReader()
-  reader.addEventListener('load', () => callback(reader.result))
-  reader.readAsDataURL(img)
-}
 
 interface IProfilePage {
   query: ParsedUrlQuery
@@ -103,7 +99,7 @@ const ProfilePage: React.FC<IProfilePage> = ({query}) => {
     }
     if (info.file.status === 'done') {
       // Get this url from response in real world.
-      getBase64(info.file.originFileObj, image => {
+      getBase64WithCallBack(info.file.originFileObj, image => {
         setImageUrl(image)
         setLoading(false)
       })

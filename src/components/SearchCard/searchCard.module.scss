@@ -1,11 +1,33 @@
+.card {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
 .price {
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 20px;
+  color: #1890ff;
 }
 
 .options {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.icons {
+  height: 14px;
+  margin-right: 5px;
+}
+
+.image {
+  cursor: pointer;
+  object-fit: cover;
+  aspect-ratio: 16/9;
+  transition: 0.4s ease-in-out;
+  &:hover {
+    transform: scale(1.3);
+  }
 }

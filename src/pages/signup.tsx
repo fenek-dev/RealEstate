@@ -1,3 +1,4 @@
+import {useCallback, useEffect} from 'react'
 import Head from 'next/head'
 import {
   Button,
@@ -8,13 +9,15 @@ import {
   Radio,
   Typography,
 } from 'antd'
-import styles from '../styles/signin.module.scss'
-import {useCallback, useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {useMutation} from '@apollo/client'
-import {SIGNUP_USER} from '../utils/queries'
+
 import {User} from '../server/user/user.model'
+import {SIGNUP_USER} from '../utils/queries'
 import {setCookie} from '../utils/cookie'
+
+import styles from '../styles/signin.module.scss'
+
 const {Title, Text, Link} = Typography
 
 const Signup: React.FC = () => {

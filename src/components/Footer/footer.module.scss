@@ -1,23 +1,36 @@
 .footer {
+  &_main {
+    display: flex;
+    justify-content: space-between;
+  }
 
-    &Main {
-        display: flex;
-        justify-content: space-between;
+  &_description {
+    display: flex;
+    flex-direction: column;
+    max-width: 267px;
+
+    &__text {
+      padding: 10px 0;
     }
+  }
 
-    &Description {
-        display: flex;
-        flex-direction: column;
-        max-width: 267px;
+  &_icons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
 
-        &__text {
-            padding: 10px 0;
-        }
+  &_column {
+    min-width: 200px;
+    &__item {
+      a {
+        display: block;
+        width: 100%;
+      }
+      transition: 0.3s ease-in-out;
+      &:hover {
+        transform: scale(1.2);
+      }
     }
-
-    &Icons {
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-    }
+  }
 }

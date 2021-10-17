@@ -1,8 +1,10 @@
-import {ApolloProvider} from '@apollo/client'
 import React from 'react'
+import {ApolloProvider} from '@apollo/client'
+
 import MainLayout from '../layouts/Main'
-import '../styles/globals.scss'
 import client from '../utils/graphql-client'
+
+import '../styles/globals.scss'
 
 function MyApp({Component, pageProps}) {
   return (

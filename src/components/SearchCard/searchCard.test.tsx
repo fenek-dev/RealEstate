@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchCard from './index'
+import {SearchCard} from './index'
 import {render, fireEvent, screen} from '@testing-library/react'
 import {defineWindowForTest} from '../../utils/test-utils'
 import {ISearchProduct} from '../../types'

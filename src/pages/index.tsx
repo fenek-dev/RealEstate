@@ -1,12 +1,16 @@
-import Head from 'next/head'
-import {Typography} from 'antd'
-import Image from 'next/image'
-import styles from '../styles/index.module.scss'
-import Search from '../components/Search'
-import {IQuery} from '../types'
-import {useRouter} from 'next/router'
 import {useCallback} from 'react'
+import Head from 'next/head'
+import Image from 'next/image'
+import {useRouter} from 'next/router'
+import {Typography} from 'antd'
+
+import {Search} from '../components'
+import {IQuery} from '../types'
+
+import styles from '../styles/index.module.scss'
+
 const {Title, Text, Paragraph} = Typography
+
 export default function Home() {
   const router = useRouter()
   const handleFinish = useCallback((values: IQuery) => {
