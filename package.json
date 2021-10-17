@@ -45,6 +45,7 @@
     "body-parser": "^1.19.0",
     "buffer-to-stream": "^1.0.0",
     "cloudinary": "^1.26.1",
+    "dotenv": "^10.0.0",
     "graphql": "^15.5.1",
     "graphql-tools": "^4.0.8",
     "mongoose": "^5.12.9",

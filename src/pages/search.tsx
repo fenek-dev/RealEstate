@@ -103,7 +103,7 @@ export default SearchPage
 export async function getServerSideProps({query}: GetServerSidePropsContext) {
   const nonNullQuery = {}
   for (const key in query) {
-    if (key in query) {
+    if (query[key]) {
       nonNullQuery[key] = isNaN(Number(query[key]))
         ? query[key]
         : Number(query[key])

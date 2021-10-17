@@ -62,7 +62,11 @@ export class UserService {
    */
   async create(dto: CreateUserInput) {
     const {email, password, type, name, phone} = dto
+    console.log(dto)
+
     const candidate = await this.userModel.findOne({email}).exec()
+    console.log(candidate)
+
     if (candidate) {
       throw new HttpException('User already exists', HttpStatus.CONFLICT)
     }

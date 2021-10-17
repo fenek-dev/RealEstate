@@ -10,8 +10,6 @@ async function bootstrap() {
     app.use(bodyParser.json({limit: '50mb'}))
     app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
     await app.listen(PORT)
-    // Need for apollo client connection
-    process.env.HOST = (await app.getUrl()).replace('[::1]', 'localhost')
     console.info('Server work on localhost:' + PORT)
   } catch (error) {
     console.error(error)
