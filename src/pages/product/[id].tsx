@@ -18,10 +18,10 @@ import client from '../../utils/graphql-client'
 import {GET_PRODUCT} from '../../utils/queries'
 import {Product} from '../../server/product/product.model'
 
-import Bath from './icons/bath.svg'
-import Bed from './icons/bed.svg'
-import House from './icons/house.svg'
-import Sqrt from './icons/sqft.svg'
+import Bath from '../../assets/product/bath.svg'
+import Bed from '../../assets/product/bed.svg'
+import House from '../../assets/product/house.svg'
+import Sqrt from '../../assets/product/sqft.svg'
 
 import styles from './product.module.scss'
 

@@ -8,11 +8,18 @@
   top: 0;
   right: 0;
   font-size: 20px;
+  color: #1890ff;
 }
 
 .options {
   display: flex;
   justify-content: space-between;
+  font-size: 13px;
+}
+
+.icons {
+  height: 14px;
+  margin-right: 5px;
 }
 
 .image {

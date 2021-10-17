@@ -4,6 +4,9 @@ import {DeleteOutlined} from '@ant-design/icons'
 import {useRouter} from 'next/router'
 
 import {ISearchProduct} from '../../types'
+import Bath from '../../assets/product/bath.svg'
+import Bed from '../../assets/product/bed.svg'
+import Sqrt from '../../assets/product/sqft.svg'
 
 import styles from './searchCard.module.scss'
 
@@ -57,7 +60,7 @@ export const SearchCard: React.FC<ISearchProduct> = memo(
                 src={src}
                 height={200}
                 key={index}
-                alt={type + ' ' + index}
+                alt={`${type} ${index}`}
               />
             ))}
           </Carousel>
@@ -65,14 +68,33 @@ export const SearchCard: React.FC<ISearchProduct> = memo(
         <Card.Meta
           title={city}
           description={address}
-          avatar={<div className={styles.price}>${price}</div>}
+          avatar={
+            <Text className={styles.price} strong>
+              ${price.toLocaleString('en-US')}
+            </Text>
+          }
           style={{position: 'relative'}}></Card.Meta>
 
         <Divider />
         <Space direction="horizontal" className={styles.options}>
-          {area && <Text>{area} sq</Text>}
-          {beds && <Text>{beds} bd</Text>}
-          {baths && <Text>{baths} bt</Text>}
+          {area && (
+            <Text>
+              <img src={Sqrt} alt="type" className={styles.icons} />
+              {area} sq
+            </Text>
+          )}
+          {beds && (
+            <Text>
+              <img src={Bed} alt="type" className={styles.icons} />
+              {beds} bd
+            </Text>
+          )}
+          {baths && (
+            <Text>
+              <img src={Bath} alt="type" className={styles.icons} />
+              {baths} bt
+            </Text>
+          )}
           <Text>
             {new Date(date).toLocaleDateString('en-US', {
               day: 'numeric',
