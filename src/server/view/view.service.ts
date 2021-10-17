@@ -8,10 +8,7 @@ export class ViewService implements OnModuleInit {
 
   async onModuleInit(): Promise<void> {
     try {
-      this.server = next({
-        dev: true,
-        dir: './',
-      })
+      this.server = next({})
       await this.server.prepare()
     } catch (error) {
       console.log(error)
