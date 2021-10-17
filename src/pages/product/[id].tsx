@@ -127,7 +127,7 @@ const ProductPage: React.FC<ProductPageInterface> = ({
                 <Text className={styles.main__desc}>{description}</Text>
               </Space>
 
-              <Space direction="vertical" size="middle">
+              <Space style={{width: '100%'}} direction="vertical" size="middle">
                 <Card hoverable title="Features" className={styles.card}>
                   <Space className={styles.card__content}>
                     <Paragraph>
